@@ -9,18 +9,18 @@ import {
   GridToolbar,
 } from "@mui/x-data-grid";
 import { Refresh } from "@mui/icons-material";
-import AddIcon from '@mui/icons-material/Add';
+import AddIcon from "@mui/icons-material/Add";
 import CustomNoRowsOverlay from "../components/CustomNoRowsOverlay";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/DeleteOutlined";
 import SaveIcon from "@mui/icons-material/Save";
 import CancelIcon from "@mui/icons-material/Close";
-import React, { useState } from "react";
+import { useState } from "react";
 
 export default function User() {
   const [rowModesModel, setRowModesModel] = useState({});
   // const [users, setUsers] = useState([]);
-  
+
   const handleRowEditStop = (params: any, event: any) => {
     if (params.reason === GridRowEditStopReasons.rowFocusOut) {
       event.defaultMuiPrevented = true;
@@ -29,7 +29,6 @@ export default function User() {
   // const handleRowModesModelChange = (newRowModesModel) => {
   //   setRowModesModel(newRowModesModel);
   // };
-  
 
   // const handleEditClick = (id: number) => () => {
   //   setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.Edit } });
@@ -78,7 +77,8 @@ export default function User() {
       width: 150,
       cellClassName: "actions",
       getActions: ({ id }) => {
-        const isInEditMode = rowModesModel[id]?.mode === GridRowModes.Edit;
+        const isInEditMode = rowModesModel;
+        // src/layouts/SideBar/SideBar.tsx
 
         if (isInEditMode) {
           return [
@@ -151,7 +151,7 @@ export default function User() {
   ];
   return (
     <div className="h-screen px-16">
-      <div className="px-10">
+      <div className="">
         <Typography variant="h4" sx={{ fontWeight: "bold", my: 4 }}>
           Users Management
         </Typography>
@@ -162,6 +162,7 @@ export default function User() {
           >
             <Button
               variant="contained"
+              sx={{ bgcolor: "#3E4095", ":hover": { bgcolor: "#3E4060" } }}
               // onClick={() => fetchUsers()}
               startIcon={<Refresh />}
             >
@@ -169,6 +170,7 @@ export default function User() {
             </Button>
             <Button
               variant="contained"
+              sx={{ bgcolor: "#3E4095", ":hover": { bgcolor: "#3E4060" } }}
               // onClick={() => fetchUsers()}
               startIcon={<AddIcon />}
             >
@@ -178,7 +180,7 @@ export default function User() {
           </ButtonGroup>
         </div>
       </div>
-      <Box sx={{ height: 400, py: 2, px: 5 }}>
+      <Box sx={{ height: 400, py: 2, alignItems: "center" }}>
         <DataGrid
           rows={rows}
           columns={columns}
@@ -198,7 +200,7 @@ export default function User() {
           onRowEditStop={handleRowEditStop}
           checkboxSelection
           slots={{ noRowsOverlay: CustomNoRowsOverlay, toolbar: GridToolbar }}
-          sx={{ "--DataGrid-overlayHeight": "300px", width: "1000px" }}
+          sx={{ "--DataGrid-overlayHeight": "300px", width: "940px" }}
         />
       </Box>
     </div>

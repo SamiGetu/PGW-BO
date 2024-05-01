@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import x from "../assets/x.jpg";
+import logo from "../assets/logo.png";
 export const LogIn = () => {
   const navigate = useNavigate();
   return (
@@ -62,7 +62,7 @@ export const LogIn = () => {
                         {/* <!--Submit button--> */}
                         <div className="mb-12 pb-1 pt-1 text-left">
                           <button
-                            className="mb-3 focus:outline-none inline-block w-full rounded px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-norma text-white  bg-sky-950"
+                            className="mb-3 focus:outline-none inline-block w-full rounded px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-norma text-white  bg-[#3E4095]"
                             type="button"
                             data-twe-ripple-init
                             data-twe-ripple-color="light"
@@ -83,7 +83,7 @@ export const LogIn = () => {
 
                   <div className="flex justify-center items-center rounded-b-lg lg:w-6/12 lg:rounded-e-lg lg:rounded-bl-none bg-white">
                     <div className="px-4 py-6 text-white md:mx-6 md:p-12">
-                      <img src={x} alt="" />
+                      <img src={logo} alt="" className="h-32" />
                     </div>
                   </div>
                 </div>

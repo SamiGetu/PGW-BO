@@ -1,10 +1,11 @@
-import { MdOutlineDashboard } from "react-icons/md";
 import { FaUsers, FaLink, FaDonate } from "react-icons/fa";
 import { MdEventNote } from "react-icons/md";
 import { BsSubtract } from "react-icons/bs";
 import { GrTransaction } from "react-icons/gr";
+import { IoMdHome } from "react-icons/io";
 import { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import logo from "../../assets/logo.png";
 
 export const SideMenu = () => {
   const [open, setOpen] = useState(true);
@@ -15,15 +16,16 @@ export const SideMenu = () => {
     {
       Name: "Home",
       Path: "",
-      icon: <MdOutlineDashboard size={"1.5rem"} />,
+      icon: <IoMdHome size={"1.5rem"} />,
       spacing: true,
     },
+    { Name: "Users", Path: "users", icon: <FaUsers size={"1.5rem"} /> },
     {
       Name: "Transactions",
       Path: "transaction",
       icon: <GrTransaction size={"1.5rem"} />,
     },
-    { Name: "Users", Path: "users", icon: <FaUsers size={"1.5rem"} /> },
+
     {
       Name: "Subaccounts",
       Path: "subaccount",
@@ -58,16 +60,16 @@ export const SideMenu = () => {
         >
           <div className="mt-[5rem]">
             <div className="inline-flex items-center gap-4 mb-[5rem]">
-              <h1
-                className={`text-sky-950 text-3xl font-semibold origin-left ${
-                  !open && "scale-0"
-                }`}
-              >
-                KisPay
-              </h1>
+              <Link to="/">
+                <img
+                  src={logo}
+                  alt=""
+                  className={`h-12 origin-left ${!open && "scale-0"}`}
+                />
+              </Link>
               <span
-                className={`w-5 h-5 border-4 border-sky-950 bg-green-0 rounded-full absolute right-11 top-[7.3rem] cursor-pointer ${
-                  open ? "bg-sky-950" : "bg-0"
+                className={`w-5 h-5 border-4 border-[#F58634] bg-green-0 rounded-full absolute right-11 top-[7.3rem] cursor-pointer ${
+                  open ? "bg-white  " : "bg-0"
                 }`}
                 onClick={() => setOpen(!open)}
               ></span>
@@ -78,12 +80,12 @@ export const SideMenu = () => {
                   <li
                     key={index}
                     onClick={() => navigate(`/${item.Path}`)}
-                    className={` text-md flex items-center gap-x-4 cursor-pointer p-2 hover:bg-sky-950 hover:text-white rounded-md ${
+                    className={` text-md flex items-center gap-x-4 cursor-pointer p-2 hover:bg-[#3E4095] hover:text-white rounded-md ${
                       item.spacing ? "mb-8 divide-y-reverse divide-y-2" : ""
                     } ${
                       location.pathname === `/${item.Path}` ||
                       (location.pathname === "/" && item.Path === "/")
-                        ? "bg-sky-950 text-white"
+                        ? "bg-[#3E4095] text-white"
                         : "text-neutral-700"
                     }`}
                   >
