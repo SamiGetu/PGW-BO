@@ -28,7 +28,9 @@ export const LogIn = () => {
                     <div className="md:mx-6 md:p-12">
                       {/* <!--Logo--> */}
                       <div className="text-left mb-10">
-                        <h1 className="text-5xl font-medium">KisPay</h1>
+                        <h1 className="text-5xl font-medium text-[#F58634]">
+                          KisPay
+                        </h1>
                       </div>
 
                       <form>

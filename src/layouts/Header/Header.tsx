@@ -5,13 +5,14 @@ import { BiLogOutCircle } from "react-icons/bi";
 import { IoSettingsOutline } from "react-icons/io5";
 import { MdOutlineExplore } from "react-icons/md";
 import { CiSearch } from "react-icons/ci";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export const Header = () => {
   const [drop, setDrop] = useState(false);
+  const navigate = useNavigate();
 
   const Links = [
-    { Name: "Setting", path: "setting", icon: <IoSettingsOutline /> },
+    { Name: "Setting", path: "settings", icon: <IoSettingsOutline /> },
     {
       Name: "Explore the Dashboard",
       path: "Explore",
@@ -26,7 +27,7 @@ export const Header = () => {
 
   return (
     <>
-      <nav className="sticky top-0 bg-white z-10 ">
+      <nav className="sticky top-0 bg-white z-10">
         <div className="w-full h-[5rem] shadow">
           <div className="flex justify-between items-center  px-20 relative">
             <div>
@@ -46,7 +47,7 @@ export const Header = () => {
                 onClick={() => setDrop(!drop)}
                 className="absolute top-6 lg:right-10  right-5 flex items-center cursor-pointer gap-2"
               >
-                <span className="w-10 h-10 rounded-full bg-[#3E4095] flex items-center justify-center">
+                <span className="w-10 h-10 rounded-full bg-primary flex items-center justify-center">
                   <CiUser size={"1.3rem"} className="text-white" />
                 </span>
                 <span className="hover:underline ">Daniel Jemmo</span>
@@ -57,16 +58,17 @@ export const Header = () => {
               <div>
                 {drop && (
                   <>
-                    <div className=" p-3 shadow-xl absolute right-20 top-20 z-10">
+                    <div className="bg-white p-3 shadow absolute right-20 top-20 ">
                       <ul className="flex flex-col ">
                         {Links.map((item, index) => (
                           <>
                             <li
                               key={index}
-                              className="flex items-center text-gray-500 gap-3 text-sm hover:bg-[#3E4095] hover:text-white p-2 rounded-md"
+                              className="flex items-center cursor-pointer text-gray-500 gap-3 text-sm hover:bg-primary hover:text-white p-2 rounded-md"
+                              onClick={() => navigate(item.path)}
                             >
                               <span className="text-2xl ">{item.icon}</span>
-                              <Link to={item.path}>{item.Name}</Link>
+                              {item.Name}
                             </li>
                           </>
                         ))}

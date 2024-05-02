@@ -68,7 +68,7 @@ export const SideMenu = () => {
                 />
               </Link>
               <span
-                className={`w-5 h-5 border-4 border-[#F58634] bg-green-0 rounded-full absolute right-11 top-[7.3rem] cursor-pointer ${
+                className={`w-5 h-5 border-4 border-primary bg-green-0 rounded-full absolute right-11 top-[7.3rem] cursor-pointer ${
                   open ? "bg-white  " : "bg-0"
                 }`}
                 onClick={() => setOpen(!open)}
@@ -80,12 +80,12 @@ export const SideMenu = () => {
                   <li
                     key={index}
                     onClick={() => navigate(`/${item.Path}`)}
-                    className={` text-md flex items-center gap-x-4 cursor-pointer p-2 hover:bg-[#3E4095] hover:text-white rounded-md ${
+                    className={` text-md flex items-center gap-x-4 cursor-pointer p-2 hover:bg-primary/75 hover:text-white rounded-md ${
                       item.spacing ? "mb-8 divide-y-reverse divide-y-2" : ""
                     } ${
                       location.pathname === `/${item.Path}` ||
                       (location.pathname === "/" && item.Path === "/")
-                        ? "bg-[#3E4095] text-white"
+                        ? "bg-primary text-white"
                         : "text-neutral-700"
                     }`}
                   >

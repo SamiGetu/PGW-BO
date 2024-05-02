@@ -4,6 +4,7 @@ import Home from "../pages/Home";
 import Layout from "../layouts/Layout";
 import { LogIn } from "../pages/LogIn";
 import Page404 from "../pages/Page404";
+import Settings from "../pages/Settings";
 
 export default function Protected() {
   return (
@@ -12,6 +13,7 @@ export default function Protected() {
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
           <Route path="users" element={<User />} />
+          <Route path="/settings" element={<Settings />} />
         </Route>
         <Route path="*" element={<Page404 />} />
         <Route path="/login" element={<LogIn />} />

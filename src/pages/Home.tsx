@@ -36,8 +36,8 @@ export default function Home() {
     },
   };
   return (
-    <div className="mx-20 h-screen">
-      <Typography variant="h4" sx={{fontWeight: "bold", my: 4 }}>Dashboard</Typography>
+    <div className="mx-20 h-screen -z-50">
+      <Typography variant="h4" sx={{fontWeight: "bold", my: 4, zIndex: -1 }}>Dashboard</Typography>
       <Divider sx={{ my: 2 }} />
       <Grid container>
         <Grid item xs={12} md={6}>
