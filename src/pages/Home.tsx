@@ -44,7 +44,7 @@ export default function Home() {
       <Grid container>
         <Grid item xs={12} md={6}>
           <BarChart
-            colors={["#F58634", "#3E4095", "#F58634"]}
+            colors={["#F58634", "#3E4095", "#F58634=5"]}
             xAxis={[
               { scaleType: "band", data: ["group A", "group B", "group C"] },
             ]}
