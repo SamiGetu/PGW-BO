@@ -27,7 +27,7 @@ export default function Home() {
   const valueFormatter = (value: number | null) => `${value}mm`;
 
   const chartSetting = {
-    series: [{ dataKey: "seoul", label: "Seoul rainfall", valueFormatter }],
+    series: [{ dataKey: "seoul", label: "Users", valueFormatter }],
     height: 300,
     sx: {
       [`& .${axisClasses.directionY} .${axisClasses.label}`]: {
@@ -37,11 +37,14 @@ export default function Home() {
   };
   return (
     <div className="mx-20 h-screen -z-50">
-      <Typography variant="h4" sx={{fontWeight: "bold", my: 4, zIndex: -1 }}>Dashboard</Typography>
+      <Typography variant="h4" sx={{ fontWeight: "bold", my: 4, zIndex: -1 }}>
+        Dashboard
+      </Typography>
       <Divider sx={{ my: 2 }} />
       <Grid container>
         <Grid item xs={12} md={6}>
           <BarChart
+            colors={["#F58634", "#3E4095", "#F58634"]}
             xAxis={[
               { scaleType: "band", data: ["group A", "group B", "group C"] },
             ]}
@@ -56,6 +59,7 @@ export default function Home() {
         </Grid>
         <Grid item xs={12} md={6}>
           <BarChart
+            colors={["#F58634", "#3E4095", "#F58634"]}
             dataset={dataset}
             {...chartSetting}
             slotProps={{
