@@ -3,25 +3,26 @@
 @tailwind utilities;
 
 @layer utilities {
-    .custom-shape-divider-top-1714387918 {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      overflow: hidden;
-      line-height: 0;
-    }
-  
-    .custom-shape-divider-top-1714387918 svg {
-      position: relative;
-      display: block;
-      width: calc(100% + 0.1px);
-      height: 910px;
-      transform: rotateY(180deg);
-    }
-  
-    .custom-shape-divider-top-1714387918 .shape-fill {
-      fill: #3E4095;
-    }
+  .custom-shape-divider-top-1714647113 {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    overflow: hidden;
+    line-height: 0;
+    z-index: -10;
   }
+
+  .custom-shape-divider-top-1714647113 svg {
+    position: relative;
+    display: block;
+    width: calc(187% + 1.3px);
+    height: 439px;
+    transform: rotateY(180deg);
+  }
+
+  .custom-shape-divider-top-1714647113 .shape-fill {
+    fill: #faa363;
+  }
+}
   

@@ -1,11 +1,30 @@
-import { useNavigate } from "react-router-dom";
-import logo from "../assets/logo.png";
+import { useState } from "react";
+import KisPay from "../assets/logo.png";
+import { FaRegEye } from "react-icons/fa";
+import { RxEyeClosed } from "react-icons/rx";
+import { useNavigate } from "react-router";
+
 export const LogIn = () => {
+  const [showPassword, setShowPassword] = useState(false);
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+
   const navigate = useNavigate();
+
   return (
     <>
       <section className="h-screen w-full flex justify-center items-center">
-        <div className="custom-shape-divider-top-1714387918">
+        <div className="absolute text-[#784724] font-bold  left-0 top-0 p-10 z-50 ">
+          <h1
+            className="text-3xl font-medium cursor-pointer"
+            onClick={() => navigate("/")}
+          >
+            KisPay
+          </h1>
+        </div>
+        <div className="custom-shape-divider-top-1714647113">
           <svg
             data-name="Layer 1"
             xmlns="http://www.w3.org/2000/svg"
@@ -13,84 +32,102 @@ export const LogIn = () => {
             preserveAspectRatio="none"
           >
             <path
-              d="M1200 120L0 16.48 0 0 1200 0 1200 120z"
+              d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z"
+              opacity=".25"
+              className="shape-fill"
+            ></path>
+            <path
+              d="M0,0V15.81C13,36.92,27.64,56.86,47.69,72.05,99.41,111.27,165,111,224.58,91.58c31.15-10.15,60.09-26.07,89.67-39.8,40.92-19,84.73-46,130.83-49.67,36.26-2.85,70.9,9.42,98.6,31.56,31.77,25.39,62.32,62,103.63,73,40.44,10.79,81.35-6.69,119.13-24.28s75.16-39,116.92-43.05c59.73-5.85,113.28,22.88,168.9,38.84,30.2,8.66,59,6.17,87.09-7.5,22.43-10.89,48-26.93,60.65-49.24V0Z"
+              opacity=".5"
+              className="shape-fill"
+            ></path>
+            <path
+              d="M0,0V5.63C149.93,59,314.09,71.32,475.83,42.57c43-7.64,84.23-20.12,127.61-26.46,59-8.63,112.48,12.24,165.56,35.4C827.93,77.22,886,95.24,951.2,90c86.53-7,172.46-45.71,248.8-84.81V0Z"
               className="shape-fill"
             ></path>
           </svg>
         </div>
-        <div className="container h-full p-10 z-10">
-          <div className="flex h-full flex-wrap items-center justify-center text-neutral-800 dark:text-neutral-800">
-            <div className="w-[80%]">
-              <div className="block rounded-lg bg-white border-2">
-                <div className="g-0 lg:flex lg:flex-wrap">
-                  {/* <!-- Left column container--> */}
-                  <div className="px-4 md:px-0 lg:w-6/12">
-                    <div className="md:mx-6 md:p-12">
-                      {/* <!--Logo--> */}
-                      <div className="text-left mb-10">
-                        <h1 className="text-5xl font-medium text-[#F58634]">
-                          KisPay
-                        </h1>
-                      </div>
+        <div className="shadow-xl bg-white lg:w-[30%] md:w-2/3 px-5 py-[5rem] rounded-lg z-10 ">
+          <div>
+            <img
+              className="mx-auto h-10 w-auto"
+              src={KisPay}
+              alt="Your Company"
+            />
+            <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-secondary">
+              Sign in to your account
+            </h2>
+          </div>
 
-                      <form>
-                        <p className="mb-4">Please login to your account</p>
-                        {/* <!--Username input--> */}
-                        <div
-                          className="relative mb-10"
-                          data-twe-input-wrapper-init
-                        >
-                          <input
-                            type="text"
-                            className="peer block min-h-[auto] w-full rounded border-[1px] focus:outline-none border-gray-400 bg-transparent px-3 py-[0.7rem]  leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 peer-focus:text-primary data-[twe-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none "
-                            id="exampleFormControlInput1"
-                            placeholder="Email"
-                          />
-                        </div>
-
-                        {/* <!--Password input--> */}
-                        <div
-                          className="relative mb-4"
-                          data-twe-input-wrapper-init
-                        >
-                          <input
-                            type="password"
-                            className="peer  block min-h-[auto] w-full rounded border-[1px] focus:outline-none border-gray-400 bg-transparent px-3 py-[0.7rem] "
-                            id="exampleFormControlInput11"
-                            placeholder="Password"
-                          />
-                        </div>
-
-                        {/* <!--Submit button--> */}
-                        <div className="mb-12 pb-1 pt-1 text-left">
-                          <button
-                            className="mb-3 focus:outline-none inline-block w-full rounded px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-norma text-white  bg-[#3E4095]"
-                            type="button"
-                            data-twe-ripple-init
-                            data-twe-ripple-color="light"
-                            onClick={() => navigate("/")}
-                          >
-                            Log in
-                          </button>
-
-                          {/* <!--Forgot password link--> */}
-                          <span className="text-blue-700">
-                            {" "}
-                            <a href="#!">Forgot password?</a>
-                          </span>
-                        </div>
-                      </form>
-                    </div>
-                  </div>
-
-                  <div className="flex justify-center items-center rounded-b-lg lg:w-6/12 lg:rounded-e-lg lg:rounded-bl-none bg-white">
-                    <div className="px-4 py-6 text-white md:mx-6 md:p-12">
-                      <img src={logo} alt="" className="h-32" />
-                    </div>
-                  </div>
+          <div className="mt-10 sm:mx-auto">
+            <form className="space-y-6">
+              <div>
+                <label
+                  htmlFor="email"
+                  className="block text-sm font-medium leading-6 text-neutral-800"
+                >
+                  Email address
+                </label>
+                <div className="mt-2">
+                  <input
+                    id="email"
+                    name="email"
+                    type="email"
+                    placeholder="example@gmail.com"
+                    autoComplete="email"
+                    required
+                    className="px-2 block w-full rounded-md border-0 py-2  text-secondary shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:outline-none  sm:text-sm sm:leading-6"
+                  />
                 </div>
               </div>
-            </div>
+
+              <div>
+                <div className="flex items-center justify-between">
+                  <label
+                    htmlFor="password"
+                    className="block text-sm font-medium leading-6 text-neutral-800"
+                  >
+                    Password
+                  </label>
+                  <div className="text-sm">
+                    <a
+                      href="#"
+                      className="font-semibold text-secondary hover:text-secondary/75"
+                    >
+                      Forgot password?
+                    </a>
+                  </div>
+                </div>
+                <div className="mt-2 relative">
+                  <input
+                    id="password"
+                    name="password"
+                    type={showPassword ? "text" : "password"}
+                    placeholder="password"
+                    autoComplete="current-password"
+                    required
+                    className="px-2 block w-full rounded-md border-0 py-2 text-secondary shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:outline-none  sm:text-sm sm:leading-6"
+                  />
+                  <button
+                    type="button"
+                    onClick={togglePasswordVisibility}
+                    className="absolute inset-y-0 right-0 flex items-center pr-2 cursor-pointer"
+                  >
+                    {showPassword ? <FaRegEye /> : <RxEyeClosed />}
+                  </button>
+                </div>
+              </div>
+
+              <div>
+                <button
+                  onClick={() => navigate("/")}
+                  type="submit"
+                  className="flex w-full justify-center rounded-md bg-primary px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-primary/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                >
+                  Sign in
+                </button>
+              </div>
+            </form>
           </div>
         </div>
       </section>
