@@ -3,16 +3,31 @@ import KisPay from "../assets/logo.png";
 import { FaRegEye } from "react-icons/fa";
 import { RxEyeClosed } from "react-icons/rx";
 import { useNavigate } from "react-router";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+
+import { Link } from "react-router-dom";
+import { loginSchema, type TLoginSchema } from "../lib/validator";
 
 export const LogIn = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const navigate = useNavigate();
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm<TLoginSchema>({ resolver: zodResolver(loginSchema) });
+
+  const onSubmit = async (data: TLoginSchema) => {
+    await new Promise((resolve) => setTimeout(resolve, 2000));
+    console.log(data);
+  };
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
-
-  const navigate = useNavigate();
-
+  
   return (
     <>
       <section className="h-screen w-full flex justify-center items-center">
@@ -58,9 +73,8 @@ export const LogIn = () => {
               Sign in to your account
             </h2>
           </div>
-
           <div className="mt-10 sm:mx-auto">
-            <form className="space-y-6">
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
               <div>
                 <label
                   htmlFor="email"
@@ -70,17 +84,21 @@ export const LogIn = () => {
                 </label>
                 <div className="mt-2">
                   <input
+                    {...register("email")}
                     id="email"
                     name="email"
                     type="email"
                     placeholder="example@gmail.com"
                     autoComplete="email"
-                    required
-                    className="px-2 block w-full rounded-md border-0 py-2  text-secondary shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:outline-none  sm:text-sm sm:leading-6"
+                    className={`px-2 block w-full rounded-md border-0 py-2  text-secondary shadow-sm ring-1 ring-inset ${
+                      errors.email ? "ring-red-500" : "ring-gray-300"
+                    } placeholder:text-gray-400 focus:outline-none  sm:text-sm sm:leading-6`}
                   />
                 </div>
+                {errors.email && (
+                  <div className="text-red-500">{errors.email.message}</div>
+                )}
               </div>
-
               <div>
                 <div className="flex items-center justify-between">
                   <label
@@ -90,23 +108,25 @@ export const LogIn = () => {
                     Password
                   </label>
                   <div className="text-sm">
-                    <a
-                      href="#"
+                    <Link
+                      to="/forgot-password"
                       className="font-semibold text-secondary hover:text-secondary/75"
                     >
                       Forgot password?
-                    </a>
+                    </Link>
                   </div>
                 </div>
                 <div className="mt-2 relative">
                   <input
+                    {...register("password")}
                     id="password"
                     name="password"
                     type={showPassword ? "text" : "password"}
                     placeholder="password"
                     autoComplete="current-password"
-                    required
-                    className="px-2 block w-full rounded-md border-0 py-2 text-secondary shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:outline-none  sm:text-sm sm:leading-6"
+                    className={`px-2 block w-full rounded-md border-0 ${
+                      errors.password ? "ring-red-500" : "ring-gray-300"
+                    }  py-2 text-secondary shadow-sm ring-1 ring-inset  placeholder:text-gray-400 focus:outline-none sm:text-sm sm:leading-6`}
                   />
                   <button
                     type="button"
@@ -116,15 +136,17 @@ export const LogIn = () => {
                     {showPassword ? <FaRegEye /> : <RxEyeClosed />}
                   </button>
                 </div>
+                {errors.password && (
+                  <div className="text-red-500">{errors.password.message}</div>
+                )}
               </div>
-
               <div>
                 <button
-                  onClick={() => navigate("/")}
+                  disabled={isSubmitting}
                   type="submit"
-                  className="flex w-full justify-center rounded-md bg-primary px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-primary/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                  className={`flex w-full justify-center rounded-md bg-primary px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-primary/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600`}
                 >
-                  Sign in
+                  {isSubmitting ? "Signing in..." : "Sign in"}
                 </button>
               </div>
             </form>
