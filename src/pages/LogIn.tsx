@@ -22,12 +22,13 @@ export const LogIn = () => {
   const onSubmit = async (data: TLoginSchema) => {
     await new Promise((resolve) => setTimeout(resolve, 2000));
     console.log(data);
+    navigate("/");
   };
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
-  
+
   return (
     <>
       <section className="h-screen w-full flex justify-center items-center">

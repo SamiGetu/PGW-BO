@@ -1,5 +1,5 @@
-import { FaUsers, FaLink, FaDonate } from "react-icons/fa";
-import { MdEventNote } from "react-icons/md";
+import { FaUsers, FaLink, FaUsersCog } from "react-icons/fa";
+import { GrTasks } from "react-icons/gr";
 import { BsSubtract } from "react-icons/bs";
 import { GrTransaction } from "react-icons/gr";
 import { IoMdHome } from "react-icons/io";
@@ -19,18 +19,11 @@ export const SideMenu = () => {
       icon: <IoMdHome size={"1.5rem"} />,
       spacing: true,
     },
-    { Name: "Users", Path: "users", icon: <FaUsers size={"1.5rem"} /> },
+
     {
       Name: "Transactions",
       Path: "transaction",
       icon: <GrTransaction size={"1.5rem"} />,
-    },
-
-    {
-      Name: "Subaccounts",
-      Path: "subaccount",
-      icon: <BsSubtract size={"1.5rem"} />,
-      spacing: true,
     },
     {
       Name: "Payment Links",
@@ -38,15 +31,21 @@ export const SideMenu = () => {
       icon: <FaLink size={"1.5rem"} />,
     },
     {
-      Name: "Donation",
-      Path: "donation",
-      icon: <FaDonate size={"1.5rem"} />,
+      Name: "Subaccounts",
+      Path: "subaccount",
+      icon: <BsSubtract size={"1.5rem"} />,
+      spacing: true,
     },
-
+    { Name: "Users", Path: "users", icon: <FaUsers size={"1.5rem"} /> },
     {
-      Name: "Events",
-      Path: "event",
-      icon: <MdEventNote size={"1.5rem"} />,
+      Name: "Roles",
+      Path: "roles",
+      icon: <FaUsersCog size={"1.5rem"} />,
+    },
+    {
+      Name: "Task",
+      Path: "tasks",
+      icon: <GrTasks size={"1.5rem"} />,
     },
   ];
 
