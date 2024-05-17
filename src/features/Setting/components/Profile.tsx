@@ -7,13 +7,12 @@ import {
   Typography,
 } from "@mui/material";
 import React, { useState } from "react";
+import useAuth from "../../../Hooks/useAuth";
 
 export const Profile = () => {
-  const [Email, setEmail] = useState("danieljemmo1@gmail.com");
-  const [FName, setFName] = useState("Daniel");
-  const [LName, setLName] = useState("Jemmo");
+  const { getUserData } = useAuth();
   const [isEditMode, setIsEditMode] = useState(false);
-
+  const userData = getUserData();
   const handleEditProfile = () => {
     setIsEditMode(true);
   };
@@ -38,10 +37,9 @@ export const Profile = () => {
                 required
                 id="outlined-required-fname"
                 label="First Name"
-                value={FName}
+                defaultValue={userData.firstName}
                 disabled={!isEditMode}
                 size="small"
-                onChange={(e) => setFName(e.target.value)}
               />
             </FormGroup>
             <FormGroup className="mt-5">
@@ -49,21 +47,19 @@ export const Profile = () => {
                 required
                 id="outlined-required-mname"
                 label="Middle Name"
-                value={LName}
+                defaultValue={userData.lastName}
                 disabled={!isEditMode}
                 size="small"
-                onChange={(e) => setLName(e.target.value)}
               />
             </FormGroup>
             <FormGroup className="mt-5">
               <TextField
                 required
-                id="outlined-required-lname"
+                id="outlined-required-email"
                 label="Email"
-                value={Email}
+                defaultValue={userData.email}
                 disabled
                 size="small"
-                onChange={(e) => setEmail(e.target.value)}
               />
             </FormGroup>
             {isEditMode ? (
@@ -74,9 +70,6 @@ export const Profile = () => {
                 className="bg-primary"
                 sx={{
                   mt: 2,
-                  bgcolor: "#F58634",
-                  ":hover": { bgcolor: "#3E4095" },
-                  borderRight: "1px solid white",
                 }}
               >
                 Change Profile
@@ -87,9 +80,6 @@ export const Profile = () => {
                 onClick={handleEditProfile}
                 sx={{
                   mt: 2,
-                  bgcolor: "#F58634",
-                  ":hover": { bgcolor: "#3E4095" },
-                  borderRight: "1px solid white",
                 }}
                 variant="contained"
                 className="bg-primary"

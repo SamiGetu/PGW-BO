@@ -8,10 +8,13 @@ import { zodResolver } from "@hookform/resolvers/zod";
 
 import { Link } from "react-router-dom";
 import { loginSchema, type TLoginSchema } from "../lib/validator";
+import { loginAPI } from "../services/Auth/login";
+import useAuth from "../Hooks/useAuth";
 
 export const LogIn = () => {
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
+  const { loginAuth } = useAuth();
 
   const {
     register,
@@ -20,9 +23,21 @@ export const LogIn = () => {
   } = useForm<TLoginSchema>({ resolver: zodResolver(loginSchema) });
 
   const onSubmit = async (data: TLoginSchema) => {
-    await new Promise((resolve) => setTimeout(resolve, 2000));
-    console.log(data);
-    navigate("/");
+    try {
+      const response = await loginAPI(data.email, data.password);
+      console.log("response", response);
+      if (response.status === 200) {
+        const jsonData = await response.json();
+        console.log("jsonData", jsonData.body.token, jsonData.body.user);
+        loginAuth(jsonData.body.user, jsonData.body.token);
+        navigate("/");
+      } else {
+        const jsonData = await response.json();
+        console.log("Error", jsonData.message);
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const togglePasswordVisibility = () => {

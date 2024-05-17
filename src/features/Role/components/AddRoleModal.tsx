@@ -2,13 +2,17 @@ import { Add } from "@mui/icons-material";
 import {
   Box,
   Button,
+  Checkbox,
+  FormControlLabel,
   FormGroup,
   Snackbar,
   TextField,
   Typography,
 } from "@mui/material";
 import Modal from "@mui/material/Modal";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import useAuth from "../../../Hooks/useAuth";
+import { TasksApi } from "../../Tasks/service/TasksApi";
 const style = {
   position: "absolute",
   top: "50%",
@@ -22,9 +26,22 @@ const style = {
 };
 export const AddRoleModal = () => {
   const [open, setOpen] = useState(false);
+  const [tasks, setTasks] = useState<{ id: string; name: string }[]>([]);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  console.log("opened");
+  const { getToken } = useAuth();
+
+  useEffect(() => {
+    const token = getToken();
+    const getTasks = async () => {
+      const response = await TasksApi(token);
+      const jsonData = await response.json();
+      console.log("jsonData", jsonData.body.tasks);
+      setTasks(jsonData.body.tasks);
+    };
+
+    getTasks();
+  }, []);
   return (
     <div>
       <Button
@@ -68,18 +85,16 @@ export const AddRoleModal = () => {
               />
             </FormGroup>
             <FormGroup style={{ maxHeight: "300px", overflowY: "auto" }}>
-              {/* {tasks &&
+              {tasks &&
                 tasks.map((task) => {
                   return (
                     <FormControlLabel
                       key={task.id}
-                      control={
-                        <Checkbox id={task.id + "x"} onChange={setSelected} />
-                      }
+                      control={<Checkbox id={task.id} />}
                       label={task.name}
                     />
                   );
-                })} */}
+                })}
             </FormGroup>
             <Button
               variant="contained"

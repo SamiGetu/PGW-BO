@@ -6,21 +6,37 @@ import { IoSettingsOutline } from "react-icons/io5";
 import { MdOutlineExplore } from "react-icons/md";
 import { CiSearch } from "react-icons/ci";
 import { useNavigate } from "react-router-dom";
+import useAuth from "../../Hooks/useAuth";
 
 export const Header = () => {
   const [drop, setDrop] = useState(false);
   const navigate = useNavigate();
+  const { getUserData, logoutAuth } = useAuth();
+  const userData = getUserData();
 
   const Links = [
-    { Name: "Setting", path: "settings", icon: <IoSettingsOutline /> },
+    {
+      Name: "Setting",
+      onclick: () => {
+        navigate("/settings");
+        window.location.reload();
+      },
+      icon: <IoSettingsOutline />,
+    },
     {
       Name: "Explore the Dashboard",
-      path: "Explore",
+      onclick: () => {
+        navigate("/Explore");
+        window.location.reload();
+      },
       icon: <MdOutlineExplore />,
     },
     {
       Name: "Logout",
-      path: "Logout",
+      onclick: () => {
+        logoutAuth();
+        window.location.reload();
+      },
       icon: <BiLogOutCircle className="text-red-500" />,
     },
   ];
@@ -50,7 +66,9 @@ export const Header = () => {
                 <span className="w-10 h-10 rounded-full bg-primary flex items-center justify-center">
                   <CiUser size={"1.3rem"} className="text-white" />
                 </span>
-                <span className="hover:underline ">Daniel Jemmo</span>
+                <span className="hover:underline uppercase ">
+                  {userData.firstName} {userData.lastName}
+                </span>
                 <span className=" ">
                   <FaChevronDown onClick={() => setDrop(!drop)} />
                 </span>
@@ -65,7 +83,7 @@ export const Header = () => {
                             <li
                               key={index}
                               className="flex items-center cursor-pointer text-gray-500 gap-3 text-sm hover:bg-primary hover:text-white p-2 rounded-md"
-                              onClick={() => navigate(item.path)}
+                              onClick={item.onclick}
                             >
                               <span className="text-2xl ">{item.icon}</span>
                               {item.Name}

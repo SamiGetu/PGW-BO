@@ -26,13 +26,16 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/DeleteOutlined";
 import SaveIcon from "@mui/icons-material/Save";
 import CancelIcon from "@mui/icons-material/Close";
+import { getUsersApi } from "./service/UsersApi";
+import useAuth from "../../Hooks/useAuth";
 
 export default function Index() {
   const [rowModesModel, setRowModesModel] = useState<GridRowModesModel>({});
   const [users, setUsers] = useState<GridRowsProp>([]);
-
   const [openSnack, setOpenSnack] = useState(false);
   const [snackMessage, setSnackMessage] = useState("");
+  const [loading, setLoading] = useState(false);
+  const { getToken } = useAuth();
 
   const handleSnackClose = () => {
     setOpenSnack(false);
@@ -87,16 +90,16 @@ export default function Index() {
   };
 
   const columns: GridColDef[] = [
-    { field: "id", headerName: "ID", width: 100, editable: true },
+    { field: "id", headerName: "ID", width: 150, editable: true },
     {
-      field: "FirstName",
+      field: "firstName",
       headerName: "First Name",
       width: 150,
       editable: true,
     },
-    { field: "LastName", headerName: "Last Name", width: 150, editable: true },
-    { field: "Email", headerName: "Email", width: 150, editable: true },
-    { field: "status", headerName: "Status", width: 150, editable: true },
+    { field: "lastName", headerName: "Last Name", width: 150, editable: true },
+    { field: "email", headerName: "Email", width: 200, editable: true },
+    { field: "roles", headerName: "Roles", width: 150, editable: true },
     {
       field: "actions",
       type: "actions",
@@ -143,51 +146,26 @@ export default function Index() {
       },
     },
   ];
-  const usersData = [
-    {
-      id: 1,
-      FirstName: "John",
-      LastName: "Doe",
-      Email: "jdoe@me.com",
-      status: "Active",
-    },
-    {
-      id: 2,
-      FirstName: "Jane",
-      LastName: "Doe",
-      Email: "jdoe@me.com",
-      status: "Active",
-    },
-    {
-      id: 3,
-      FirstName: "Joe",
-      LastName: "Doe",
-      Email: "jdoe@me.com",
-      status: "Active",
-    },
-    {
-      id: 4,
-      FirstName: "Jill",
-      LastName: "Doe",
-      Email: "jdoe@me.com",
-      status: "Active",
-    },
-    {
-      id: 5,
-      FirstName: "Jack",
-      LastName: "Doe",
-      Email: "jdoe@me.com",
-      status: "Active",
-    },
-    {
-      id: 6,
-      FirstName: "Jill",
-      LastName: "Doe",
-      Email: "jdoe@me.com",
-      status: "Active",
-    },
-  ];
-  useEffect(() => setUsers(usersData));
+
+  const token = getToken();
+  const getUsers = async () => {
+    try {
+      setLoading(true);
+      const response = await getUsersApi(token);
+      const jsonData = await response.json();
+      console.log("jsonData", jsonData.body.users);
+      setUsers(jsonData.body.users);
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getUsers();
+  }, []);
+  
   return (
     <div className="h-[100%] w-[90%] mx-auto" style={{ minHeight: "100vh" }}>
       <Snackbar
@@ -221,7 +199,7 @@ export default function Index() {
                 bgcolor: "primary.main",
                 color: "white",
               }}
-              //   onClick={() => fetchRoles()}
+              onClick={() => getUsers()}
               startIcon={<Refresh />}
             >
               Refresh
@@ -234,7 +212,7 @@ export default function Index() {
         <DataGrid
           rows={users}
           columns={columns}
-          //   loading={loading}
+          loading={loading}
           editMode="row"
           rowModesModel={rowModesModel}
           onRowModesModelChange={handleRowModesModelChange}

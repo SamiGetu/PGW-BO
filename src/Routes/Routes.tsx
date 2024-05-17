@@ -7,20 +7,24 @@ import Page404 from "../pages/Page404";
 import Settings from "../pages/Settings";
 import Role from "../pages/Role";
 import Tasks from "../pages/Tasks";
+import PrivateRoute from "./PrivateRoute";
+import { RedirectAuthUsers } from "./RedirectAuthUsers";
 
 export default function Protected() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Layout />}>
-          <Route index element={<Home />} />
-          <Route path="users" element={<User />} />
-          <Route path="/settings" element={<Settings />} />
-          <Route path="/roles" element={<Role />} />
-          <Route path="/tasks" element={<Tasks />} />
+        <Route path="/" element={<PrivateRoute />}>
+          <Route path="/" element={<Layout />}>
+            <Route index element={<Home />} />
+            <Route path="users" element={<User />} />
+            <Route path="/settings" element={<Settings />} />
+            <Route path="/roles" element={<Role />} />
+            <Route path="/tasks" element={<Tasks />} />
+          </Route>
         </Route>
         <Route path="*" element={<Page404 />} />
-        <Route path="/login" element={<LogIn />} />
+        <Route path="/" element={<RedirectAuthUsers />}><Route path="/login" element={<LogIn />} /></Route>
       </Routes>
     </Router>
   );

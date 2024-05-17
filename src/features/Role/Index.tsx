@@ -25,33 +25,18 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/DeleteOutlined";
 import SaveIcon from "@mui/icons-material/Save";
 import CancelIcon from "@mui/icons-material/Close";
-import { useState } from "react";
-
-type RolesDataType = {
-  id: number;
-  roleName: string;
-  isBuiltIn: "Yes" | "No";
-};
-const data: RolesDataType[] = [
-  { id: 1, roleName: "Role_SA", isBuiltIn: "Yes" },
-  { id: 2, roleName: "Role_Admin", isBuiltIn: "No" },
-  {
-    id: 3,
-    roleName: "Role_Merchant",
-    isBuiltIn: "No",
-  },
-  {
-    id: 4,
-    roleName: "ROLE_FINANCE_MANAGER",
-    isBuiltIn: "No",
-  },
-];
+import { useEffect, useState } from "react";
+import { RolesApi } from "./service/RolesApi";
+import useAuth from "../../Hooks/useAuth";
 
 export default function Index() {
   const [rowModesModel, setRowModesModel] = useState<GridRowModesModel>({});
-  const [roles, setRoles] = useState<GridRowsProp>(data);
+  const [roles, setRoles] = useState<GridRowsProp>([]);
   const [openSnack, setOpenSnack] = useState(false);
   const [snackMessage, setSnackMessage] = useState("");
+  const [loading, setLoading] = useState(false);
+  const { getToken } = useAuth();
+  console.log(roles);
 
   const handleSnackClose = () => {
     setOpenSnack(false);
@@ -106,7 +91,13 @@ export default function Index() {
 
   const columns: GridColDef[] = [
     { field: "id", headerName: "ID", width: 100 },
-    { field: "roleName", headerName: "Role Name", width: 250, editable: true },
+    { field: "name", headerName: "Role Name", width: 150, editable: true },
+    {
+      field: "description",
+      headerName: "Description",
+      width: 350,
+      editable: true,
+    },
     {
       field: "isBuiltIn",
       headerName: "is Built-in",
@@ -162,6 +153,26 @@ export default function Index() {
       },
     },
   ];
+
+  const token = getToken();
+
+  const getTasks = async () => {
+    try {
+      setLoading(true);
+      const response = await RolesApi(token);
+      const jsonData = await response.json();
+      console.log("jsonData", jsonData.body.roles);
+      setRoles(jsonData.body.roles);
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getTasks();
+  }, []);
   return (
     <div className="w-[90%] mx-auto h-[100%]">
       <Snackbar
@@ -195,7 +206,7 @@ export default function Index() {
                 bgcolor: "primary.main",
                 color: "white",
               }}
-              //   onClick={() => fetchRoles()}
+              onClick={() => getTasks()}
               startIcon={<Refresh />}
             >
               Refresh
@@ -208,11 +219,13 @@ export default function Index() {
         <DataGrid
           rows={roles}
           columns={columns}
+          loading={loading}
           editMode="row"
           rowModesModel={rowModesModel}
           onRowModesModelChange={handleRowModesModelChange}
           onRowEditStop={handleRowEditStop}
           processRowUpdate={processRowUpdate}
+          autoHeight
           initialState={{
             pagination: {
               paginationModel: {
@@ -220,9 +233,8 @@ export default function Index() {
               },
             },
           }}
-          pageSizeOptions={[5]}
+          pageSizeOptions={[5, 10, 25, 50, 100]}
           checkboxSelection
-          disableRowSelectionOnClick
           slots={{ noRowsOverlay: CustomNoRowsOverlay, toolbar: GridToolbar }}
           sx={{ "--DataGrid-overlayHeight": "300px" }}
         />

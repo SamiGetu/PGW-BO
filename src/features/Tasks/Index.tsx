@@ -26,12 +26,16 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/DeleteOutlined";
 import SaveIcon from "@mui/icons-material/Save";
 import CancelIcon from "@mui/icons-material/Close";
+import { TasksApi } from "./service/TasksApi";
+import useAuth from "../../Hooks/useAuth";
 
 export default function Index() {
   const [tasks, setTasks] = useState<GridRowsProp>([]);
   const [rowModesModel, setRowModesModel] = useState<GridRowModesModel>({});
   const [openSnack, setOpenSnack] = useState(false);
   const [snackMessage, setSnackMessage] = useState("");
+  const [loading, setLoading] = useState(false);
+  const { getToken } = useAuth();
 
   const handleSnackClose = () => {
     setOpenSnack(false);
@@ -86,7 +90,7 @@ export default function Index() {
   };
 
   const columns: GridColDef[] = [
-    { field: "id", headerName: "ID", width: 100 },
+    { field: "id", headerName: "ID", width: 150 },
     { field: "taskName", headerName: "Task Name", width: 150, editable: true },
     {
       field: "urlPattern",
@@ -148,65 +152,24 @@ export default function Index() {
       },
     },
   ];
-  const tasksData = [
-    {
-      id: 1,
-      taskName: "Users",
-      urlPattern: "/users",
-      component: "UsersPage",
-      parent: "Admin",
-      listOrder: "1",
-    },
-    {
-      id: 2,
-      taskName: "Roles",
-      urlPattern: "/roles",
-      component: "RolesPage",
-      parent: "Admin",
-      listOrder: "2",
-    },
-    {
-      id: 3,
-      taskName: "Tasks",
-      urlPattern: "/tasks",
-      component: "TasksPage",
-      parent: "Admin",
-      listOrder: "3",
-    },
-    {
-      id: 4,
-      taskName: "Settings",
-      urlPattern: "/settings",
-      component: "SettingsPage",
-      parent: "Admin",
-      listOrder: "4",
-    },
-    {
-      id: 5,
-      taskName: "Dashboard",
-      urlPattern: "/dashboard",
-      component: "DashboardPage",
-      parent: "Admin",
-      listOrder: "5",
-    },
-    {
-      id: 6,
-      taskName: "Reports",
-      urlPattern: "/reports",
-      component: "ReportsPage",
-      parent: "Admin",
-      listOrder: "6",
-    },
-    {
-      id: 7,
-      taskName: "Admin",
-      urlPattern: "/admin",
-      component: "AdminPage",
-      parent: "Admin",
-      listOrder: "7",
-    },
-  ];
-  useEffect(() => setTasks(tasksData));
+  const token = getToken();
+  const getTasks = async () => {
+    try {
+      setLoading(true);
+      const response = await TasksApi(token);
+      const jsonData = await response.json();
+      console.log("jsonData", jsonData.body.tasks);
+      setTasks(jsonData.body.tasks);
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getTasks();
+  }, []);
   return (
     <div className="h-full w-[90%] mx-auto z-50" style={{ minHeight: "100vh" }}>
       <Snackbar
@@ -240,7 +203,7 @@ export default function Index() {
                 bgcolor: "primary.main",
                 color: "white",
               }}
-              //   onClick={() => fetchRoles()}
+              onClick={() => getTasks()}
               startIcon={<Refresh />}
             >
               Refresh
@@ -253,6 +216,7 @@ export default function Index() {
         <DataGrid
           rows={tasks}
           columns={columns}
+          loading={loading}
           editMode="row"
           rowModesModel={rowModesModel}
           onRowModesModelChange={handleRowModesModelChange}
