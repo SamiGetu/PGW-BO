@@ -4,11 +4,6 @@ import {
   Alert,
   Button,
   ButtonGroup,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
   Snackbar,
   Typography,
 } from "@mui/material";
@@ -26,35 +21,30 @@ import {
   GridToolbar,
 } from "@mui/x-data-grid";
 import CustomNoRowsOverlay from "../../components/CustomNoRowsOverlay";
-import { AddRoleModal } from "./components/AddUserModal";
+import { AddComponentModal } from "./components/AddComponentModal";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/DeleteOutlined";
 import SaveIcon from "@mui/icons-material/Save";
 import CancelIcon from "@mui/icons-material/Close";
-import { DeleteUserApi, UpdateUserApi, getUsersApi } from "./service/UsersApi";
+import { ComponentsApi } from "./service/componentsApi";
 import useAuth from "../../Hooks/useAuth";
 
 export default function Index() {
+  const [tasks, setTasks] = useState<GridRowsProp>([]);
   const [rowModesModel, setRowModesModel] = useState<GridRowModesModel>({});
-  const [users, setUsers] = useState<GridRowsProp>([]);
   const [openSnack, setOpenSnack] = useState(false);
   const [snackMessage, setSnackMessage] = useState("");
   const [loading, setLoading] = useState(false);
-  const [success, setSuccess] = useState(false);
-  const [open, setOpen] = useState(false);
-  const [selectedRoleId, setSelectedRoleId] = useState<GridRowId | null>(null);
   const { getToken } = useAuth();
-
-  const handleClickOpen = (id: GridRowId) => {
-    setOpen(true);
-    setSelectedRoleId(id);
-  };
-  const handleClose = () => {
-    setOpen(false);
-  };
 
   const handleSnackClose = () => {
     setOpenSnack(false);
+  };
+
+  const handleDeleteClick = (id: GridRowId) => () => {
+    setTasks(tasks.filter((task) => task.id !== id));
+    setOpenSnack(true);
+    setSnackMessage("Role deleted successfully");
   };
 
   const handleRowEditStop: GridEventListener<"rowEditStop"> = (
@@ -73,6 +63,8 @@ export default function Index() {
 
   const handleSaveClick = (id: GridRowId) => () => {
     setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.View } });
+    setOpenSnack(true);
+    setSnackMessage("Role updated successfully");
   };
 
   const handleCancelClick = (id: GridRowId) => () => {
@@ -81,27 +73,15 @@ export default function Index() {
       [id]: { mode: GridRowModes.View, ignoreModifications: true },
     });
 
-    const editedRow = users.find((user) => user.id === id);
+    const editedRow = tasks.find((task) => task.id === id);
     if (editedRow!.isNew) {
-      setUsers(users.filter((user) => user.id !== id));
+      setTasks(tasks.filter((task) => task.id !== id));
     }
   };
-  type editUserType = {
-    id: string;
-    isNew: boolean;
-    firstName: string;
-    lastName: string;
-    email: string;
-  };
+
   const processRowUpdate = (newRow: GridRowModel) => {
-    const updatedRow = { ...newRow, isNew: false } as editUserType;
-    setUsers(users.map((user) => (user.id === newRow.id ? updatedRow : user)));
-    handelEdit(
-      updatedRow.id,
-      updatedRow.firstName,
-      updatedRow.lastName,
-      updatedRow.email
-    );
+    const updatedRow = { ...newRow, isNew: false };
+    setTasks(tasks.map((task) => (task.id === newRow.id ? updatedRow : task)));
     return updatedRow;
   };
 
@@ -110,16 +90,26 @@ export default function Index() {
   };
 
   const columns: GridColDef[] = [
-    { field: "id", headerName: "ID", width: 150, editable: true },
+    { field: "id", headerName: "ID", width: 150 },
     {
-      field: "firstName",
-      headerName: "First Name",
+      field: "urlPattern",
+      headerName: "URL Pattern",
       width: 150,
       editable: true,
     },
-    { field: "lastName", headerName: "Last Name", width: 150, editable: true },
-    { field: "email", headerName: "Email", width: 200, editable: true },
-    { field: "roles", headerName: "Roles", width: 150, editable: true },
+    { field: "component", headerName: "Component", width: 150, editable: true },
+    {
+      field: "listOrder",
+      headerName: "List Order",
+      width: 150,
+      editable: true,
+    },
+    {
+        field: "hasSpace",
+        headerName: "Has Space",
+        width: 150,
+        editable: true,
+      },
     {
       field: "actions",
       type: "actions",
@@ -159,89 +149,33 @@ export default function Index() {
           <GridActionsCellItem
             icon={<DeleteIcon />}
             label="Delete"
-            onClick={() => handleClickOpen(id)}
+            onClick={handleDeleteClick(id)}
             color="inherit"
           />,
         ];
       },
     },
   ];
-
   const token = getToken();
-  const getUsers = async () => {
+  const getTasks = async () => {
     try {
       setLoading(true);
-      const response = await getUsersApi(token);
+      const response = await ComponentsApi(token);
       const jsonData = await response.json();
-      console.log("jsonData", jsonData.body.users);
-      setUsers(jsonData.body.users);
+      console.log("jsonData", jsonData.body.tasks);
+      setTasks(jsonData.body.tasks);
       setLoading(false);
     } catch (error) {
       setLoading(false);
       console.log(error);
     }
   };
+
   useEffect(() => {
-    getUsers();
+    getTasks();
   }, []);
-
-  const handelDelete = async (id: any) => {
-    try {
-      const response = await DeleteUserApi(token, id);
-      if (response.ok) {
-        const jsonData = await response.json();
-        console.log(jsonData);
-        setOpenSnack(true);
-        setSnackMessage("user deleted successfully");
-        setSuccess(true);
-        getUsers();
-      } else {
-        console.log("Request failed with status " + response.status);
-        setOpenSnack(true);
-        setSnackMessage("Failed to delete the user.");
-        setSuccess(false);
-      }
-    } catch (error) {
-      console.error("Error:", error);
-    }
-  };
-  const handelEdit = async (
-    id: string,
-    firstName: string,
-    lastName: string,
-    email: string
-  ) => {
-    try {
-      const response = await UpdateUserApi(
-        token,
-        id,
-        firstName,
-        lastName,
-        email
-      );
-      if (response.ok) {
-        const jsonData = await response.json();
-        console.log(jsonData);
-        setOpenSnack(true);
-        setSnackMessage("user updated successfully");
-        setSuccess(true);
-        getUsers();
-      } else {
-        console.log("Request failed with status " + response.status);
-        setOpenSnack(true);
-        setSnackMessage("Failed to update the user.");
-        setSuccess(false);
-      }
-    } catch (error) {
-      console.log(error);
-      setSuccess(false);
-      setOpenSnack(true);
-      setSnackMessage("Failed to update the user");
-    }
-  };
-
   return (
-    <div className="h-[100%] w-[90%] mx-auto" style={{ minHeight: "100vh" }}>
+    <div className="h-full w-[90%] mx-auto z-50" style={{ minHeight: "100vh" }}>
       <Snackbar
         anchorOrigin={{ vertical: "top", horizontal: "center" }}
         open={openSnack}
@@ -250,43 +184,16 @@ export default function Index() {
       >
         <Alert
           onClose={handleSnackClose}
-          severity={success ? "success" : "error"}
+          severity="success"
           variant="filled"
           sx={{ width: "100%" }}
         >
           {snackMessage}
         </Alert>
       </Snackbar>
-      <Dialog
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
-        <DialogTitle id="alert-dialog-title">
-          {"Are you sure you want to delete this Task?"}
-        </DialogTitle>
-        <DialogContent>
-          <DialogContentText id="alert-dialog-description">
-            This action cannot be undone.
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose}>No</Button>
-          <Button
-            onClick={() => {
-              handelDelete(selectedRoleId);
-              handleClose();
-            }}
-            autoFocus
-          >
-            Yes
-          </Button>
-        </DialogActions>
-      </Dialog>
       <div className="py-4">
         <Typography variant="h4" sx={{ fontWeight: "bold", my: 4 }}>
-          <h2>User Management</h2>
+          <h2>Components Management</h2>
         </Typography>
         <div className="flex">
           <ButtonGroup
@@ -300,18 +207,18 @@ export default function Index() {
                 bgcolor: "primary.main",
                 color: "white",
               }}
-              onClick={() => getUsers()}
+              onClick={() => getTasks()}
               startIcon={<Refresh />}
             >
               Refresh
             </Button>
-            <AddRoleModal key="fetchRoles" />
+            <AddComponentModal key="fetchRoles" />
           </ButtonGroup>
         </div>
       </div>
       <div className="py-4">
         <DataGrid
-          rows={users}
+          rows={tasks}
           columns={columns}
           loading={loading}
           editMode="row"
@@ -319,7 +226,6 @@ export default function Index() {
           onRowModesModelChange={handleRowModesModelChange}
           onRowEditStop={handleRowEditStop}
           processRowUpdate={processRowUpdate}
-          columnVisibilityModel={{ id: false }}
           autoHeight
           initialState={{
             pagination: {
@@ -331,7 +237,7 @@ export default function Index() {
           pageSizeOptions={[5, 10, 25, 50, 100]}
           checkboxSelection
           slots={{ noRowsOverlay: CustomNoRowsOverlay, toolbar: GridToolbar }}
-          sx={{ "--DataGrid-overlayHeight": "300px", color: "black" }}
+          sx={{ "--DataGrid-overlayHeight": "300px" }}
         />
       </div>
     </div>

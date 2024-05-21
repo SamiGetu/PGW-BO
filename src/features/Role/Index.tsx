@@ -3,6 +3,11 @@ import {
   Alert,
   Button,
   ButtonGroup,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
   Snackbar,
   Typography,
 } from "@mui/material";
@@ -26,8 +31,9 @@ import DeleteIcon from "@mui/icons-material/DeleteOutlined";
 import SaveIcon from "@mui/icons-material/Save";
 import CancelIcon from "@mui/icons-material/Close";
 import { useEffect, useState } from "react";
-import { RolesApi } from "./service/RolesApi";
+import { DeleteRoleApi, RolesApi, UpdateRoleApi } from "./service/RolesApi";
 import useAuth from "../../Hooks/useAuth";
+import { AddTaskModal } from "./components/AddTaskModal";
 
 export default function Index() {
   const [rowModesModel, setRowModesModel] = useState<GridRowModesModel>({});
@@ -35,8 +41,19 @@ export default function Index() {
   const [openSnack, setOpenSnack] = useState(false);
   const [snackMessage, setSnackMessage] = useState("");
   const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
+  const [open, setOpen] = useState(false);
+  const [selectedRoleId, setSelectedRoleId] = useState<GridRowId | null>(null); // State for selected role ID
   const { getToken } = useAuth();
-  console.log(roles);
+  const token = getToken();
+
+  const handleClickOpen = (id: GridRowId) => {
+    setOpen(true);
+    setSelectedRoleId(id); // Set the selected role ID
+  };
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   const handleSnackClose = () => {
     setOpenSnack(false);
@@ -50,12 +67,6 @@ export default function Index() {
     }
   };
 
-  const handleDeleteClick = (id: GridRowId) => () => {
-    setRoles(roles.filter((role) => role.id !== id));
-    setOpenSnack(true);
-    setSnackMessage("Role deleted successfully");
-  };
-
   const handleEditClick = (id: GridRowId) => {
     setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.Edit } });
     return id;
@@ -63,8 +74,7 @@ export default function Index() {
 
   const handleSaveClick = (id: GridRowId) => () => {
     setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.View } });
-    setOpenSnack(true);
-    setSnackMessage("Role updated successfully");
+    handelEditRole(id);
   };
 
   const handleCancelClick = (id: GridRowId) => () => {
@@ -146,17 +156,56 @@ export default function Index() {
             icon={<DeleteIcon />}
             label="Delete"
             disabled={currentRecord?.isBuiltIn === "Yes"}
-            onClick={handleDeleteClick(id)}
+            onClick={() => handleClickOpen(id)}
             color="inherit"
           />,
+          <AddTaskModal key={id} />,
         ];
       },
     },
   ];
 
-  const token = getToken();
+  const handelEditRole = async (roleId: any) => {
+    try {
+      const response = await UpdateRoleApi(token, roleId, "test", "test", []);
+      if (response.ok) {
+        const responseData = await response.json();
+        console.log(responseData);
+        setSuccess(true);
+        setOpenSnack(true);
+        setSnackMessage("Role updated successfully");
+      } else {
+        console.log("Request failed with status " + response.status);
+        setSuccess(false);
+        setOpenSnack(true);
+        setSnackMessage("Failed to update the role.");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+  const handleDeleteSubmit = async (roleId: any) => {
+    try {
+      const response = await DeleteRoleApi(token, roleId);
+      if (response.ok) {
+        const responseData = await response.json();
+        console.log(responseData);
+        setRoles(roles.filter((role) => role.id !== roleId)); // Remove the role from the state
+        setSuccess(true);
+        setOpenSnack(true);
+        setSnackMessage("Role deleted successfully");
+      } else {
+        console.log("Request failed with status " + response.status);
+        setSuccess(false);
+        setOpenSnack(true);
+        setSnackMessage("Failed to delete the role.");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
 
-  const getTasks = async () => {
+  const getRoles = async () => {
     try {
       setLoading(true);
       const response = await RolesApi(token);
@@ -171,7 +220,7 @@ export default function Index() {
   };
 
   useEffect(() => {
-    getTasks();
+    getRoles();
   }, []);
   return (
     <div className="w-[90%] mx-auto h-[100%]">
@@ -183,13 +232,40 @@ export default function Index() {
       >
         <Alert
           onClose={handleSnackClose}
-          severity="success"
+          severity={success ? "success" : "error"}
           variant="filled"
           sx={{ width: "100%" }}
         >
           {snackMessage}
         </Alert>
       </Snackbar>
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">
+          {"Are you sure you want to delete this role?"}
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            This action cannot be undone.
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose}>No</Button>
+          <Button
+            onClick={() => {
+              handleDeleteSubmit(selectedRoleId);
+              handleClose();
+            }}
+            autoFocus
+          >
+            Yes
+          </Button>
+        </DialogActions>
+      </Dialog>
       <div className="py-4">
         <Typography variant="h4" sx={{ fontWeight: "bold", my: 4 }}>
           <h2>Roles Management</h2>
@@ -206,7 +282,7 @@ export default function Index() {
                 bgcolor: "primary.main",
                 color: "white",
               }}
-              onClick={() => getTasks()}
+              onClick={() => getRoles()}
               startIcon={<Refresh />}
             >
               Refresh
@@ -225,6 +301,7 @@ export default function Index() {
           onRowModesModelChange={handleRowModesModelChange}
           onRowEditStop={handleRowEditStop}
           processRowUpdate={processRowUpdate}
+          columnVisibilityModel={{ id: false }}
           autoHeight
           initialState={{
             pagination: {

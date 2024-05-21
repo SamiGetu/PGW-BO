@@ -6,6 +6,7 @@ import { IoMdHome } from "react-icons/io";
 import { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import logo from "../../assets/logo.png";
+import CreditCardIcon from '@mui/icons-material/CreditCard';
 
 export const SideMenu = () => {
   const [open, setOpen] = useState(true);
@@ -41,6 +42,11 @@ export const SideMenu = () => {
       Name: "Roles",
       Path: "roles",
       icon: <FaUsersCog size={"1.5rem"} />,
+    },
+    {
+      Name: "Components",
+      Path: "Components",
+      icon: <CreditCardIcon sx={{ fontSize: "1.5rem" }}  />,
     },
     {
       Name: "Task",

@@ -9,6 +9,7 @@ import Role from "../pages/Role";
 import Tasks from "../pages/Tasks";
 import PrivateRoute from "./PrivateRoute";
 import { RedirectAuthUsers } from "./RedirectAuthUsers";
+import ComponentsManagement from "../pages/ComponentsManagement ";
 
 export default function Protected() {
   return (
@@ -20,11 +21,14 @@ export default function Protected() {
             <Route path="users" element={<User />} />
             <Route path="/settings" element={<Settings />} />
             <Route path="/roles" element={<Role />} />
+            <Route path="/Components" element={<ComponentsManagement />} />
             <Route path="/tasks" element={<Tasks />} />
           </Route>
         </Route>
         <Route path="*" element={<Page404 />} />
-        <Route path="/" element={<RedirectAuthUsers />}><Route path="/login" element={<LogIn />} /></Route>
+        <Route path="/" element={<RedirectAuthUsers />}>
+          <Route path="/login" element={<LogIn />} />
+        </Route>
       </Routes>
     </Router>
   );

@@ -1,4 +1,3 @@
-import { zodResolver } from "@hookform/resolvers/zod";
 import { Add } from "@mui/icons-material";
 import {
   Box,
@@ -10,10 +9,6 @@ import {
 } from "@mui/material";
 import Modal from "@mui/material/Modal";
 import { useState } from "react";
-import { useForm } from "react-hook-form";
-import { AddTaskSchema, TAddTaskSchema } from "../../../lib/validator";
-import { AddTaskApi } from "../service/TasksApi";
-import useAuth from "../../../Hooks/useAuth";
 const style = {
   position: "absolute",
   top: "50%",
@@ -25,29 +20,10 @@ const style = {
   boxShadow: 24,
   p: 4,
 };
-export const AddRoleModal = () => {
+export const AddComponentModal = () => {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  const { getToken } = useAuth();
-  const token = getToken();
-
-  const {
-    register,
-    handleSubmit,
-    formState: { errors, isSubmitting },
-  } = useForm<TAddTaskSchema>({ resolver: zodResolver(AddTaskSchema) });
-
-  const onSubmit = async (data: TAddTaskSchema) => {
-    try {
-      const response = await AddTaskApi(token, data.TaskName, data.target);
-      if (response.ok) {
-        setOpen(false);
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
   return (
     <div>
@@ -78,41 +54,59 @@ export const AddRoleModal = () => {
       >
         <Box sx={style}>
           <Typography id="modal-modal-title" variant="h6" component="h2">
-            Add New Task
+            Add New Component
           </Typography>
-          <form onSubmit={handleSubmit(onSubmit)}>
+          <form>
             <FormGroup className="mt-3">
               <TextField
-                {...register("TaskName")}
+                required
                 id="outlined-required"
                 label="Task Name"
                 defaultValue=""
                 // onChange={(e) => setName(e.target.value)}
-                sx={{ mb: 1 }}
+                sx={{ mb: 2 }}
               />
-              {errors.TaskName && (
-                <p className="text-red-500 mb-2">{errors.TaskName.message}</p>
-              )}
               <TextField
-                {...register("target")}
+                required
                 id="outlined-required"
-                label="target"
+                label="Task Url Pattern"
                 defaultValue=""
-                sx={{ mb: 1 }}
+                // onChange={(e) => setName(e.target.value)}
+                sx={{ mb: 2 }}
               />
-              {errors.target && (
-                <p className="text-red-500 mb-2">{errors.target.message}</p>
-              )}
+              <TextField
+                required
+                id="outlined-required"
+                label="Component Name"
+                defaultValue=""
+                // onChange={(e) => setName(e.target.value)}
+                sx={{ mb: 2 }}
+              />
+              <TextField
+                required
+                id="outlined-required"
+                label="Has Space"
+                defaultValue=""
+                // onChange={(e) => setName(e.target.value)}
+                sx={{ mb: 2 }}
+              />
+              <TextField
+                required
+                id="outlined-required"
+                label="List Order"
+                defaultValue=""
+                // onChange={(e) => setName(e.target.value)}
+                sx={{ mb: 2 }}
+              />
             </FormGroup>
             <Button
-              type="submit"
               variant="contained"
               sx={{
                 bgcolor: "primary.main",
                 color: "white",
               }}
             >
-              {isSubmitting ? "Submitting..." : "Submit"}
+              Submit
             </Button>
           </form>
         </Box>

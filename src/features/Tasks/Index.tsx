@@ -4,6 +4,11 @@ import {
   Alert,
   Button,
   ButtonGroup,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
   Snackbar,
   Typography,
 } from "@mui/material";
@@ -26,7 +31,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/DeleteOutlined";
 import SaveIcon from "@mui/icons-material/Save";
 import CancelIcon from "@mui/icons-material/Close";
-import { TasksApi } from "./service/TasksApi";
+import { DeleteTaskApi, TasksApi, UpdateTaskApi } from "./service/TasksApi";
 import useAuth from "../../Hooks/useAuth";
 
 export default function Index() {
@@ -35,16 +40,21 @@ export default function Index() {
   const [openSnack, setOpenSnack] = useState(false);
   const [snackMessage, setSnackMessage] = useState("");
   const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
+  const [open, setOpen] = useState(false);
+  const [selectedRoleId, setSelectedRoleId] = useState<GridRowId | null>(null);
   const { getToken } = useAuth();
+
+  const handleClickOpen = (id: GridRowId) => {
+    setOpen(true);
+    setSelectedRoleId(id);
+  };
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   const handleSnackClose = () => {
     setOpenSnack(false);
-  };
-
-  const handleDeleteClick = (id: GridRowId) => () => {
-    setTasks(tasks.filter((task) => task.id !== id));
-    setOpenSnack(true);
-    setSnackMessage("Role deleted successfully");
   };
 
   const handleRowEditStop: GridEventListener<"rowEditStop"> = (
@@ -63,8 +73,6 @@ export default function Index() {
 
   const handleSaveClick = (id: GridRowId) => () => {
     setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.View } });
-    setOpenSnack(true);
-    setSnackMessage("Role updated successfully");
   };
 
   const handleCancelClick = (id: GridRowId) => () => {
@@ -82,6 +90,7 @@ export default function Index() {
   const processRowUpdate = (newRow: GridRowModel) => {
     const updatedRow = { ...newRow, isNew: false };
     setTasks(tasks.map((task) => (task.id === newRow.id ? updatedRow : task)));
+    handleEdit(newRow.id, newRow.taskName, newRow.target);
     return updatedRow;
   };
 
@@ -91,19 +100,10 @@ export default function Index() {
 
   const columns: GridColDef[] = [
     { field: "id", headerName: "ID", width: 150 },
-    { field: "taskName", headerName: "Task Name", width: 150, editable: true },
     {
-      field: "urlPattern",
-      headerName: "URL Pattern",
-      width: 150,
-      editable: true,
-    },
-    { field: "component", headerName: "Component", width: 150, editable: true },
-    { field: "parent", headerName: "Parent", width: 150, editable: true },
-    {
-      field: "listOrder",
-      headerName: "List Order",
-      width: 150,
+      field: "target",
+      headerName: "Target",
+      width: 250,
       editable: true,
     },
     {
@@ -111,7 +111,7 @@ export default function Index() {
       type: "actions",
       headerName: "Actions",
       cellClassName: "actions",
-      width: 150,
+      width: 250,
       getActions: ({ id }) => {
         const isInEditMode = rowModesModel[id]?.mode === GridRowModes.Edit;
 
@@ -145,7 +145,7 @@ export default function Index() {
           <GridActionsCellItem
             icon={<DeleteIcon />}
             label="Delete"
-            onClick={handleDeleteClick(id)}
+            onClick={() => handleClickOpen(id)}
             color="inherit"
           />,
         ];
@@ -166,10 +166,50 @@ export default function Index() {
       console.log(error);
     }
   };
-
   useEffect(() => {
     getTasks();
   }, []);
+
+  const handleEdit = async (id: any, taskName: string, target: string) => {
+    try {
+      const response = await UpdateTaskApi(token, id, taskName, target);
+      if (response.ok) {
+        const jsonData = await response.json();
+        console.log(jsonData);
+        setOpenSnack(true);
+        setSnackMessage("Task updated successfully");
+        setSuccess(true);
+        getTasks();
+      } else {
+        console.log("Request failed with status " + response.status);
+        setOpenSnack(true);
+        setSnackMessage("Failed to update the task.");
+        setSuccess(false);
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+  const handleDelete = async (id: any) => {
+    try {
+      const response = await DeleteTaskApi(token, id);
+      if (response.ok) {
+        const jsonData = await response.json();
+        console.log(jsonData);
+        setOpenSnack(true);
+        setSnackMessage("Task deleted successfully");
+        setSuccess(true);
+        getTasks();
+      } else {
+        console.log("Request failed with status " + response.status);
+        setOpenSnack(true);
+        setSnackMessage("Failed to delete the task.");
+        setSuccess(false);
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
   return (
     <div className="h-full w-[90%] mx-auto z-50" style={{ minHeight: "100vh" }}>
       <Snackbar
@@ -180,13 +220,40 @@ export default function Index() {
       >
         <Alert
           onClose={handleSnackClose}
-          severity="success"
+          severity={success ? "success" : "error"}
           variant="filled"
           sx={{ width: "100%" }}
         >
           {snackMessage}
         </Alert>
       </Snackbar>
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">
+          {"Are you sure you want to delete this Task?"}
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            This action cannot be undone.
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose}>No</Button>
+          <Button
+            onClick={() => {
+              handleDelete(selectedRoleId);
+              handleClose();
+            }}
+            autoFocus
+          >
+            Yes
+          </Button>
+        </DialogActions>
+      </Dialog>
       <div className="py-4">
         <Typography variant="h4" sx={{ fontWeight: "bold", my: 4 }}>
           <h2>Task Management</h2>
@@ -222,6 +289,7 @@ export default function Index() {
           onRowModesModelChange={handleRowModesModelChange}
           onRowEditStop={handleRowEditStop}
           processRowUpdate={processRowUpdate}
+          columnVisibilityModel={{ id: false }}
           autoHeight
           initialState={{
             pagination: {
