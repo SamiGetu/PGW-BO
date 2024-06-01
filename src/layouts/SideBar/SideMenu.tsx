@@ -1,12 +1,13 @@
 import { FaUsers, FaLink, FaUsersCog } from "react-icons/fa";
 import { GrTasks } from "react-icons/gr";
-import { BsSubtract } from "react-icons/bs";
 import { GrTransaction } from "react-icons/gr";
 import { IoMdHome } from "react-icons/io";
+import { IoPeopleSharp } from "react-icons/io5";
 import { useState } from "react";
+
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import logo from "../../assets/logo.png";
-import CreditCardIcon from '@mui/icons-material/CreditCard';
+import CreditCardIcon from "@mui/icons-material/CreditCard";
 
 export const SideMenu = () => {
   const [open, setOpen] = useState(true);
@@ -32,9 +33,9 @@ export const SideMenu = () => {
       icon: <FaLink size={"1.5rem"} />,
     },
     {
-      Name: "Subaccounts",
-      Path: "subaccount",
-      icon: <BsSubtract size={"1.5rem"} />,
+      Name: "Merchants",
+      Path: "merchants",
+      icon: <IoPeopleSharp size={"1.5rem"} />,
       spacing: true,
     },
     { Name: "Users", Path: "users", icon: <FaUsers size={"1.5rem"} /> },
@@ -46,7 +47,7 @@ export const SideMenu = () => {
     {
       Name: "Components",
       Path: "Components",
-      icon: <CreditCardIcon sx={{ fontSize: "1.5rem" }}  />,
+      icon: <CreditCardIcon sx={{ fontSize: "1.5rem" }} />,
     },
     {
       Name: "Task",
