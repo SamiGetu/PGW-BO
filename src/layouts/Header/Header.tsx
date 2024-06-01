@@ -43,8 +43,8 @@ export const Header = () => {
 
   return (
     <>
-      <nav className="sticky top-0 bg-white z-10">
-        <div className="w-full h-[5rem] shadow">
+      <nav className="sticky top-0 bg-white">
+        <div className="w-full h-[5rem] border border-gray-100">
           <div className="flex justify-between items-center  px-20 relative">
             <div>
               {/* Search section */}

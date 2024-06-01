@@ -11,7 +11,7 @@ export const Index = () => {
   return (
     <div className="p-20">
       <h1 className="text-4xl font-bold mb-5">Daily Transactions</h1>
-      <div className="flex justify-between mr-[10rem] mb-10">
+      <div className="flex justify-between items-center mr-[10rem] mb-10">
         <div>
           <LocalizationProvider dateAdapter={AdapterDayjs}>
             <DemoContainer components={["DatePicker", "DatePicker"]}>
@@ -23,7 +23,7 @@ export const Index = () => {
             </DemoContainer>
           </LocalizationProvider>
         </div>
-        <div className="font-medium text-xl ">
+        <div className="font-medium text-xl  border-b-[1px] border-primary rounded-xl p-5">
           <div className="flex items-center gap-4 ">
             <label htmlFor="">Total Number of Merchants:</label>
             <p>98</p>

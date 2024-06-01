@@ -28,7 +28,7 @@ export const WithdrawalsPaymentDetail = () => {
   };
   return (
     <>
-      <div className="p-20">
+      <div className="p-24">
         <div>
           <h1 className="text-4xl font-bold mb-10">Withdrawal Payment</h1>
           <ul className="list-none space-y-5">
@@ -53,27 +53,21 @@ export const WithdrawalsPaymentDetail = () => {
             </li>
           </ul>
         </div>
-        <div className="flex flex-col gap-5 border-black border p-5 rounded-lg font-medium mt-[5rem]">
+
+        <div className="flex flex-col gap-5  p-5 rounded-lg font-medium mt-[5rem]">
+          <hr />
           <div className="flex items-center gap-3 ">
             <label htmlFor="" className="text-md font-medium">
               Accounts:
             </label>
-            <select
-              name=""
-              id=""
-              className="px-5 py-[5px] border border-primary rounded-xl"
-            >
+            <select name="" id="" className="px-5 py-[5px]  rounded-md">
               <option value="">11548582588</option>
               <option value="">100012345678</option>
             </select>
           </div>
           <div className="flex items-center gap-3">
             <label htmlFor="">Paid Through:</label>
-            <select
-              name=""
-              id=""
-              className="px-5 py-[5px] border border-primary rounded-xl"
-            >
+            <select name="" id="" className="px-5 py-[5px]rounded-md">
               <option value="">Check</option>
               <option value="">Mobile</option>
               <option value="">Internet</option>
@@ -84,14 +78,14 @@ export const WithdrawalsPaymentDetail = () => {
             <label htmlFor="">Ref No:</label>
             <input
               type="text"
-              className="px-10 py-2 border border-primary rounded-xl"
+              className="px-10 py-2 border border-gray-400 rounded-md"
             />
           </div>
           <div className="flex items-center gap-3">
             <label htmlFor="">Amount:</label>
             <input
               type="text"
-              className="px-10 py-2 border border-primary rounded-xl"
+              className="px-10 py-2 border border-gray-400 rounded-md"
             />
           </div>
           <div>
