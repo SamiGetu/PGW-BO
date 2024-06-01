@@ -13,6 +13,10 @@ import Modal from "@mui/material/Modal";
 import { useEffect, useState } from "react";
 import { RolesApi } from "../../Role/service/RolesApi";
 import useAuth from "../../../Hooks/useAuth";
+import { AddUserApi } from "../service/UsersApi";
+import { useForm } from "react-hook-form";
+import { AddUserSchema, TAddUserSchema } from "../../../lib/validator";
+import { zodResolver } from "@hookform/resolvers/zod";
 const style = {
   position: "absolute",
   top: "50%",
@@ -30,20 +34,38 @@ export const AddRoleModal = () => {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const { getToken } = useAuth();
+  const token = getToken();
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm<TAddUserSchema>({ resolver: zodResolver(AddUserSchema) });
+
+  const onSubmit = async (data: TAddUserSchema) => {
+    try {
+      console.log(data);
+      const response = await AddUserApi(data);
+      if (response.ok) {
+        setOpen(false);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   useEffect(() => {
-    const token = getToken();
     const getTasks = async () => {
       const response = await RolesApi(token);
       const jsonData = await response.json();
-      console.log("jsonData", jsonData.roles);
+      console.log("jsonData", jsonData.body.roles);
       setRoles(jsonData.body.roles);
     };
-
     getTasks();
   }, []);
+
   return (
-    <div>
+    <div className="overflow-x-auto">
       <Button
         key="addRole"
         variant="contained"
@@ -73,62 +95,68 @@ export const AddRoleModal = () => {
           <Typography id="modal-modal-title" variant="h6" component="h2">
             Add New User
           </Typography>
-          <form>
-            <FormGroup className="mt-2">
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <FormGroup className="mt-5">
               <TextField
-                required
                 id="outlined-required fname"
                 label="First Name"
                 defaultValue=""
                 size="small"
+                {...register("firstName")}
               />
+              {errors.firstName && (
+                <p className="text-red-500 my-3">{errors.firstName.message}</p>
+              )}
             </FormGroup>
-            <FormGroup className="mt-2">
+            <FormGroup className="mt-5">
               <TextField
-                required
                 id="outlined-required mname"
                 label="Middle Name"
                 defaultValue=""
                 size="small"
+                {...register("middleName")}
               />
+              {errors.middleName && (
+                <p className="text-red-500 my-3">{errors.middleName.message}</p>
+              )}
             </FormGroup>
-            <FormGroup className="mt-2">
+            <FormGroup className="mt-5">
               <TextField
-                required
                 id="outlined-required lname"
                 label="Last Name"
                 defaultValue=""
                 size="small"
+                {...register("lastName")}
               />
+              {errors.lastName && (
+                <p className="text-red-500 my-3">{errors.lastName.message}</p>
+              )}
             </FormGroup>
-            <FormGroup className="mt-2">
+            <FormGroup className="mt-5">
               <TextField
-                required
-                id="outlined-required phone"
-                label="Phone"
-                defaultValue=""
-                size="small"
-              />
-            </FormGroup>
-            <FormGroup className="mt-2">
-              <TextField
-                required
                 id="outlined-required email"
                 label="Email"
                 defaultValue=""
                 size="small"
+                {...register("email")}
               />
+              {errors.email && (
+                <p className="text-red-500 my-3">{errors.email.message}</p>
+              )}
             </FormGroup>
-            <FormGroup className="mt-2">
+            <FormGroup className="mt-5">
               <TextField
-                required
                 id="outlined-required password"
                 label="Password"
                 type="password"
                 defaultValue=""
                 size="small"
                 sx={{ mb: 2 }}
+                {...register("password")}
               />
+              {errors.password && (
+                <p className="text-red-500 my-3">{errors.password.message}</p>
+              )}
             </FormGroup>
 
             <FormGroup>
@@ -143,13 +171,14 @@ export const AddRoleModal = () => {
                 })}
             </FormGroup>
             <Button
+              type="submit"
               variant="contained"
               sx={{
                 bgcolor: "primary.main",
                 color: "white",
               }}
             >
-              Submit
+              {isSubmitting ? "Submitting..." : "Submit"}
             </Button>
           </form>
         </Box>

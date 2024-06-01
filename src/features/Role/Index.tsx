@@ -159,7 +159,7 @@ export default function Index() {
             onClick={() => handleClickOpen(id)}
             color="inherit"
           />,
-          <AddTaskModal key={id} />,
+          <AddTaskModal key={id} existingId={id.toString()} />
         ];
       },
     },

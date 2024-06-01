@@ -33,7 +33,10 @@ export default function Protected() {
             <Route path="/Components" element={<ComponentsManagement />} />
             <Route path="/tasks" element={<Tasks />} />
             <Route path="/merchants" element={<Merchants />} />
-            <Route path="/merchant-detail" element={<MerchantDetail />} />
+            <Route
+              path="/merchant-detail/:merchantId"
+              element={<MerchantDetail />}
+            />
             <Route path="/transaction" element={<Transaction />} />
             <Route path="/transaction-detail" element={<TransactionDetail />} />
             <Route path="/withdraw" element={<Withdraw />} />

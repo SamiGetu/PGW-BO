@@ -12,13 +12,38 @@ import {
   DialogContentText,
   DialogTitle,
 } from "@mui/material";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { SingleMerchantApi } from "../service/MerchentApi";
+import useAuth from "../../../Hooks/useAuth";
 
+type Merchant = {
+  id: string;
+  firstName: string;
+  middleName: string;
+  lastName: string;
+  businessName: string;
+  email: string;
+  phoneNumber: string;
+};
 export const MerchantDetail = () => {
   const [openApprove, setOpenApprove] = useState(false);
   const [openReject, setOpenReject] = useState(false);
+  const [merchant, setMerchant] = useState<Merchant>({
+    id: "",
+    firstName: "",
+    middleName: "",
+    lastName: "",
+    businessName: "",
+    email: "",
+    phoneNumber: "",
+  });
   const navigate = useNavigate();
+  const merchantId = useParams().merchantId;
+  const { getToken } = useAuth();
+  const userToken = getToken();
+  console.log(merchantId);
+
   const handleApproveClickOpen = () => {
     setOpenApprove(true);
   };
@@ -37,6 +62,23 @@ export const MerchantDetail = () => {
     const data = {};
     navigate("/merchant-pdf", { state: data });
   };
+
+  const getMerchant = async () => {
+    try {
+      if (merchantId) {
+        const response = await SingleMerchantApi(merchantId, userToken);
+        const jsonData = await response.json();
+        console.log("jsonData", jsonData.body);
+        setMerchant(jsonData.body);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    getMerchant();
+  }, []);
+
   return (
     <>
       <div className="p-20 mt-10">
@@ -83,7 +125,10 @@ export const MerchantDetail = () => {
             <ul className="list-none space-y-5">
               <li className="text-md">
                 <span className="font-medium mr-5"> Full Name:</span>
-                <span>Abebe Kebede</span> (Owner)
+                <span>
+                  {merchant.firstName} {merchant.middleName} {merchant.lastName}
+                </span>{" "}
+                (Owner)
               </li>
               <hr />
               <li className="text-md">
@@ -93,7 +138,7 @@ export const MerchantDetail = () => {
               <hr />
               <li className="text-md">
                 <span className="font-medium mr-5"> Business Name:</span>
-                <span>Invictus Software Development PLC</span>
+                <span>{merchant.businessName}</span>
               </li>
               <hr />
               <li className="text-md">
