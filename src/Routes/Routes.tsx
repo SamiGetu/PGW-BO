@@ -13,6 +13,12 @@ import ComponentsManagement from "../pages/ComponentsManagement ";
 import { Merchants } from "../pages/Merchants";
 import { MerchantDetail } from "../features/Merchants/components/MerchantDetail";
 import MerchantPdf from "../pages/MerchantPdf";
+import { Transaction } from "../pages/Transaction";
+import { Withdraw } from "../pages/Withdraw";
+import { TransactionDetail } from "../features/Transaction/components/TransactionDetail";
+import WithdrawDetail from "../features/Withdraw/components/WithdrawDetail";
+import WithdrawalsPayment from "../pages/WithdrawalsPayment";
+import { WithdrawalsPaymentDetail } from "../features/withdrawalsPayment/components/WithdrawalsPaymentDetail";
 
 export default function Protected() {
   return (
@@ -28,6 +34,15 @@ export default function Protected() {
             <Route path="/tasks" element={<Tasks />} />
             <Route path="/merchants" element={<Merchants />} />
             <Route path="/merchant-detail" element={<MerchantDetail />} />
+            <Route path="/transaction" element={<Transaction />} />
+            <Route path="/transaction-detail" element={<TransactionDetail />} />
+            <Route path="/withdraw" element={<Withdraw />} />
+            <Route path="/withdraw-detail" element={<WithdrawDetail />} />
+            <Route path="/withdraw-payment" element={<WithdrawalsPayment />} />
+            <Route
+              path="/withdraw-payment-detail"
+              element={<WithdrawalsPaymentDetail />}
+            />
           </Route>
         </Route>
         <Route path="/merchant-pdf" element={<MerchantPdf />} />
