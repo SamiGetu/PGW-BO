@@ -1,8 +1,10 @@
-import { FaUsers, FaLink, FaUsersCog } from "react-icons/fa";
+import { FaUsers, FaUsersCog } from "react-icons/fa";
 import { GrTasks } from "react-icons/gr";
 import { GrTransaction } from "react-icons/gr";
 import { IoMdHome } from "react-icons/io";
 import { IoPeopleSharp } from "react-icons/io5";
+import { BiMoneyWithdraw } from "react-icons/bi";
+import { MdOutlinePayments } from "react-icons/md";
 import { useState } from "react";
 
 import { Link, useLocation, useNavigate } from "react-router-dom";
@@ -28,9 +30,14 @@ export const SideMenu = () => {
       icon: <GrTransaction size={"1.5rem"} />,
     },
     {
-      Name: "Payment Links",
-      Path: "paymentlink",
-      icon: <FaLink size={"1.5rem"} />,
+      Name: "Withdrawals",
+      Path: "withdraw",
+      icon: <BiMoneyWithdraw size={"1.5rem"} />,
+    },
+    {
+      Name: "Withdrawals Payment",
+      Path: "withdraw-payment",
+      icon: <MdOutlinePayments size={"1.5rem"} />,
     },
     {
       Name: "Merchants",
