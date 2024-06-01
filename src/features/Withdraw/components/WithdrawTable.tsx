@@ -1,9 +1,9 @@
 import Box from "@mui/material/Box";
-import { DataGrid, GridActionsCellItem, GridColDef } from "@mui/x-data-grid";
+import { DataGrid, GridColDef } from "@mui/x-data-grid";
 
 import { styled } from "@mui/material/styles";
 // import { useNavigate } from "react-router-dom";
-import { FaStreetView } from "react-icons/fa6";
+
 import {
   Button,
   Dialog,
@@ -147,17 +147,7 @@ export function WithdrawTable() {
       width: 100,
       cellClassName: "actions",
       getActions: () => {
-        return [
-          <Button onClick={handleApproveClickOpen}>
-            <GridActionsCellItem
-              icon={<FaStreetView />}
-              label="View"
-              className="textPrimary"
-              color="inherit"
-            />{" "}
-            Approve
-          </Button>,
-        ];
+        return [<Button onClick={handleApproveClickOpen}>Approve</Button>];
       },
     },
   ];
