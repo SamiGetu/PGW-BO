@@ -10,11 +10,21 @@ import { Link } from "react-router-dom";
 import { loginSchema, type TLoginSchema } from "../lib/validator";
 import { loginAPI } from "../services/Auth/login";
 import useAuth from "../Hooks/useAuth";
+import { AppModal, triggerModal } from "../components/UseModal";
 
 export const LogIn = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const [modalTitle, setModalTitle] = useState("");
+  const [modalContent, setModalContent] = useState("");
+
   const navigate = useNavigate();
   const { loginAuth } = useAuth();
+
+  const modal = async (title: string, content: string) => {
+    setModalTitle(title);
+    setModalContent(content);
+    return await triggerModal();
+  };
 
   const {
     register,
@@ -34,9 +44,11 @@ export const LogIn = () => {
       } else {
         const jsonData = await response.json();
         console.log("Error", jsonData.message);
+        modal("Oops", jsonData.message);
       }
     } catch (error) {
       console.log(error);
+      modal("Oops", "something went wrong please try again");
     }
   };
 
@@ -169,6 +181,7 @@ export const LogIn = () => {
           </div>
         </div>
       </section>
+      <AppModal title={modalTitle} content={modalContent} onClose={() => {}} />
     </>
   );
 };
