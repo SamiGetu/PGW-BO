@@ -27,11 +27,12 @@ const style = {
   boxShadow: 24,
   p: 4,
 };
-export const AddTaskModal = () => {
+export const AddTaskModal = ({ existingId }: { existingId: string }) => {
   const [open, setOpen] = useState(false);
   const [tasks, setTasks] = useState<{ id: string; target: string }[]>([]);
   const handleClose = () => setOpen(false);
   const { getToken } = useAuth();
+  console.log(existingId);
 
   const {
     register,

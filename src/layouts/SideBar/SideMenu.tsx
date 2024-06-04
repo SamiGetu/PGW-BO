@@ -86,7 +86,7 @@ export const SideMenu = () => {
               />
               <div
                 className={`cursor-pointer absolute ${
-                  open ? "left-[13rem] -top-[5.5rem]" : "left-7 -top-[2rem]"
+                  open ? "left-[16rem] -top-[5.5rem]" : "left-7 -top-[2rem]"
                 }`}
                 onClick={() => setOpen(!open)}
               >

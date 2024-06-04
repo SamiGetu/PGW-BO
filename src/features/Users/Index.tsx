@@ -117,6 +117,12 @@ export default function Index() {
       width: 150,
       editable: true,
     },
+    {
+      field: "middleName",
+      headerName: "Middle Name",
+      width: 150,
+      editable: true,
+    },
     { field: "lastName", headerName: "Last Name", width: 150, editable: true },
     { field: "email", headerName: "Email", width: 200, editable: true },
     { field: "roles", headerName: "Roles", width: 150, editable: true },

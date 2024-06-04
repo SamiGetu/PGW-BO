@@ -1,4 +1,9 @@
-import { GetRolesURL, AddRoleUrl, DeleteRoleUrl } from "../../../services/urls";
+import {
+  GetRolesURL,
+  AddRoleUrl,
+  DeleteRoleUrl,
+  AddTaskToRoleUrl,
+} from "../../../services/urls";
 
 export async function RolesApi(token: string | null) {
   const myHeaders = new Headers();
@@ -35,6 +40,31 @@ export async function AddRoleApi(
   };
 
   const response = await fetch(AddRoleUrl, requestOptions);
+
+  return response;
+}
+
+export async function AddTaskToRoleApi(
+  token: string | null,
+  id: string,
+  tasks: string[]
+) {
+  const myHeaders = new Headers();
+  myHeaders.append("Content-Type", "application/json");
+  myHeaders.append("Mode", "cors");
+  myHeaders.append("Authorization", `Bearer ${token}`);
+
+  const requestOptions: RequestInit = {
+    method: "POST",
+    headers: myHeaders,
+    redirect: "follow",
+    body: JSON.stringify({ tasks }),
+  };
+
+  const response = await fetch(
+    `${AddTaskToRoleUrl}/${id}/add_tasks`,
+    requestOptions
+  );
 
   return response;
 }

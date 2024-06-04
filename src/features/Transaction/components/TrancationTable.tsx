@@ -118,8 +118,16 @@ export function TrancationTable() {
       description: "This column has a value getter and is not sortable.",
       sortable: false,
       width: 160,
-      valueGetter: (value, row) =>
-        `${row.status === "TEST" ? "TEST" : "PRODUCTION"}`,
+      renderCell: (params) => (
+        <div
+          style={{
+            color: params.value === "UNSETTLED" ? "red" : "green",
+            fontWeight: "500",
+          }}
+        >
+          {params.value}
+        </div>
+      ),
     },
     {
       field: "actions",
