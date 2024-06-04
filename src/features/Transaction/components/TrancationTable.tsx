@@ -119,9 +119,8 @@ export function TrancationTable() {
       sortable: false,
       width: 160,
       valueGetter: (value, row) =>
-        `${row.status === "TEST" ? "TESTATA" : "PRODUCAT"}`,
+        `${row.status === "TEST" ? "TEST" : "PRODUCTION"}`,
     },
-
     {
       field: "actions",
       type: "actions",
