@@ -131,8 +131,16 @@ export function MerchantsTable() {
       description: "This column has a value getter and is not sortable.",
       sortable: false,
       width: 160,
-      valueGetter: (value, row) =>
-        `${row.mode === "TEST" ? "TESTATA" : "PRODUCAT"}`,
+      renderCell: (params) => (
+        <div
+          style={{
+            color: params.value === "PRODUCTION" ? "green" : "#D69E2E",
+            fontWeight: "500",
+          }}
+        >
+          {params.value}
+        </div>
+      ),
     },
     {
       field: "status",
