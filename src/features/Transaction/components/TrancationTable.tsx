@@ -169,7 +169,7 @@ export function TrancationTable() {
   ];
 
   return (
-    <Box sx={{ width: "100%" }}>
+    <Box sx={{}}>
       <DataGrid
         autoHeight
         rows={rows}

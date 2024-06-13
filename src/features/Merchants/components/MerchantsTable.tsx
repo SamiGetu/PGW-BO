@@ -8,7 +8,7 @@ import {
 } from "@mui/x-data-grid";
 
 import { useNavigate } from "react-router-dom";
-import { FaStreetView } from "react-icons/fa6";
+import { FaStreetView } from "react-icons/fa";
 import { Button } from "@mui/material";
 import { useEffect, useState } from "react";
 import { MerchantsApi } from "../service/MerchentApi";
@@ -27,25 +27,33 @@ export function MerchantsTable() {
     {
       field: "firstName",
       headerName: "First Name",
-      width: 150,
+      width: 130,
+      flex: 1,
+      minWidth: 120,
       editable: true,
     },
     {
       field: "middleName",
       headerName: "Middle Name",
-      width: 160,
+      width: 150,
+      flex: 1,
+      minWidth: 120,
       editable: true,
     },
     {
       field: "lastName",
       headerName: "Last Name",
-      width: 160,
+      width: 150,
+      flex: 1,
+      minWidth: 120,
       editable: true,
     },
     {
       field: "businessType",
       headerName: "Business Type",
-      width: 160,
+      width: 150,
+      flex: 1,
+      minWidth: 120,
       editable: true,
     },
     {
@@ -53,14 +61,18 @@ export function MerchantsTable() {
       headerName: "Business Name",
       description: "This column has a value getter and is not sortable.",
       sortable: false,
-      width: 260,
+      width: 200,
+      flex: 1.5,
+      minWidth: 180,
     },
     {
       field: "mode",
       headerName: "Mode",
       description: "This column has a value getter and is not sortable.",
       sortable: false,
-      width: 160,
+      width: 150,
+      flex: 1,
+      minWidth: 120,
       renderCell: (params) => (
         <div
           style={{
@@ -77,23 +89,27 @@ export function MerchantsTable() {
       headerName: "Status",
       description: "This column has a value getter and is not sortable.",
       sortable: false,
-      width: 160,
+      width: 150,
+      flex: 1,
+      minWidth: 120,
     },
     {
       field: "actions",
       type: "actions",
       headerName: "Actions",
-      width: 100,
+      width: 120,
+      flex: 0.8,
+      minWidth: 100,
       cellClassName: "actions",
       getActions: ({ id }) => {
         return [
-          <Button onClick={handleViewClick(id)}>
+          <Button key="view" onClick={() => handleViewClick(id)}>
             <GridActionsCellItem
               icon={<FaStreetView />}
               label="View"
               className="textPrimary"
               color="inherit"
-            />{" "}
+            />
             View
           </Button>,
         ];
@@ -114,18 +130,18 @@ export function MerchantsTable() {
       console.log(error);
     }
   };
+
   useEffect(() => {
     getMerchants();
   }, []);
 
-  const handleViewClick = (id: GridRowId) => () => {
-    console.log("CLicked" + id);
-
+  const handleViewClick = (id: GridRowId) => {
+    console.log("Clicked " + id);
     navigate(`/merchant-detail/${id}`);
   };
 
   return (
-    <Box sx={{ width: "100%" }}>
+    <Box>
       <DataGrid
         autoHeight
         rows={merchants}

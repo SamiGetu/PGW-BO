@@ -42,63 +42,49 @@ export const Header = () => {
   ];
 
   return (
-    <>
-      <nav className="sticky top-0 bg-white">
-        <div className="w-full h-[5rem] border border-gray-100">
-          <div className="flex justify-between items-center  px-20 relative">
-            <div>
-              {/* Search section */}
-              <span className="pt-7 flex items-center gap-2">
-                <CiSearch size={"1.4rem"} />
-                <input
-                  type="text"
-                  placeholder="Search"
-                  className="w-[30rem] py-[5px] focus:outline-none"
-                />
-              </span>
-            </div>
-
-            <div className="flex items-center justify-center gap-5">
-              <div
-                onClick={() => setDrop(!drop)}
-                className="absolute top-6 lg:right-10  right-5 flex items-center cursor-pointer gap-2"
-              >
-                <span className="w-10 h-10 rounded-full bg-primary flex items-center justify-center">
-                  <CiUser size={"1.3rem"} className="text-white" />
-                </span>
-                <span className="hover:underline uppercase ">
-                  {userData.firstName} {userData.lastName}
-                </span>
-                <span className=" ">
-                  <FaChevronDown onClick={() => setDrop(!drop)} />
-                </span>
-              </div>
-              <div>
-                {drop && (
-                  <>
-                    <div className="bg-white p-3 shadow absolute right-20 top-20 ">
-                      <ul className="flex flex-col ">
-                        {Links.map((item, index) => (
-                          <>
-                            <li
-                              key={index}
-                              className="flex items-center cursor-pointer text-gray-500 gap-3 text-sm hover:bg-primary hover:text-white p-2 rounded-md"
-                              onClick={item.onclick}
-                            >
-                              <span className="text-2xl ">{item.icon}</span>
-                              {item.Name}
-                            </li>
-                          </>
-                        ))}
-                      </ul>
-                    </div>
-                  </>
-                )}
-              </div>
-            </div>
-          </div>
+    <nav className="sticky top-0 bg-white border-gray-100 border-b-[1px]">
+      <div className="container mx-auto flex justify-between items-center h-16 px-4 md:px-8">
+        <div className="flex items-center gap-2">
+          <CiSearch size={"1.4rem"} className="md:block hidden" />
+          <input
+            type="text"
+            placeholder="Search"
+            className="hidden sm:block w-full max-w-[30rem] py-[5px] focus:outline-none md:block hidden"
+          />
         </div>
-      </nav>
-    </>
+        <div className="flex items-center gap-5">
+          <div
+            onClick={() => setDrop(!drop)}
+            className="flex items-center cursor-pointer gap-2"
+          >
+            <span className="w-10 h-10 rounded-full bg-primary flex items-center justify-center">
+              <CiUser size={"1.3rem"} className="text-white" />
+            </span>
+            <span className="hover:underline uppercase hidden sm:block">
+              {userData.firstName} {userData.lastName}
+            </span>
+            <span>
+              <FaChevronDown />
+            </span>
+          </div>
+          {drop && (
+            <div className="bg-white p-3 shadow absolute right-4 top-16 md:right-8">
+              <ul className="flex flex-col">
+                {Links.map((item, index) => (
+                  <li
+                    key={index}
+                    className="flex items-center cursor-pointer text-gray-500 gap-3 text-sm hover:bg-primary hover:text-white p-2 rounded-md"
+                    onClick={item.onclick}
+                  >
+                    <span className="text-2xl">{item.icon}</span>
+                    {item.Name}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+        </div>
+      </div>
+    </nav>
   );
 };

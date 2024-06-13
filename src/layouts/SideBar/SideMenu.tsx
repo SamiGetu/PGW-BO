@@ -1,21 +1,41 @@
 import { FaUsers, FaUsersCog } from "react-icons/fa";
-import { GrTasks } from "react-icons/gr";
-import { GrTransaction } from "react-icons/gr";
+import { GrTasks, GrTransaction } from "react-icons/gr";
 import { IoMdHome } from "react-icons/io";
 import { IoPeopleSharp } from "react-icons/io5";
 import { BiMoneyWithdraw } from "react-icons/bi";
 import { MdOutlinePayments } from "react-icons/md";
-import { useState } from "react";
-
+import { useState, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import logo from "../../assets/logo.png";
+import kispay from "../../assets/logo.png";
 import CreditCardIcon from "@mui/icons-material/CreditCard";
 import { RiMenu3Fill } from "react-icons/ri";
 
 export const SideMenu = () => {
   const [open, setOpen] = useState(true);
-  const location = useLocation(); // Import useLocation hook
+  const location = useLocation();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    // Check the initial screen size and set open state accordingly
+    if (window.innerWidth < 1024) {
+      setOpen(false);
+    }
+
+    // Add a resize event listener to handle screen size changes
+    const handleResize = () => {
+      if (window.innerWidth < 1024) {
+        setOpen(false);
+      } else {
+        setOpen(true);
+      }
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
   const Links = [
     {
@@ -24,7 +44,6 @@ export const SideMenu = () => {
       icon: <IoMdHome size={"1.5rem"} />,
       spacing: true,
     },
-
     {
       Name: "Transactions",
       Path: "transaction",
@@ -68,7 +87,7 @@ export const SideMenu = () => {
     <nav className="relative z-10">
       <div
         className={`transition-all duration-500 ${
-          open ? "lg:pl-[20rem] pl-0" : "pl-0"
+          open ? "lg:pl-[17rem] pl-0" : "pl-0"
         }`}
       >
         <div
@@ -76,9 +95,9 @@ export const SideMenu = () => {
         ${open ? "w-[20rem]" : "w-0"} font-Roboto`}
         >
           <div className="mt-[5rem]">
-            <div className="flex items-center justify-center gap-10 mb-[5rem] relative">
+            <div className="flex items-center justify-center gap-10 mb-[5rem]">
               <img
-                src={logo}
+                src={kispay}
                 className={`transition-transform duration-500 ${
                   !open && "scale-0"
                 } w-[6rem]`}
@@ -86,7 +105,7 @@ export const SideMenu = () => {
               />
               <div
                 className={`cursor-pointer absolute ${
-                  open ? "left-[16rem] -top-[5.5rem]" : "left-7 -top-[2rem]"
+                  open ? "left-[13rem] top-0" : "left-7 top-0"
                 }`}
                 onClick={() => setOpen(!open)}
               >
@@ -107,13 +126,13 @@ export const SideMenu = () => {
                   className={`flex items-center gap-x-4 cursor-pointer p-2 px-10 hover:bg-primary hover:text-white rounded-md transition-colors ${
                     !open && "scale-0"
                   }
-                ${item.spacing ? "mb-8" : ""} 
-                ${
-                  location.pathname === `/${item.Path}` ||
-                  (location.pathname === "/" && item.Path === "")
-                    ? "bg-primary text-white"
-                    : "text-neutral-700"
-                }`}
+                  ${item.spacing ? "mb-8" : ""}
+                  ${
+                    location.pathname === `/${item.Path}` ||
+                    (location.pathname === "/" && item.Path === "")
+                      ? "bg-primary text-white"
+                      : "text-neutral-700"
+                  }`}
                 >
                   <Link className="flex items-center gap-4" to={item.Path}>
                     <div className=" mx-1.5">{item.icon}</div>

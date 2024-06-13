@@ -9,26 +9,29 @@ import React from "react";
 export const Index = () => {
   const [value, setValue] = React.useState<Dayjs | null>(dayjs("2022-04-17"));
   return (
-    <div className="p-20">
-      <h1 className="text-4xl font-bold mb-5">Daily Transactions</h1>
-      <div className="flex justify-between items-center mr-[10rem] mb-10">
-        <div>
+    <div className="px-5 sm:px-10 md:px-20 mt-10">
+      <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-5">
+        Daily Transactions
+      </h1>
+      <div className="flex flex-col md:flex-row justify-between items-center mb-10">
+        <div className="w-full md:w-auto mb-5 md:mb-0">
           <LocalizationProvider dateAdapter={AdapterDayjs}>
             <DemoContainer components={["DatePicker", "DatePicker"]}>
               <DatePicker
                 label="Pick a Date"
                 value={value}
                 onChange={(newValue) => setValue(newValue)}
+                className="w-full"
               />
             </DemoContainer>
           </LocalizationProvider>
         </div>
-        <div className="font-medium text-xl  border-b-[1px] border-primary rounded-xl p-5">
-          <div className="flex items-center gap-4 ">
-            <label htmlFor="">Total Number of Merchants:</label>
+        <div className="font-medium text-lg sm:text-xl border-b-[1px] border-primary rounded-xl p-5 w-full md:w-auto md:ml-10">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-4">
+            <label htmlFor="">Total Merchants:</label>
             <p>98</p>
           </div>
-          <div className="flex items-center gap-4">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-4 mt-3">
             <label htmlFor="">Total Transcation Amount:</label>
             <p>ETB 222,850,000.00</p>
           </div>

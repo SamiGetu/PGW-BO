@@ -1,9 +1,7 @@
 import Box from "@mui/material/Box";
 import { DataGrid, GridColDef, GridRowId } from "@mui/x-data-grid";
-
 import { styled } from "@mui/material/styles";
 import { useNavigate } from "react-router-dom";
-
 import { Button } from "@mui/material";
 
 const StyledGridOverlay = styled("div")(({ theme }) => ({
@@ -82,8 +80,7 @@ export function TransactionDetail() {
   const navigate = useNavigate();
 
   const handleViewClick = (id: GridRowId) => () => {
-    console.log("CLicked" + id);
-
+    console.log("Clicked " + id);
     navigate("/customer-detail");
   };
 
@@ -121,7 +118,6 @@ export function TransactionDetail() {
       valueGetter: (value, row) =>
         `${row.status === "TEST" ? "TEST" : "PRODUCTION"}`,
     },
-
     {
       field: "actions",
       type: "actions",
@@ -141,7 +137,7 @@ export function TransactionDetail() {
       transactionType: "TeleBirr",
       amount: "2,000,000",
       time: "05:01:39",
-      status: "SUCCESSFULL",
+      status: "SUCCESSFUL",
     },
     {
       id: 2,
@@ -149,20 +145,30 @@ export function TransactionDetail() {
       transactionType: "Card",
       amount: "12,980",
       time: "04:12:34",
-      status: "SUCCESSFULL",
+      status: "SUCCESSFUL",
     },
   ];
 
   return (
-    <div className="p-20">
-      <div className="mb-10 space-y-2">
-        <h1 className="text-4xl font-bold">Customer Daily Transcation</h1>
-        <div className="flex items-center gap-5 text-xl font-medium">
-          <label htmlFor="">Total Transaction</label>
+    <div className="p-5 sm:p-10 md:p-20">
+      <div className="mb-5 md:mb-10 space-y-2">
+        <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold">
+          Customer Daily Transaction
+        </h1>
+        <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-5 text-lg sm:text-xl font-medium">
+          <label>Total Transaction</label>
           <p>2,456,321.90</p>
         </div>
       </div>
-      <Box sx={{ width: "100%" }}>
+      <Box
+        sx={{
+          width: {
+            xs: "100%",
+            sm: "95%",
+            md: "90%",
+          },
+        }}
+      >
         <DataGrid
           autoHeight
           rows={rows}

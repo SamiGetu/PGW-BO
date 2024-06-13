@@ -159,7 +159,7 @@ export default function Index() {
             onClick={() => handleClickOpen(id)}
             color="inherit"
           />,
-          <AddTaskModal key={id} existingId={id.toString()} />
+          <AddTaskModal key={id} existingId={id.toString()} />,
         ];
       },
     },
@@ -223,7 +223,8 @@ export default function Index() {
     getRoles();
   }, []);
   return (
-    <div className="w-[90%] mx-auto h-[100%]">
+    <div className="px-5 sm:px-10 md:px-20 mt-10">
+      {/* Snackbar */}
       <Snackbar
         anchorOrigin={{ vertical: "top", horizontal: "center" }}
         open={openSnack}
@@ -239,6 +240,8 @@ export default function Index() {
           {snackMessage}
         </Alert>
       </Snackbar>
+
+      {/* Delete Confirmation Dialog */}
       <Dialog
         open={open}
         onClose={handleClose}
@@ -266,14 +269,18 @@ export default function Index() {
           </Button>
         </DialogActions>
       </Dialog>
+
+      {/* Main Content */}
       <div className="py-4">
         <Typography variant="h4" sx={{ fontWeight: "bold", my: 4 }}>
           <h2>Roles Management</h2>
         </Typography>
-        <div className="flex">
+        <div className="flex flex-col sm:flex-row items-center justify-between">
+          {/* Button Group */}
           <ButtonGroup
             variant="contained"
             aria-label="outlined secondary button group"
+            sx={{ mb: { xs: 2, sm: 0 }, mr: { xs: 0, sm: 2 } }}
           >
             <Button
               key="refreshRoles"
@@ -291,7 +298,9 @@ export default function Index() {
           </ButtonGroup>
         </div>
       </div>
-      <div className="py-4">
+
+      {/* DataGrid */}
+      <div className="py-4" style={{ minWidth: 0 }}>
         <DataGrid
           rows={roles}
           columns={columns}

@@ -1,9 +1,6 @@
 import Box from "@mui/material/Box";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
-
 import { styled } from "@mui/material/styles";
-// import { useNavigate } from "react-router-dom";
-
 import {
   Button,
   Dialog,
@@ -89,8 +86,6 @@ function CustomNoRowsOverlay() {
 export function WithdrawTable() {
   const [openApprove, setOpenApprove] = useState(false);
 
-  //   const navigate = useNavigate();
-
   const handleApproveClickOpen = () => {
     setOpenApprove(true);
   };
@@ -98,12 +93,6 @@ export function WithdrawTable() {
   const handleApproveClose = () => {
     setOpenApprove(false);
   };
-
-  //   const handleViewClick = (id: GridRowId) => () => {
-  //     console.log("CLicked" + id);
-
-  //     navigate("/withdraw-detail");
-  //   };
 
   const columns: GridColDef<(typeof rows)[number]>[] = [
     {
@@ -182,9 +171,11 @@ export function WithdrawTable() {
   ];
 
   return (
-    <div className="p-20">
-      <h1 className="text-4xl font-bold mb-10">Withdrawal Requests</h1>
-      <Box sx={{ width: "100%" }}>
+    <div>
+      <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-5">
+        Withdrawal Requests
+      </h1>
+      <Box>
         <DataGrid
           autoHeight
           rows={rows}
@@ -204,28 +195,34 @@ export function WithdrawTable() {
         />
       </Box>
       {/* Approve confirmation modal */}
-      <>
-        <Dialog
-          open={openApprove}
-          onClose={handleApproveClose}
-          aria-labelledby="alert-dialog-title"
-          aria-describedby="alert-dialog-description"
-        >
-          <DialogTitle id="alert-dialog-title">{"Are you sure?"}</DialogTitle>
-          <DialogContent>
-            <DialogContentText id="alert-dialog-description">
-              <h2>Amount to be Paid</h2>
-              <input type="text" className="px-10 py-2 border-2 rounded-md" />
-            </DialogContentText>
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={handleApproveClose}>No</Button>
-            <Button onClick={handleApproveClose} autoFocus>
-              yes
-            </Button>
-          </DialogActions>
-        </Dialog>
-      </>
+      <Dialog
+        open={openApprove}
+        onClose={handleApproveClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+        maxWidth="sm"
+        fullWidth
+      >
+        <DialogTitle id="alert-dialog-title">{"Are you sure?"}</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            <h2>Amount to be Paid</h2>
+            <input
+              type="text"
+              className="w-full px-3 py-2 border rounded-md"
+              placeholder="Enter amount"
+            />
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleApproveClose} color="primary">
+            No
+          </Button>
+          <Button onClick={handleApproveClose} autoFocus color="primary">
+            Yes
+          </Button>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 }

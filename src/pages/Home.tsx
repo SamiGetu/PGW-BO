@@ -1,6 +1,7 @@
 import { BarChart } from "@mui/x-charts/BarChart";
 import { axisClasses } from "@mui/x-charts/ChartsAxis";
 import { Divider, Grid, Typography } from "@mui/material";
+import { useTheme, useMediaQuery } from "@mui/material";
 
 export default function Home() {
   const dataset = [
@@ -35,13 +36,19 @@ export default function Home() {
       },
     },
   };
+
+  const theme = useTheme();
+  const isXs = useMediaQuery(theme.breakpoints.down("xs"));
+  const isSm = useMediaQuery(theme.breakpoints.down("sm"));
+  const isMd = useMediaQuery(theme.breakpoints.down("md"));
+
   return (
-    <div className="mx-20 h-screen -z-50">
+    <div className="px-5 sm:px-10 md:px-20 h-screen -z-50">
       <Typography variant="h4" sx={{ fontWeight: "bold", my: 4, zIndex: -1 }}>
         Dashboard
       </Typography>
       <Divider sx={{ my: 2 }} />
-      <Grid container>
+      <Grid container spacing={2}>
         <Grid item xs={12} md={6}>
           <BarChart
             colors={["#F58634", "#3E4095", "#F58634"]}
@@ -53,8 +60,8 @@ export default function Home() {
               { data: [1, 6, 3] },
               { data: [2, 5, 6] },
             ]}
-            width={500}
-            height={300}
+            width={isXs ? 300 : isSm ? 400 : isMd ? 450 : 500}
+            height={isXs ? 200 : isSm ? 250 : isMd ? 280 : 300}
           />
         </Grid>
         <Grid item xs={12} md={6}>
@@ -62,6 +69,8 @@ export default function Home() {
             colors={["#F58634", "#3E4095", "#F58634"]}
             dataset={dataset}
             {...chartSetting}
+            width={isXs ? 300 : isSm ? 400 : isMd ? 450 : 500}
+            height={isXs ? 200 : isSm ? 250 : isMd ? 280 : 300}
             slotProps={{
               bar: {
                 clipPath: `inset(0px round 10px 10px 0px 0px)`,

@@ -211,7 +211,7 @@ export default function Index() {
     }
   };
   return (
-    <div className="h-full w-[90%] mx-auto z-50" style={{ minHeight: "100vh" }}>
+    <div className="px-5 sm:px-10 md:px-20 z-50" style={{ minHeight: "100vh" }}>
       <Snackbar
         anchorOrigin={{ vertical: "top", horizontal: "center" }}
         open={openSnack}
