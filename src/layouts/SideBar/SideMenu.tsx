@@ -23,6 +23,8 @@ export const SideMenu = () => {
     return () => window.removeEventListener("resize", updateMenuState);
   }, []);
 
+  const mobileScreen = window.innerWidth <= 1280;
+
   const Links = [
     {
       Name: "Home",
@@ -65,7 +67,7 @@ export const SideMenu = () => {
     <nav className="relative z-10">
       <motion.div
         className={`transition-all duration-500 ${
-          open ? "lg:pl-[19rem] pl-0" : "pl-0"
+          open ? "2xl:pl-[19rem] pl-0" : "pl-0"
         }`}
         initial={{ width: 0 }}
         animate={{ width: "auto" }}
@@ -74,7 +76,7 @@ export const SideMenu = () => {
       >
         {/* Menu icon */}
         <div
-          className={`cursor-pointer absolute z-10 left-7 top-0`}
+          className={`cursor-pointer fixed z-10 left-7 top-0`}
           onClick={() => setOpen(!open)}
         >
           <label htmlFor="" className="text-sm font-semibold">
@@ -96,7 +98,7 @@ export const SideMenu = () => {
         <AnimatePresence>
           {open && (
             <motion.div
-              className={`fixed top-0 left-0 h-screen pt-8 bg-white border-r-2 font-Roboto`}
+              className={`fixed top-0 left-0 h-screen pt-8 bg-white border-r-2 font-Roboto overflow-y-auto`}
               initial={{ width: 0 }}
               animate={{ width: "auto" }}
               exit={{ opacity: 0 }}
@@ -115,7 +117,7 @@ export const SideMenu = () => {
                     <li
                       key={index}
                       onClick={() => {
-                        setOpen(!open);
+                        open === mobileScreen && setOpen(!open);
                         navigate(`/${item.Path}`);
                       }}
                       className={`flex items-center gap-x-4 cursor-pointer p-3 mx-2 my-1 hover:bg-primary hover:text-white rounded-md transition-transform duration-500
