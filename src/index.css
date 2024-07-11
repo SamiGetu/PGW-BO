@@ -3,6 +3,8 @@
 @tailwind utilities;
 
 @layer utilities {
+  body {
+  }
   .custom-shape-divider-top-1714647113 {
     position: absolute;
     top: 0;
@@ -25,4 +27,3 @@
     fill: #faa363;
   }
 }
-  

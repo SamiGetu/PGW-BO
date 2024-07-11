@@ -150,7 +150,7 @@ export function TransactionDetail() {
   ];
 
   return (
-    <div className="p-5 sm:p-10 md:p-20">
+    <div>
       <div className="mb-5 md:mb-10 space-y-2">
         <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold">
           Customer Daily Transaction

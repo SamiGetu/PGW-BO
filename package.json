@@ -22,6 +22,7 @@
     "@types/node": "^20.12.12",
     "daisyui": "^4.11.1",
     "dayjs": "^1.11.11",
+    "framer-motion": "^11.3.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.51.4",
