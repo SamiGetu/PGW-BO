@@ -114,7 +114,10 @@ export const SideMenu = () => {
                   {Links.map((item, index) => (
                     <li
                       key={index}
-                      onClick={() => navigate(`/${item.Path}`)}
+                      onClick={() => {
+                        setOpen(!open);
+                        navigate(`/${item.Path}`);
+                      }}
                       className={`flex items-center gap-x-4 cursor-pointer p-3 mx-2 my-1 hover:bg-primary hover:text-white rounded-md transition-transform duration-500
                         ${open ? "block" : "hidden"}
                         ${item.spacing ? "mb-5" : ""}

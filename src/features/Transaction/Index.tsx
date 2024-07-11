@@ -9,7 +9,7 @@ import React from "react";
 export const Index = () => {
   const [value, setValue] = React.useState<Dayjs | null>(dayjs("2022-04-17"));
   return (
-    <div className="px-5 sm:px-10 md:px-20 mt-10">
+    <div className="mt-10">
       <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-5">
         Daily Transactions
       </h1>

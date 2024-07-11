@@ -105,11 +105,11 @@ export default function Index() {
       editable: true,
     },
     {
-        field: "hasSpace",
-        headerName: "Has Space",
-        width: 150,
-        editable: true,
-      },
+      field: "hasSpace",
+      headerName: "Has Space",
+      width: 150,
+      editable: true,
+    },
     {
       field: "actions",
       type: "actions",
@@ -175,7 +175,7 @@ export default function Index() {
     getTasks();
   }, []);
   return (
-    <div className="h-full w-[90%] mx-auto z-50" style={{ minHeight: "100vh" }}>
+    <div className="h-full  z-50" style={{ minHeight: "100vh" }}>
       <Snackbar
         anchorOrigin={{ vertical: "top", horizontal: "center" }}
         open={openSnack}

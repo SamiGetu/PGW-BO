@@ -43,7 +43,7 @@ export default function Home() {
   const isMd = useMediaQuery(theme.breakpoints.down("md"));
 
   return (
-    <div className="px-5 sm:px-10 md:px-20 h-screen -z-50">
+    <div className="h-screen -z-50">
       <Typography variant="h4" sx={{ fontWeight: "bold", my: 4, zIndex: -1 }}>
         Dashboard
       </Typography>

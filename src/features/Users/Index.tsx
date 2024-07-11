@@ -247,7 +247,7 @@ export default function Index() {
   };
 
   return (
-    <div className="h-[100%] w-[90%] mx-auto" style={{ minHeight: "100vh" }}>
+    <div className="h-[100%]" style={{ minHeight: "100vh" }}>
       <Snackbar
         anchorOrigin={{ vertical: "top", horizontal: "center" }}
         open={openSnack}

@@ -9,7 +9,7 @@ export default function Layout() {
         <SideMenu />
         <div className="flex flex-col w-full">
           <Header />
-          <div className="p-10">
+          <div className="p-5">
             <Outlet />
           </div>
         </div>

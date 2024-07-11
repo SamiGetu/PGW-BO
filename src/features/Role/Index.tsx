@@ -223,7 +223,7 @@ export default function Index() {
     getRoles();
   }, []);
   return (
-    <div className="px-5 sm:px-10 md:px-20 mt-10">
+    <div>
       {/* Snackbar */}
       <Snackbar
         anchorOrigin={{ vertical: "top", horizontal: "center" }}
