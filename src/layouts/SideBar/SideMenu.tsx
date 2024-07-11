@@ -65,7 +65,7 @@ export const SideMenu = () => {
     <nav className="relative z-10">
       <motion.div
         className={`transition-all duration-500 ${
-          open ? "lg:pl-[17rem] pl-0" : "pl-0"
+          open ? "lg:pl-[19rem] pl-0" : "pl-0"
         }`}
         initial={{ width: 0 }}
         animate={{ width: "auto" }}
@@ -106,8 +106,8 @@ export const SideMenu = () => {
                 <div className="flex items-center justify-center gap-10 mb-[5rem]">
                   <img
                     src={kispay}
-                    className={`transition-all duration-500 w-[5rem]`}
-                    alt="Kispay icon"
+                    className={`transition-transform duration-500 w-[6rem]`}
+                    alt="Kispay"
                   />
                 </div>
                 <ul className="pt-2">
