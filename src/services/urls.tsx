@@ -1,4 +1,4 @@
-const apiBaseURL = "http://196.188.127.204:5080/api";
+const apiBaseURL = "http://196.189.61.66:5080/api";
 
 export const LoginURL = `${apiBaseURL}/auth/login`;
 export const RegisterURL = `${apiBaseURL}/auth/register`;
@@ -14,3 +14,5 @@ export const DeleteTaskUrl = `${apiBaseURL}/auth/tasks`;
 export const GetMerchantsURL = `${apiBaseURL}/merchants/get_all_merchants`;
 export const GetSingleMerchantUrl = `${apiBaseURL}/merchants/get_merchant`;
 
+export const getAllRolesUrl = `${apiBaseURL}/auth/roles`;
+export const addRole = `${apiBaseURL}/auth/users/add_roles`;

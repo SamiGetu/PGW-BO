@@ -19,9 +19,8 @@ const style = {
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: 500,
+  width: 600,
   bgcolor: "background.paper",
-  border: "2px solid #000",
   boxShadow: 24,
   p: 4,
 };
@@ -55,8 +54,12 @@ export const AddRoleModal = () => {
         key="addRole"
         variant="contained"
         sx={{
-          bgcolor: "primary.main",
           color: "white",
+          fontWeight: "500",
+          background: "#3E4095",
+          "&:hover": {
+            background: "#3E4095",
+          },
         }}
         onClick={handleOpen}
         startIcon={<Add />}
@@ -77,7 +80,12 @@ export const AddRoleModal = () => {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <Typography id="modal-modal-title" variant="h6" component="h2">
+          <Typography
+            id="modal-modal-title"
+            variant="h6"
+            component="h2"
+            sx={{ fontFamily: "Barlow Condensed, serif" }}
+          >
             Add New Task
           </Typography>
           <form onSubmit={handleSubmit(onSubmit)}>
@@ -104,16 +112,25 @@ export const AddRoleModal = () => {
                 <p className="text-red-500 mb-2">{errors.target.message}</p>
               )}
             </FormGroup>
-            <Button
-              type="submit"
-              variant="contained"
-              sx={{
-                bgcolor: "primary.main",
-                color: "white",
-              }}
-            >
-              {isSubmitting ? "Submitting..." : "Submit"}
-            </Button>
+            <div className="flex justify-end items-center gap-5 my-5">
+              <Button type="submit" variant="outlined" onClick={handleClose}>
+                Close
+              </Button>{" "}
+              <Button
+                type="submit"
+                variant="contained"
+                sx={{
+                  color: "white",
+                  fontWeight: "500",
+                  background: "#3E4095",
+                  "&:hover": {
+                    background: "#3E4095",
+                  },
+                }}
+              >
+                {isSubmitting ? "Submitting..." : "Submit"}
+              </Button>
+            </div>
           </form>
         </Box>
       </Modal>

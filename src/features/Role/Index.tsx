@@ -43,7 +43,7 @@ export default function Index() {
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [open, setOpen] = useState(false);
-  const [selectedRoleId, setSelectedRoleId] = useState<GridRowId | null>(null); // State for selected role ID
+  const [selectedRoleId, setSelectedRoleId] = useState<GridRowId | null>(null);
   const { getToken } = useAuth();
   const token = getToken();
 
@@ -190,7 +190,7 @@ export default function Index() {
       if (response.ok) {
         const responseData = await response.json();
         console.log(responseData);
-        setRoles(roles.filter((role) => role.id !== roleId)); // Remove the role from the state
+        setRoles(roles.filter((role) => role.id !== roleId));
         setSuccess(true);
         setOpenSnack(true);
         setSnackMessage("Role deleted successfully");
@@ -223,7 +223,7 @@ export default function Index() {
     getRoles();
   }, []);
   return (
-    <div>
+    <div style={{ fontFamily: "Barlow Condensed, serif" }}>
       {/* Snackbar */}
       <Snackbar
         anchorOrigin={{ vertical: "top", horizontal: "center" }}
@@ -270,15 +270,10 @@ export default function Index() {
         </DialogActions>
       </Dialog>
 
-      {/* Main Content */}
       <div className="py-4">
-        <Typography variant="h4" sx={{ fontWeight: "bold", my: 4 }}>
-          <h2>Roles Management</h2>
-        </Typography>
+        <h2 className="text-3xl font-bold mb-2">Roles Management</h2>
         <div className="flex flex-col sm:flex-row items-center justify-between">
-          {/* Button Group */}
           <ButtonGroup
-            variant="contained"
             aria-label="outlined secondary button group"
             sx={{ mb: { xs: 2, sm: 0 }, mr: { xs: 0, sm: 2 } }}
           >
@@ -286,8 +281,12 @@ export default function Index() {
               key="refreshRoles"
               variant="contained"
               sx={{
-                bgcolor: "primary.main",
                 color: "white",
+                fontWeight: "500",
+                background: "#3E4095",
+                "&:hover": {
+                  background: "#3E4095",
+                },
               }}
               onClick={() => getRoles()}
               startIcon={<Refresh />}
@@ -299,7 +298,6 @@ export default function Index() {
         </div>
       </div>
 
-      {/* DataGrid */}
       <div className="py-4" style={{ minWidth: 0 }}>
         <DataGrid
           rows={roles}
@@ -322,7 +320,13 @@ export default function Index() {
           pageSizeOptions={[5, 10, 25, 50, 100]}
           checkboxSelection
           slots={{ noRowsOverlay: CustomNoRowsOverlay, toolbar: GridToolbar }}
-          sx={{ "--DataGrid-overlayHeight": "300px" }}
+          sx={{
+            "--DataGrid-overlayHeight": "300px",
+            color: "black",
+            ".MuiButtonBase-root": {
+              color: "#3E4095",
+            },
+          }}
         />
       </div>
     </div>

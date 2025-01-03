@@ -1,4 +1,3 @@
-import React from "react";
 import { FaCheck } from "react-icons/fa";
 import { FaXmark } from "react-icons/fa6";
 import { HiOutlineArrowNarrowLeft } from "react-icons/hi";

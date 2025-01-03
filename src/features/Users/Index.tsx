@@ -33,6 +33,7 @@ import SaveIcon from "@mui/icons-material/Save";
 import CancelIcon from "@mui/icons-material/Close";
 import { DeleteUserApi, UpdateUserApi, getUsersApi } from "./service/UsersApi";
 import useAuth from "../../Hooks/useAuth";
+import ManageUserRole from "./components/ManageUserRole";
 
 export default function Index() {
   const [rowModesModel, setRowModesModel] = useState<GridRowModesModel>({});
@@ -168,6 +169,7 @@ export default function Index() {
             onClick={() => handleClickOpen(id)}
             color="inherit"
           />,
+          <ManageUserRole afterSave={getUsers} existingId={id.toString()} />,
         ];
       },
     },
@@ -191,7 +193,7 @@ export default function Index() {
     getUsers();
   }, []);
 
-  const handelDelete = async (id: any) => {
+  const handelDelete = async (id: string) => {
     try {
       const response = await DeleteUserApi(token, id);
       if (response.ok) {
@@ -247,7 +249,7 @@ export default function Index() {
   };
 
   return (
-    <div className="h-[100%]" style={{ minHeight: "100vh" }}>
+    <div style={{ fontFamily: "Barlow Condensed, serif" }}>
       <Snackbar
         anchorOrigin={{ vertical: "top", horizontal: "center" }}
         open={openSnack}
@@ -290,21 +292,20 @@ export default function Index() {
           </Button>
         </DialogActions>
       </Dialog>
-      <div className="py-4">
-        <Typography variant="h4" sx={{ fontWeight: "bold", my: 4 }}>
-          <h2>User Management</h2>
-        </Typography>
+      <div>
+        <h2 className="text-3xl font-bold mb-2">User Management</h2>
         <div className="flex">
-          <ButtonGroup
-            variant="contained"
-            aria-label="outlined secondary button group"
-          >
+          <ButtonGroup aria-label="outlined secondary button group">
             <Button
               key="refreshRoles"
               variant="contained"
               sx={{
-                bgcolor: "primary.main",
                 color: "white",
+                fontWeight: "500",
+                background: "#3E4095",
+                "&:hover": {
+                  background: "#3E4095",
+                },
               }}
               onClick={() => getUsers()}
               startIcon={<Refresh />}
@@ -337,7 +338,13 @@ export default function Index() {
           pageSizeOptions={[5, 10, 25, 50, 100]}
           checkboxSelection
           slots={{ noRowsOverlay: CustomNoRowsOverlay, toolbar: GridToolbar }}
-          sx={{ "--DataGrid-overlayHeight": "300px", color: "black" }}
+          sx={{
+            "--DataGrid-overlayHeight": "300px",
+            color: "black",
+            ".MuiButtonBase-root": {
+              color: "#3E4095",
+            },
+          }}
         />
       </div>
     </div>

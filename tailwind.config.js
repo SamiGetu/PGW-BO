@@ -3,14 +3,19 @@ export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {
-      fontFamily: {
-        Roboto: ["Roboto", "sans-serif"], // Add your font stack here
+      backgroundColor: {
+        primary: "#F58634",
+        secondary: "#3E4095",
       },
-      colors: {
-        primary: "#F58634", // Define primary color
-        secondary: "#3E4095", // Define secondary color
+      textColor: {
+        primary: "#F58634",
+        secondary: "#3E4095",
+      },
+      borderColor: {
+        primary: "#F58634",
+        secondary: "#3E4095",
       },
     },
   },
-  plugins: [require("daisyui")],
+  plugins: [],
 };

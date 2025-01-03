@@ -4,7 +4,7 @@ import {
   Button,
   Checkbox,
   FormControlLabel,
-  FormGroup,
+  Grid,
   Snackbar,
   TextField,
   Typography,
@@ -22,9 +22,8 @@ const style = {
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: 500,
+  width: 800,
   bgcolor: "background.paper",
-  border: "2px solid #000",
   boxShadow: 24,
   p: 4,
 };
@@ -65,121 +64,137 @@ export const AddRoleModal = () => {
   }, []);
 
   return (
-    <div className="overflow-x-auto">
+    <div style={{ fontFamily: "Barlow Condensed, serif" }}>
       <Button
-        key="addRole"
         variant="contained"
-        sx={{
-          bgcolor: "primary.main",
-          color: "white",
-        }}
         onClick={handleOpen}
         startIcon={<Add />}
+        sx={{
+          color: "white",
+          fontWeight: "500",
+          background: "#3E4095",
+          "&:hover": {
+            background: "#3E4095",
+          },
+        }}
       >
-        Add&nbsp;&nbsp;&nbsp;&nbsp;
+        Add Role
       </Button>
-      <Snackbar
-        // open={openSnack}
-        autoHideDuration={6000}
-        // onClose={handleSnackClose}
-        message="Role Created Successfully."
-        // action={actionSnack}
-      />
+
+      <Snackbar autoHideDuration={6000} message="Role Created Successfully." />
+
       <Modal
         open={open}
         onClose={handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
+        aria-labelledby="modal-title"
+        aria-describedby="modal-description"
       >
         <Box sx={style}>
-          <Typography id="modal-modal-title" variant="h6" component="h2">
+          <Typography
+            id="modal-title"
+            variant="h5"
+            fontWeight="bold"
+            gutterBottom
+            sx={{ fontFamily: "Barlow Condensed, serif" }}
+          >
             Add New User
           </Typography>
           <form onSubmit={handleSubmit(onSubmit)}>
-            <FormGroup className="mt-5">
-              <TextField
-                id="outlined-required fname"
-                label="First Name"
-                defaultValue=""
-                size="small"
-                {...register("firstName")}
-              />
-              {errors.firstName && (
-                <p className="text-red-500 my-3">{errors.firstName.message}</p>
-              )}
-            </FormGroup>
-            <FormGroup className="mt-5">
-              <TextField
-                id="outlined-required mname"
-                label="Middle Name"
-                defaultValue=""
-                size="small"
-                {...register("middleName")}
-              />
-              {errors.middleName && (
-                <p className="text-red-500 my-3">{errors.middleName.message}</p>
-              )}
-            </FormGroup>
-            <FormGroup className="mt-5">
-              <TextField
-                id="outlined-required lname"
-                label="Last Name"
-                defaultValue=""
-                size="small"
-                {...register("lastName")}
-              />
-              {errors.lastName && (
-                <p className="text-red-500 my-3">{errors.lastName.message}</p>
-              )}
-            </FormGroup>
-            <FormGroup className="mt-5">
-              <TextField
-                id="outlined-required email"
-                label="Email"
-                defaultValue=""
-                size="small"
-                {...register("email")}
-              />
-              {errors.email && (
-                <p className="text-red-500 my-3">{errors.email.message}</p>
-              )}
-            </FormGroup>
-            <FormGroup className="mt-5">
-              <TextField
-                id="outlined-required password"
-                label="Password"
-                type="password"
-                defaultValue=""
-                size="small"
-                sx={{ mb: 2 }}
-                {...register("password")}
-              />
-              {errors.password && (
-                <p className="text-red-500 my-3">{errors.password.message}</p>
-              )}
-            </FormGroup>
-
-            <FormGroup>
-              {roles &&
-                roles.map((role) => {
-                  return (
+            <Grid container spacing={3}>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  fullWidth
+                  label="First Name"
+                  {...register("firstName")}
+                  error={!!errors.firstName}
+                  helperText={errors.firstName?.message}
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  fullWidth
+                  label="Middle Name"
+                  {...register("middleName")}
+                  error={!!errors.middleName}
+                  helperText={errors.middleName?.message}
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  fullWidth
+                  label="Last Name"
+                  {...register("lastName")}
+                  error={!!errors.lastName}
+                  helperText={errors.lastName?.message}
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  fullWidth
+                  label="Email"
+                  {...register("email")}
+                  error={!!errors.email}
+                  helperText={errors.email?.message}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  fullWidth
+                  label="Password"
+                  type="password"
+                  {...register("password")}
+                  error={!!errors.password}
+                  helperText={errors.password?.message}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <Typography variant="body1" fontWeight="bold" gutterBottom>
+                  Assign Roles
+                </Typography>
+                <div className="flex flex-wrap items-center gap-5">
+                  {roles.map((role) => (
                     <FormControlLabel
+                      key={role.id}
                       control={<Checkbox id={role.id} />}
                       label={role.name}
                     />
-                  );
-                })}
-            </FormGroup>
-            <Button
-              type="submit"
-              variant="contained"
+                  ))}
+                </div>
+              </Grid>
+            </Grid>
+            <Box
               sx={{
-                bgcolor: "primary.main",
-                color: "white",
+                display: "flex",
+                justifyContent: "flex-end",
+                gap: 2,
+                mt: 4,
               }}
             >
-              {isSubmitting ? "Submitting..." : "Submit"}
-            </Button>
+              <Button
+                onClick={handleClose}
+                variant="outlined"
+                sx={{
+                  fontWeight: "500",
+                }}
+              >
+                Cancel
+              </Button>
+              <Button
+                type="submit"
+                variant="contained"
+                disabled={isSubmitting}
+                sx={{
+                  color: "white",
+                  fontWeight: "500",
+                  background: "#3E4095",
+                  "&:hover": {
+                    background: "#3E4095",
+                  },
+                }}
+              >
+                {isSubmitting ? "Submitting..." : "Submit"}
+              </Button>
+            </Box>
           </form>
         </Box>
       </Modal>

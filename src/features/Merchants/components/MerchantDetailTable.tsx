@@ -19,7 +19,7 @@ const rows = [
 
 export default function MerchantDetailTable() {
   return (
-    <TableContainer component={Paper} sx={{ borderRadius: "15px" }}>
+    <TableContainer component={Paper} sx={{ borderRadius: "15px" }}>  
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead>
           <TableRow>

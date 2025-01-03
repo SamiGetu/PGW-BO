@@ -1,8 +1,9 @@
 import Box from "@mui/material/Box";
-import { DataGrid, GridColDef, GridRowId } from "@mui/x-data-grid";
+import { DataGrid, GridColDef, GridRowId, GridToolbar } from "@mui/x-data-grid";
 import { styled } from "@mui/material/styles";
 import { Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { Refresh } from "@mui/icons-material";
 
 const StyledGridOverlay = styled("div")(({ theme }) => ({
   display: "flex",
@@ -135,14 +136,36 @@ export function WithdrawalsPaymentTable() {
 
   return (
     <Box>
-      <h1 className="text-4xl font-bold mb-10">Withdrawal Requests</h1>
-      <Box sx={{ width: "100%" }}>
+      <h1 className="text-3xl font-bold mb-2">Withdrawal Requests</h1>
+      <Box>
+        <Button
+          variant="contained"
+          sx={{
+            my: 2,
+            color: "white",
+            fontWeight: "500",
+            background: "#3E4095",
+            "&:hover": {
+              background: "#3E4095",
+            },
+          }}
+        >
+          Refresh <Refresh />
+        </Button>
         <DataGrid
           autoHeight
           rows={rows}
           columns={columns}
-          slots={{ noRowsOverlay: CustomNoRowsOverlay }}
-          sx={{ "--DataGrid-overlayHeight": "300px" }}
+          sx={{
+            "--DataGrid-overlayHeight": "300px",
+            ".MuiButtonBase-root": {
+              color: "#3E4095",
+            },
+          }}
+          slots={{
+            noRowsOverlay: CustomNoRowsOverlay,
+            toolbar: GridToolbar,
+          }}
           initialState={{
             pagination: {
               paginationModel: {

@@ -1,10 +1,11 @@
 import Box from "@mui/material/Box";
-import { DataGrid, GridColDef, GridRowId } from "@mui/x-data-grid";
+import { DataGrid, GridColDef, GridRowId, GridToolbar } from "@mui/x-data-grid";
 
 import { styled } from "@mui/material/styles";
 import { useNavigate } from "react-router-dom";
 
-import { Button } from "@mui/material";
+import { Button, MenuItem, TextField } from "@mui/material";
+import { Refresh } from "@mui/icons-material";
 
 const StyledGridOverlay = styled("div")(({ theme }) => ({
   display: "flex",
@@ -29,6 +30,14 @@ const StyledGridOverlay = styled("div")(({ theme }) => ({
     fill: theme.palette.mode === "light" ? "#f5f5f5" : "#fff",
   },
 }));
+
+interface RowData {
+  id: GridRowId;
+  merchantId: string;
+  totalTransaction: number;
+  successfulTransaction: number;
+  failedTransaction: number;
+}
 
 function CustomNoRowsOverlay() {
   return (
@@ -78,7 +87,7 @@ function CustomNoRowsOverlay() {
   );
 }
 
-export function TrancationTable() {
+export function SummeryTable() {
   const navigate = useNavigate();
 
   const handleViewClick = (id: GridRowId) => () => {
@@ -89,46 +98,30 @@ export function TrancationTable() {
 
   const columns: GridColDef<(typeof rows)[number]>[] = [
     {
-      field: "merchant",
-      headerName: "Merchant",
-      width: 350,
+      field: "merchantId",
+      headerName: "Merchant Id",
+      width: 400,
       editable: true,
     },
     {
-      field: "dailyTotal",
-      headerName: "Daily Total",
-      width: 160,
+      field: "totalTransaction",
+      headerName: "Total Transaction",
+      width: 250,
       editable: true,
     },
     {
-      field: "settledAmount",
-      headerName: "Setteld Amount",
-      width: 160,
+      field: "successfulTransaction",
+      headerName: "Successful Transaction",
+      width: 250,
       editable: true,
     },
     {
-      field: "settledOn",
-      headerName: "Settled On",
-      width: 160,
+      field: "failedTransaction",
+      headerName: "Failed Transaction",
+      width: 250,
       editable: true,
     },
-    {
-      field: "status",
-      headerName: "Status",
-      description: "This column has a value getter and is not sortable.",
-      sortable: false,
-      width: 160,
-      renderCell: (params) => (
-        <div
-          style={{
-            color: params.value === "UNSETTLED" ? "red" : "green",
-            fontWeight: "500",
-          }}
-        >
-          {params.value}
-        </div>
-      ),
-    },
+
     {
       field: "actions",
       type: "actions",
@@ -141,41 +134,54 @@ export function TrancationTable() {
     },
   ];
 
-  const rows = [
-    {
-      id: 1,
-      merchant: "Invictus Software Development PLC (ID5546857)",
-      dailyTotal: "2,456,321.90",
-      settledAmount: "-",
-      settledOn: "-",
-      status: "UNSETTLED",
-    },
-    {
-      id: 2,
-      merchant: "Shoa Shopping Center (ID5478589)",
-      dailyTotal: "3,567,567.90",
-      settledAmount: "-",
-      settledOn: "-",
-      status: "UNSETTLED",
-    },
-    {
-      id: 3,
-      merchant: "Lannister Fast Delivery (ID4575637)",
-      dailyTotal: "4,542,567.90",
-      settledAmount: "4,542,567.90",
-      settledOn: "June 1, 2024",
-      status: "SETTLED",
-    },
-  ];
+  const rows: RowData[] = [];
 
   return (
     <Box sx={{}}>
+      <h1 className="text-3xl font-bold mb-2">Transaction Summary</h1>
+
+      <Button
+        variant="contained"
+        sx={{
+          my: 2,
+          color: "white",
+          fontWeight: "500",
+          background: "#3E4095",
+          "&:hover": {
+            background: "#3E4095",
+          },
+        }}
+      >
+        Refresh <Refresh />
+      </Button>
+      <div className="flex  justify-start items-center gap-5 my-2">
+        <TextField
+          label="Pick a Date"
+          type="date"
+          size="small"
+          InputLabelProps={{ shrink: true }}
+        />
+        <TextField label="Filter" size="small" select className="w-[10rem]">
+          <MenuItem>daily</MenuItem>
+          <MenuItem>Weekly</MenuItem>
+          <MenuItem>Monthly</MenuItem>
+          <MenuItem>Annual</MenuItem>
+        </TextField>
+      </div>
       <DataGrid
         autoHeight
         rows={rows}
         columns={columns}
-        slots={{ noRowsOverlay: CustomNoRowsOverlay }}
-        sx={{ "--DataGrid-overlayHeight": "300px" }}
+        sx={{
+          "--DataGrid-overlayHeight": "300px",
+          ".MuiButtonBase-root": {
+            color: "#3E4095",
+          },
+        }}
+        slots={{
+          noRowsOverlay: CustomNoRowsOverlay,
+          toolbar: GridToolbar,
+        }}
         initialState={{
           pagination: {
             paginationModel: {

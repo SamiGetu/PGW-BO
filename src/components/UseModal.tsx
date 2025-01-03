@@ -14,15 +14,15 @@ export const AppModal: React.FC<AppModalProps> = ({
   const modalDOMId = "modal_dialog";
 
   return (
-    <dialog id={modalDOMId} className="modal">
-      <div className="modal-box bg-white">
+    <dialog id={modalDOMId} className="rounded-md">
+      <div className="bg-white px-14 p-5 rounded-xl">
         <h3 className="font-bold text-lg">{title}</h3>
         <p className="py-4">{content}</p>
-        <div className="modal-action">
+        <div>
           <form method="dialog">
             <button
               onClick={() => onClose()}
-              className="btn btn-sm bg-gray-200 hover:bg-gray-400 border-gray-200 text-black"
+              className="px-5 p-1 focus:outline-none rounded-md bg-gray-200 hover:bg-gray-400 border-gray-200 text-black"
             >
               Close
             </button>

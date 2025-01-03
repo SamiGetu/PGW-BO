@@ -5,6 +5,7 @@ import {
   GridColDef,
   GridRowId,
   GridRowsProp,
+  GridToolbar,
 } from "@mui/x-data-grid";
 
 import { useNavigate } from "react-router-dom";
@@ -14,6 +15,7 @@ import { useEffect, useState } from "react";
 import { MerchantsApi } from "../service/MerchentApi";
 import useAuth from "../../../Hooks/useAuth";
 import CustomNoRowsOverlay from "../../../components/CustomNoRowsOverlay";
+import { Refresh } from "@mui/icons-material";
 
 export function MerchantsTable() {
   const navigate = useNavigate();
@@ -142,13 +144,36 @@ export function MerchantsTable() {
 
   return (
     <Box>
+      <h1 className="text-3xl font-bold mb-2">Merchants</h1>
+      <Button
+        variant="contained"
+        sx={{
+          my: 2,
+          color: "white",
+          fontWeight: "500",
+          background: "#3E4095",
+          "&:hover": {
+            background: "#3E4095",
+          },
+        }}
+      >
+        Refresh <Refresh />
+      </Button>
       <DataGrid
         autoHeight
         rows={merchants}
         columns={columns}
         loading={loading}
-        slots={{ noRowsOverlay: CustomNoRowsOverlay }}
-        sx={{ "--DataGrid-overlayHeight": "300px" }}
+        sx={{
+          "--DataGrid-overlayHeight": "300px",
+          ".MuiButtonBase-root": {
+            color: "#3E4095",
+          },
+        }}
+        slots={{
+          noRowsOverlay: CustomNoRowsOverlay,
+          toolbar: GridToolbar,
+        }}
         initialState={{
           pagination: {
             paginationModel: {

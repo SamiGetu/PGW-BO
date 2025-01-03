@@ -1,17 +1,21 @@
-import { CiUser } from "react-icons/ci";
 import { FaChevronDown } from "react-icons/fa";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { BiLogOutCircle } from "react-icons/bi";
 import { IoSettingsOutline } from "react-icons/io5";
 import { MdOutlineExplore } from "react-icons/md";
 import { CiSearch } from "react-icons/ci";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import useAuth from "../../Hooks/useAuth";
+import profile from "../../assets/images/profile.png";
 
 export const Header = () => {
   const [drop, setDrop] = useState(false);
+  const location = useLocation();
+  const routeName =
+    location.pathname.replace("/", "").replace("-", " ") || "Home";
   const navigate = useNavigate();
   const { getUserData, logoutAuth } = useAuth();
+  const userDropdownRef = useRef<HTMLDivElement>(null);
   const userData = getUserData();
 
   const Links = [
@@ -41,34 +45,68 @@ export const Header = () => {
     },
   ];
 
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        userDropdownRef.current &&
+        !userDropdownRef.current.contains(event.target as Node)
+      ) {
+        setDrop(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
   return (
-    <nav className="sticky top-0 bg-white border-gray-100 border-b-[1px]">
-      <div className="container mx-auto flex justify-between items-center h-16 px-4 md:px-8">
-        <div className="flex items-center gap-2">
-          <CiSearch size={"1.4rem"} className="md:block hidden" />
-          <input
-            type="text"
-            placeholder="Search"
-            className="hidden sm:block w-full max-w-[30rem] py-[5px] focus:outline-none md:block hidden"
-          />
+    <nav className="bg-white px-4 py-3 shadow-sm">
+      <div className="container mx-auto flex items-center justify-between">
+        <div className="flex justify-start items-center gap-80 px-10">
+          <h1 className="w-full text-2xl font-bold text-secondary ml-2">
+            {routeName.charAt(0).toUpperCase() + routeName.slice(1)}
+          </h1>
+          <div className="w-full relative max-w-md">
+            <CiSearch
+              size={20}
+              className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500"
+            />
+            <input
+              type="text"
+              placeholder="Search for anything..."
+              className="w-[20rem] pl-10 pr-4 py-3 text-md border rounded-xl bg-gray-100 focus:outline-none focus:ring-1 focus:ring-primary"
+            />
+          </div>
         </div>
         <div className="flex items-center gap-5">
           <div
+            className="flex items-center gap-2 cursor-pointer"
             onClick={() => setDrop(!drop)}
-            className="flex items-center cursor-pointer gap-2"
           >
-            <span className="w-10 h-10 rounded-full bg-primary flex items-center justify-center">
-              <CiUser size={"1.3rem"} className="text-white" />
-            </span>
-            <span className="hover:underline uppercase hidden sm:block">
-              {userData.firstName} {userData.lastName}
-            </span>
-            <span>
-              <FaChevronDown />
-            </span>
+            <div className="w-10 h-10 rounded-full bg-gray-200 overflow-hidden">
+              <img
+                src={userData?.profilePicture || profile}
+                alt="User Avatar"
+                className="w-full h-full object-cover"
+              />
+            </div>
+
+            <div className="text-lg">
+              <p className="font-medium">{`${userData?.firstName} ${userData?.lastName}`}</p>
+              <p className="text-gray-500 text-xs">ID123456</p>
+            </div>
+            <FaChevronDown size={14} className="text-gray-500" />
           </div>
-          {drop && (
-            <div className="bg-white p-3 shadow absolute right-4 top-16 md:right-8">
+        </div>
+      </div>
+
+      <div ref={userDropdownRef} className="relative">
+        {drop && (
+          <div className="absolute right-5 top-5 z-20">
+            <div className="bg-white dark:bg-gray-800 p-4 shadow-lg rounded-lg border border-gray-200 dark:border-gray-700 w-56">
               <ul className="flex flex-col">
                 {Links.map((item, index) => (
                   <li
@@ -76,14 +114,16 @@ export const Header = () => {
                     className="flex items-center cursor-pointer text-gray-500 gap-3 text-sm hover:bg-primary hover:text-white p-2 rounded-md"
                     onClick={item.onclick}
                   >
-                    <span className="text-2xl">{item.icon}</span>
+                    <span className="text-lg text-gray-500 dark:text-gray-300 hover:text-white">
+                      {item.icon}
+                    </span>
                     {item.Name}
                   </li>
                 ))}
               </ul>
             </div>
-          )}
-        </div>
+          </div>
+        )}
       </div>
     </nav>
   );
