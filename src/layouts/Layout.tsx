@@ -21,13 +21,13 @@ export const Layout = () => {
   }, []);
 
   return (
-    <div className="flex items-start justify-start gap-10">
+    <div>
       <SideMenu menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
       <div>
         <motion.div
           initial={{ marginLeft: 0 }}
           animate={{
-            marginLeft: isLargeScreen && menuOpen ? "20rem" : "0rem",
+            marginLeft: isLargeScreen && menuOpen ? "15rem" : "0rem",
           }}
           transition={{ type: "spring", stiffness: 70, damping: 20 }}
           className=" max-w-full overflow-x-hidden"
