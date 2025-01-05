@@ -1,4 +1,4 @@
-const apiBaseURL = "http://196.189.61.66:5080/api";
+const apiBaseURL = "http://api.kispay.et/api";
 
 export const LoginURL = `${apiBaseURL}/auth/login`;
 export const RegisterURL = `${apiBaseURL}/auth/register`;
