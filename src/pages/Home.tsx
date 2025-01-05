@@ -3,7 +3,7 @@ import { FinanceDashboard } from "../features/Dashboards/Finance/FinanceDashboar
 import useAuth from "../Hooks/useAuth";
 import Dashboard404 from "./Dashboard404";
 
-export const Home = () => {
+export const Dashboard = () => {
   const userData = useAuth().getUserData();
   console.log("userData", userData);
 

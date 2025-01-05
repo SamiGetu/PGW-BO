@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import User from "../pages/User";
 import { Layout } from "../layouts/Layout";
 import { LogIn } from "../pages/LogIn";
@@ -22,15 +22,16 @@ import { TransactionSummary } from "../pages/TransactionSummary";
 import { AdminDashBoard } from "../features/Dashboards/Admin/AdminDashBoard";
 import { FinanceDashboard } from "../features/Dashboards/Finance/FinanceDashboard";
 import EmailVerification from "../pages/EmailVerification";
-import { Home } from "../pages/Home";
 import Dashboard404 from "./../pages/Dashboard404";
+import { Dashboard } from "../pages/Home";
 
 export default function Protected() {
   return (
     <Routes>
       <Route path="/" element={<PrivateRoute />}>
         <Route path="/" element={<Layout />}>
-          <Route path="/" element={<Home />} />
+          <Route index element={<Navigate to="/dashboard" replace />} />
+          <Route path="/dashboard" element={<Dashboard />} />
           <Route path="users" element={<User />} />
           <Route path="/settings" element={<Settings />} />
           <Route path="/roles" element={<Role />} />

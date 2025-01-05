@@ -6,7 +6,7 @@ export const HealthBar = () => {
 
   useEffect(() => {
     const timer = setInterval(() => {
-      setProgress(97);
+      setProgress(50);
     }, 800);
     return () => {
       clearInterval(timer);
@@ -21,7 +21,7 @@ export const HealthBar = () => {
           size={300}
           value={progress}
           sx={{
-            color: "inherit",
+            color: "secondary",
             border: "1px solid #D1D5DB",
             borderRadius: "50%",
           }}

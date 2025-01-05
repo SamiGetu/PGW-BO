@@ -2,7 +2,6 @@ import kispay from "../../assets/logo.png";
 import { motion } from "framer-motion";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useMediaQuery } from "@mui/material";
-import { AiOutlineHome } from "react-icons/ai";
 import { BsCardChecklist, BsCashStack } from "react-icons/bs";
 import { HiOutlineDocumentReport } from "react-icons/hi";
 import { IoMdPeople } from "react-icons/io";
@@ -10,6 +9,7 @@ import { RiUserSettingsLine } from "react-icons/ri";
 import { MdOutlineAccountBalanceWallet } from "react-icons/md";
 import { BiTask, BiUser } from "react-icons/bi";
 import { CgMenuGridO } from "react-icons/cg";
+import { RiDashboard2Line } from "react-icons/ri";
 
 export const SideMenu = ({
   menuOpen,
@@ -24,56 +24,56 @@ export const SideMenu = ({
 
   const Links = [
     {
-      Name: "Home",
-      Path: "/",
-      icon: <AiOutlineHome size={"1.5rem"} />,
+      Name: "Dashboard",
+      Path: "/dashboard",
+      icon: <RiDashboard2Line size={20} />,
       spacing: true,
     },
     {
       Name: "Transactions",
       Path: "/transaction",
-      icon: <MdOutlineAccountBalanceWallet size={"1.5rem"} />,
+      icon: <MdOutlineAccountBalanceWallet size={20} />,
     },
     {
       Name: "Transaction Summary",
       Path: "/transaction-summary",
-      icon: <HiOutlineDocumentReport size={"1.5rem"} />,
+      icon: <HiOutlineDocumentReport size={20} />,
     },
     {
       Name: "Withdrawals",
       Path: "/withdraw",
-      icon: <BsCashStack size={"1.5rem"} />,
+      icon: <BsCashStack size={20} />,
     },
     {
       Name: "Withdrawals Payment",
       Path: "/withdraw-payment",
-      icon: <MdOutlineAccountBalanceWallet size={"1.5rem"} />,
+      icon: <MdOutlineAccountBalanceWallet size={20} />,
     },
     {
       Name: "Merchants",
       Path: "/merchants",
-      icon: <IoMdPeople size={"1.5rem"} />,
+      icon: <IoMdPeople size={20} />,
       spacing: true,
     },
     {
       Name: "Users",
       Path: "/users",
-      icon: <BiUser size={"1.5rem"} />,
+      icon: <BiUser size={20} />,
     },
     {
       Name: "Roles",
       Path: "/roles",
-      icon: <RiUserSettingsLine size={"1.5rem"} />,
+      icon: <RiUserSettingsLine size={20} />,
     },
     {
       Name: "Components",
       Path: "/Components",
-      icon: <BsCardChecklist size={"1.5rem"} />,
+      icon: <BsCardChecklist size={20} />,
     },
     {
       Name: "Task",
       Path: "/tasks",
-      icon: <BiTask size={"1.5rem"} />,
+      icon: <BiTask size={20} />,
     },
   ];
 
