@@ -1,4 +1,4 @@
-const apiBaseURL = "http://api.kispay.et/api";
+const apiBaseURL = "https://api.kispay.et/api";
 
 export const LoginURL = `${apiBaseURL}/auth/login`;
 export const RegisterURL = `${apiBaseURL}/auth/register`;

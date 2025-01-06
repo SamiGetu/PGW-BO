@@ -23,7 +23,7 @@ type AddUserApiType = {
   email: string;
   password: string;
 };
-export async function AddUserApi( data: AddUserApiType) {
+export async function AddUserApi(data: AddUserApiType) {
   const myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
   myHeaders.append("Mode", "cors");

@@ -1,7 +1,7 @@
 const Footer = () => {
   return (
-    <footer className="w-full bg-primary text-white text-center p-4">
-      <p className="text-md">
+    <footer className="border-t text-neutral-800 text-center p-4">
+      <p className="text-md cursor-pointer hover:text-secondary hover:underline hover:scale-95 transition duration-300 ease-in-out">
         © {new Date().getFullYear()} Developed by Invictus Software
       </p>
     </footer>

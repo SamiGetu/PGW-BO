@@ -61,15 +61,18 @@ export const Header = () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
+  const handleDrop = () => {
+    setDrop(!drop);
+  };
 
   return (
     <nav className="bg-white px-4 py-3 shadow-sm">
       <div className="container mx-auto flex items-center justify-between">
-        <div className="flex justify-start items-center gap-80 px-10">
-          <h1 className="w-full text-2xl font-bold text-secondary ml-2">
+        <div className="flex justify-start items-center px-10">
+          <h1 className="w-full text-2xl font-bold text-secondary ml-2  md:px-10 ">
             {routeName.charAt(0).toUpperCase() + routeName.slice(1)}
           </h1>
-          <div className="w-full relative max-w-md">
+          <div className="w-full relative max-w-md lg:block hidden">
             <CiSearch
               size={20}
               className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500"
@@ -84,7 +87,7 @@ export const Header = () => {
         <div className="flex items-center gap-5">
           <div
             className="flex items-center gap-2 cursor-pointer"
-            onClick={() => setDrop(!drop)}
+            onClick={handleDrop}
           >
             <div className="w-10 h-10 rounded-full bg-gray-200 overflow-hidden">
               <img
@@ -94,7 +97,7 @@ export const Header = () => {
               />
             </div>
 
-            <div className="text-lg">
+            <div className="text-lg lg:block hidden">
               <p className="font-medium">{`${userData?.firstName} ${userData?.lastName}`}</p>
               <p className="text-gray-500 text-xs">ID123456</p>
             </div>
@@ -108,6 +111,11 @@ export const Header = () => {
           <div className="absolute right-5 top-5 z-20">
             <div className="bg-white dark:bg-gray-800 p-4 shadow-lg rounded-lg border border-gray-200 dark:border-gray-700 w-56">
               <ul className="flex flex-col">
+                <div className="w-full text-lg px-3">
+                  <p className="font-medium">{`${userData?.firstName} ${userData?.lastName}`}</p>
+                  <p className="text-gray-500 text-xs">ID123456</p>
+                  <div className="w-full h-[1px] bg-gray-200 dark:bg-gray-700 my-2"></div>
+                </div>
                 {Links.map((item, index) => (
                   <li
                     key={index}

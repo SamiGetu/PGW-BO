@@ -82,10 +82,10 @@ export const SideMenu = ({
       initial={{ x: "-100%" }}
       animate={{ x: menuOpen ? "0%" : "-100%" }}
       transition={{ type: "spring", stiffness: 70, damping: 20 }}
-      className="fixed top-0 left-0 w-[17rem] h-full bg-gray-100 z-10 flex flex-col items-start border-r"
+      className="fixed top-0 left-0 w-[20rem] h-full bg-blue-50 z-10 flex flex-col items-start border-r"
     >
       <div
-        className="flex items-center justify-end w-full fixed left-10 my-6"
+        className="flex items-center justify-end w-full fixed left-10 my-5"
         onClick={() => setMenuOpen(!menuOpen)}
       >
         {menuOpen ? (
@@ -130,8 +130,7 @@ export const SideMenu = ({
                 <span className="ml-4">{link.Name}</span>
               </Link>
             </div>
-
-            <div className={`${link.spacing ? "my-2" : ""} `}></div>
+            <div className={`${link.spacing ? "my-1 border" : ""} `}></div>
           </>
         ))}
       </ul>

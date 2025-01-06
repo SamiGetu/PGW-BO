@@ -10,7 +10,6 @@ import {
   DialogContentText,
   DialogTitle,
   Snackbar,
-  Typography,
 } from "@mui/material";
 import {
   DataGrid,
@@ -283,7 +282,9 @@ export default function Index() {
           <Button onClick={handleClose}>No</Button>
           <Button
             onClick={() => {
-              handelDelete(selectedRoleId);
+              if (selectedRoleId !== null) {
+                handelDelete(selectedRoleId.toString());
+              }
               handleClose();
             }}
             autoFocus
