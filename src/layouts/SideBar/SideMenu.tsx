@@ -56,6 +56,12 @@ export const SideMenu = ({
       spacing: true,
     },
     {
+      Name: "Approve Merchants",
+      Path: "/approve-merchants",
+      icon: <IoMdPeople size={20} />,
+      spacing: true,
+    },
+    {
       Name: "Users",
       Path: "/users",
       icon: <BiUser size={20} />,

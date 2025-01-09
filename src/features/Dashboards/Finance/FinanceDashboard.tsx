@@ -1,44 +1,63 @@
 import { Card } from "./components/Card";
 import merchants from "../../../assets/merchant.png";
-import kyc from "../../../assets/face-recognize.png";
-import applicant from "../../../assets/form.png";
+import unsettled from "../../../assets/transaction (3).png";
+import commission from "../../../assets/commission.png";
+import transaction from "../../../assets/transaction (1).png";
+import { useNavigate } from "react-router-dom";
+import LiveTransaction from "./components/Table/LiveTransaction";
 
 export const FinanceDashboard = () => {
+  const navigate = useNavigate();
   const cards = [
     {
       title: "Merchants ",
-      amount: 290,
+      amount: 10000,
       style: "bg-primary",
       currency: "",
       icon: merchants,
+      path: "/merchants",
     },
     {
-      title: "KYC pending",
+      title: "Unsettled transactions",
       amount: 4,
-      style: "bg-blue-950",
-      icon: kyc,
+      style: "bg-sky-950",
+      icon: unsettled,
+      path: "/transaction",
     },
     {
-      title: "Applicants",
+      title: "Commission",
       amount: 15,
       style: "bg-sky-950",
-      icon: applicant,
-      applicant: "(Daily)",
+      icon: commission,
+      path: "",
+    },
+    {
+      title: "Transactions",
+      amount: 15,
+      style: "bg-sky-950",
+      icon: transaction,
+      path: "/transaction",
     },
   ];
   return (
-    <div className="my-20">
-      <div className="flex justify-start items-center gap-10">
+    <div>
+      <div className="flex justify-start items-center gap-5">
         {cards.map((card, index) => (
           <Card
+            onClick={() => {
+              navigate(card.path);
+            }}
             key={index}
             amount={card.amount}
             desc={card.title}
             style={card.style}
             icon={card.icon}
-            applicant={card.applicant}
           />
         ))}
+      </div>
+      <div className="my-10">
+        {" "}
+        <LiveTransaction />
       </div>
     </div>
   );

@@ -10,7 +10,7 @@ import {
 
 import { useNavigate } from "react-router-dom";
 import { FaStreetView } from "react-icons/fa";
-import { Button } from "@mui/material";
+import { Button, MenuItem, TextField } from "@mui/material";
 import { useEffect, useState } from "react";
 import { MerchantsApi } from "../service/MerchentApi";
 import useAuth from "../../../Hooks/useAuth";
@@ -144,7 +144,6 @@ export function MerchantsTable() {
 
   return (
     <Box>
-      <h1 className="text-3xl font-bold mb-2">Merchants</h1>
       <Button
         variant="contained"
         sx={{
@@ -159,6 +158,13 @@ export function MerchantsTable() {
       >
         Refresh <Refresh />
       </Button>
+      <div className="flex justify-start gap-5 items-center my-5">
+        <TextField label="Status" size="small" select className="w-[10rem]">
+          <MenuItem>All</MenuItem>
+          <MenuItem>TEST</MenuItem>
+          <MenuItem>PROD</MenuItem>
+        </TextField>
+      </div>
       <DataGrid
         autoHeight
         rows={merchants}

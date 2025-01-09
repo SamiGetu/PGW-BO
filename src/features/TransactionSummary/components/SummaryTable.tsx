@@ -138,8 +138,6 @@ export function SummeryTable() {
 
   return (
     <Box sx={{}}>
-      <h1 className="text-3xl font-bold mb-2">Transaction Summary</h1>
-
       <Button
         variant="contained"
         sx={{

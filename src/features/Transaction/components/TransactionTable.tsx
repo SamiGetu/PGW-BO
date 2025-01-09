@@ -97,7 +97,6 @@ export function TransactionTable() {
 
   return (
     <Box>
-      <h1 className="text-3xl font-bold mb-2">Daily Transactions</h1>
       <div className="font-medium text-lg sm:text-md rounded-xl w-full">
         <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-4">
           <label htmlFor="">Total Merchants:</label>

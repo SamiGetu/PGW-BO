@@ -136,48 +136,45 @@ export function WithdrawalsPaymentTable() {
 
   return (
     <Box>
-      <h1 className="text-3xl font-bold mb-2">Withdrawal Requests</h1>
-      <Box>
-        <Button
-          variant="contained"
-          sx={{
-            my: 2,
-            color: "white",
-            fontWeight: "500",
+      <Button
+        variant="contained"
+        sx={{
+          my: 2,
+          color: "white",
+          fontWeight: "500",
+          background: "#3E4095",
+          "&:hover": {
             background: "#3E4095",
-            "&:hover": {
-              background: "#3E4095",
+          },
+        }}
+      >
+        Refresh <Refresh />
+      </Button>
+      <DataGrid
+        autoHeight
+        rows={rows}
+        columns={columns}
+        sx={{
+          "--DataGrid-overlayHeight": "300px",
+          ".MuiButtonBase-root": {
+            color: "#3E4095",
+          },
+        }}
+        slots={{
+          noRowsOverlay: CustomNoRowsOverlay,
+          toolbar: GridToolbar,
+        }}
+        initialState={{
+          pagination: {
+            paginationModel: {
+              pageSize: 10,
             },
-          }}
-        >
-          Refresh <Refresh />
-        </Button>
-        <DataGrid
-          autoHeight
-          rows={rows}
-          columns={columns}
-          sx={{
-            "--DataGrid-overlayHeight": "300px",
-            ".MuiButtonBase-root": {
-              color: "#3E4095",
-            },
-          }}
-          slots={{
-            noRowsOverlay: CustomNoRowsOverlay,
-            toolbar: GridToolbar,
-          }}
-          initialState={{
-            pagination: {
-              paginationModel: {
-                pageSize: 10,
-              },
-            },
-          }}
-          pageSizeOptions={[5, 10, 25, 50, 100]}
-          checkboxSelection
-          disableRowSelectionOnClick
-        />
-      </Box>
+          },
+        }}
+        pageSizeOptions={[5, 10, 25, 50, 100]}
+        checkboxSelection
+        disableRowSelectionOnClick
+      />
     </Box>
   );
 }

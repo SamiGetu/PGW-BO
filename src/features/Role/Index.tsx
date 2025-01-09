@@ -271,7 +271,6 @@ export default function Index() {
       </Dialog>
 
       <div className="py-4">
-        <h2 className="text-3xl font-bold mb-2">Roles Management</h2>
         <div className="flex flex-col sm:flex-row items-center justify-between">
           <ButtonGroup
             aria-label="outlined secondary button group"

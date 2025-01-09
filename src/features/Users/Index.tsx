@@ -294,7 +294,6 @@ export default function Index() {
         </DialogActions>
       </Dialog>
       <div>
-        <h2 className="text-3xl font-bold mb-2">User Management</h2>
         <div className="flex">
           <ButtonGroup aria-label="outlined secondary button group">
             <Button

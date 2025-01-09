@@ -40,7 +40,7 @@ const StatusChart = () => {
   });
 
   return (
-    <div className="w-[30rem] border p-5">
+    <div className="w-full lg:w-[25rem] border p-5">
       <div id="chart">
         <ReactApexChart options={options} series={series} type="polarArea" />
       </div>

@@ -195,7 +195,6 @@ export default function Index() {
         </Alert>
       </Snackbar>
       <div className="py-4">
-        <h2 className="text-3xl font-bold mb-2">Components Management</h2>
         <div className="flex">
           <ButtonGroup aria-label="outlined secondary button group">
             <Button

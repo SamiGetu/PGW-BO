@@ -14,7 +14,7 @@ export const HealthBar = () => {
   }, []);
 
   return (
-    <div className="border  p-7">
+    <div className="border p-5">
       <div className="relative flex items-center justify-center rounded-2xl">
         <CircularProgress
           variant="determinate"

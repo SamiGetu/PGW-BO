@@ -24,6 +24,8 @@ import { FinanceDashboard } from "../features/Dashboards/Finance/FinanceDashboar
 import EmailVerification from "../pages/EmailVerification";
 import Dashboard404 from "./../pages/Dashboard404";
 import { Dashboard } from "../pages/Home";
+import ApproveMerchants from "../pages/ApproveMerchants";
+import ApprovalDetail from "../features/ApproveMerchants/Pages/ApprovalDetail";
 
 export default function Protected() {
   return (
@@ -48,6 +50,8 @@ export default function Protected() {
           <Route path="/withdraw" element={<Withdraw />} />
           <Route path="/withdraw-detail" element={<WithdrawDetail />} />
           <Route path="/withdraw-payment" element={<WithdrawalsPayment />} />
+          <Route path="/approve-merchants" element={<ApproveMerchants />} />
+          <Route path="/approval-detail/:authId" element={<ApprovalDetail />} />
           <Route
             path="/withdraw-payment-detail"
             element={<WithdrawalsPaymentDetail />}

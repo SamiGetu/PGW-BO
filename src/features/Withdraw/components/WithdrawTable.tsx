@@ -102,7 +102,6 @@ export function WithdrawTable() {
 
   return (
     <div>
-      <h1 className="text-3xl font-bold mb-2">Withdrawal Requests</h1>
       <Box>
         <Button
           variant="contained"

@@ -28,7 +28,6 @@ export const WithdrawalsPaymentDetail = () => {
 
   return (
     <div className="container">
-      <h1 className="text-4xl font-extrabold mb-6">Withdrawal Payment</h1>
       <ul className="list-none space-y-3 md:space-y-5">
         <li className="text-md">
           <span className="font-medium mr-3">Merchant Name:</span>

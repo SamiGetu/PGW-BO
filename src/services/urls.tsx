@@ -16,3 +16,5 @@ export const GetSingleMerchantUrl = `${apiBaseURL}/merchants/get_merchant`;
 
 export const getAllRolesUrl = `${apiBaseURL}/auth/roles`;
 export const addRole = `${apiBaseURL}/auth/users/add_roles`;
+
+export const getAllRequestsUrl = `${apiBaseURL}/merchants/rfp/get_all_requests`;

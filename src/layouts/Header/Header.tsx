@@ -67,7 +67,7 @@ export const Header = () => {
 
   return (
     <nav className="bg-white px-4 py-3 shadow-sm">
-      <div className="container mx-auto flex items-center justify-between">
+      <div className="flex items-center justify-between">
         <div className="flex justify-start items-center px-10">
           <h1 className="w-full text-2xl font-bold text-secondary ml-2  md:px-10 ">
             {routeName.charAt(0).toUpperCase() + routeName.slice(1)}
