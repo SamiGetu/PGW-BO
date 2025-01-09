@@ -26,6 +26,8 @@ import Dashboard404 from "./../pages/Dashboard404";
 import { Dashboard } from "../pages/Home";
 import ApproveMerchants from "../pages/ApproveMerchants";
 import ApprovalDetail from "../features/ApproveMerchants/Pages/ApprovalDetail";
+import Settlement from "../pages/Settlement";
+import { SettlementDetailTableBo } from "../features/Settlement/components/Table/SettlementDetailTableBo";
 
 export default function Protected() {
   return (
@@ -55,6 +57,11 @@ export default function Protected() {
           <Route
             path="/withdraw-payment-detail"
             element={<WithdrawalsPaymentDetail />}
+          />
+          <Route path="/settlement" element={<Settlement />} />
+          <Route
+            path="//settlement-detail"
+            element={<SettlementDetailTableBo />}
           />
           {/* dashboards */}
           <Route path="/admin-dashboard" element={<AdminDashBoard />} />

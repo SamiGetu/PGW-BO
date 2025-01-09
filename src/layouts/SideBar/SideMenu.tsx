@@ -10,6 +10,8 @@ import { MdOutlineAccountBalanceWallet } from "react-icons/md";
 import { BiTask, BiUser } from "react-icons/bi";
 import { CgMenuGridO } from "react-icons/cg";
 import { RiDashboard2Line } from "react-icons/ri";
+import { CiBookmarkCheck } from "react-icons/ci";
+import { BsBank2 } from "react-icons/bs";
 
 export const SideMenu = ({
   menuOpen,
@@ -50,15 +52,20 @@ export const SideMenu = ({
       icon: <MdOutlineAccountBalanceWallet size={20} />,
     },
     {
+      Name: "Settlements",
+      Path: "/settlement",
+      icon: <BsBank2 size={20} />,
+    },
+    {
       Name: "Merchants",
       Path: "/merchants",
       icon: <IoMdPeople size={20} />,
       spacing: true,
     },
     {
-      Name: "Approve Merchants",
+      Name: "Approve Request",
       Path: "/approve-merchants",
-      icon: <IoMdPeople size={20} />,
+      icon: <CiBookmarkCheck size={20} />,
       spacing: true,
     },
     {
