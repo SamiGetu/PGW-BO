@@ -1,114 +1,51 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import Box from "@mui/material/Box";
-import { DataGrid, GridColDef, GridToolbar } from "@mui/x-data-grid";
+import {
+  DataGrid,
+  GridColDef,
+  GridRowsProp,
+  GridToolbar,
+} from "@mui/x-data-grid";
 import { useNavigate } from "react-router-dom";
-// import { FaSave } from "react-icons/fa";
-// import { useEffect, useState } from "react";
-// import useAuth from "../../../../Hooks/useAuth";
-import { Button, TextField, Typography } from "@mui/material";
+import { Button, Typography } from "@mui/material";
 import { GrRefresh } from "react-icons/gr";
 import { IoArrowBack } from "react-icons/io5";
 import CustomNoRowsOverlay from "../../../../components/CustomNoRowsOverlay";
 
-const row = [
-  {
-    id: "1",
-    date: "20-10-2024",
-    amount: 1500,
-    status: "Partially Settled",
-    settled: 1100,
-    unSettled: 400,
-  },
-  {
-    id: "2",
-    date: "20-12-2024",
-    amount: 1600,
-    status: "Pending",
-    settled: 0,
-    unSettled: 1600,
-  },
-];
+const row: GridRowsProp = [];
 export const SettlementDetailTableBo = () => {
-  //   const [loading, setLoading] = useState(false);
-  //   const [department, setDepartment] = useState([]);
-  //   const token = useAuth().getToken();
   const navigate = useNavigate();
-
-  function formatMoney(amount: number, currency = "ETB", locale = "en-US") {
-    return new Intl.NumberFormat(locale, {
-      style: "currency",
-      currency: currency,
-      minimumFractionDigits: 2,
-      maximumFractionDigits: 2,
-    }).format(amount);
-  }
-
-  const current = new Date();
-
-  //   const fetchDepartment = async () => {
-  //     setLoading(true);
-  //     try {
-  //       const response = await GetRequest(getAllDepartmentUrl, token);
-  //       const jsonData = await response.json();
-  //       if (response.ok) {
-  //         console.log("Department", jsonData.body);
-  //         setDepartment(jsonData.body);
-  //         setLoading(false);
-  //       } else {
-  //         console.log("jsonData", jsonData);
-  //         setLoading(false);
-  //       }
-  //     } catch (ex) {
-  //       console.log("error fetching department", ex);
-  //       setLoading(false);
-  //     }
-  //   };
-  //   useEffect(() => {
-  //     fetchDepartment();
-  //   }, []);
-  //   const handleStatusColorChange = (status: string) => {
-  //     if (status === "pending") {
-  //       return "red";
-  //     } else if (status === "partiallySettled") {
-  //       return "#FF9900";
-  //     } else if (status === "fullySettled") {
-  //       return "green";
-  //     }
-  //   };
 
   const columns: GridColDef<(typeof row)[number]>[] = [
     {
-      field: "date",
-      headerName: "Date",
+      field: "merchantName",
+      headerName: "Merchant Name",
       width: 200,
       editable: true,
     },
     {
-      field: "amount",
-      headerName: "Amount",
+      field: "accountNumber",
+      headerName: "Account Number",
       width: 150,
       editable: true,
       align: "right",
       headerAlign: "right",
-      renderCell: (params) => <Box>{formatMoney(params.value)}</Box>,
     },
     {
-      field: "settled",
-      headerName: "Settled",
+      field: "amount",
+      headerName: "Amount",
       width: 200,
       editable: true,
       align: "right",
       headerAlign: "right",
-      renderCell: (params) => <Box>{formatMoney(params.value)}</Box>,
     },
     {
-      field: "unSettled",
-      headerName: "Unsettled",
+      field: "remark",
+      headerName: "Remark",
       width: 200,
       editable: true,
       align: "right",
       headerAlign: "right",
-      renderCell: (params) => <Box>{formatMoney(params.value)}</Box>,
     },
     {
       field: "status",
@@ -130,52 +67,22 @@ export const SettlementDetailTableBo = () => {
             className="cursor-pointer"
           />
 
-          <Box sx={{ display: "flex", flexDirection: "column", gap: 1, my: 2 }}>
-            <Box
-              sx={{ display: "flex", justifyContent: "space-start", gap: 10 }}
-            >
-              <Typography
-                style={{
-                  fontFamily: "Barlow Condensed, serif",
-                  fontSize: "20px",
-                }}
-              >
-                <span className="font-bold">Merchant ID:</span> KPM0001
-              </Typography>
-              <Typography
-                style={{
-                  fontFamily: "Barlow Condensed, serif",
-                  fontSize: "20px",
-                }}
-              >
-                <span className="font-bold">Bank:</span> CBE{" "}
-              </Typography>
-            </Box>
-            <Box
-              sx={{ display: "flex", justifyContent: "space-start", gap: 10 }}
-            >
-              <Typography
-                style={{
-                  fontFamily: "Barlow Condensed, serif",
-                  fontSize: "20px",
-                }}
-              >
-                <span className="font-bold">Business Name:</span> Innvictus
-                Software Development
-              </Typography>
-            </Box>
-            <Box sx={{ display: "flex" }}>
-              <Typography
-                sx={{
-                  fontSize: "25px",
-                  fontFamily: "Barlow Condensed, serif",
-                }}
-              >
-                Payable: 2000
-              </Typography>
-            </Box>
-          </Box>
-
+          <h1 className="max-w-sm text-2xl font-bold">
+            Kispay Financial solutions S.C Payment settlement Dashen Bank S.C
+            Jan 4 2024
+          </h1>
+          <div className="max-w-3xl ">
+            <p className="text-lg my-1">
+              <span className="text-lg text-secondary font-bold">Dear</span>{" "}
+              Samuel
+            </p>
+            <p className="text-lg">
+              Please credit to the following list of your customer by debiting
+              our account maintain with you 1184356789345 with their
+              corresponding amount. Please note that, put 9842 as your remark.
+              Regards
+            </p>
+          </div>
           <Box sx={{ width: "100%" }}>
             <Button
               variant="contained"
@@ -188,14 +95,7 @@ export const SettlementDetailTableBo = () => {
               <GrRefresh size={20} />
               Refresh
             </Button>
-            <Typography
-              sx={{
-                my: 2,
-                fontFamily: "Barlow Condensed, serif",
-              }}
-            >
-              Daily Transactions Summary
-            </Typography>
+
             <DataGrid
               rows={row}
               columns={columns}
@@ -221,8 +121,14 @@ export const SettlementDetailTableBo = () => {
                 },
               }}
             />
+
+            <div className="flex my-10 text-xl">
+              <label htmlFor="">Signed</label>
+              <div className="w-[20rem] border-b border-black"></div>
+              <label className="mx-10">Stamp</label>
+            </div>
           </Box>
-          <form action="">
+          {/* <form action="">
             <fieldset className="border p-5 rounded-md">
               <legend className="text-lg">Settlement Form</legend>
               <Box>
@@ -269,7 +175,7 @@ export const SettlementDetailTableBo = () => {
                 </Button>
               </Box>
             </fieldset>
-          </form>
+          </form> */}
         </div>
       </div>
     </>
