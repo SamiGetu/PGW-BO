@@ -1,7 +1,7 @@
 import { HealthBar } from "./components/HealthBar";
 import { Card } from "./components/Card";
 import user from "../../../assets/user.png";
-import role from "../../../assets/Role.png";
+import role from "../../../assets/role.png";
 import uptime from "../../../assets/uptime.png";
 
 export const AdminDashBoard = () => {

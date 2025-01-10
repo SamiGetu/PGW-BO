@@ -38,52 +38,55 @@ export function ApproveMerchantsTable() {
 
   const columns: GridColDef[] = [
     {
-      field: "firstName",
+      field: "requestedBy.firstName",
       headerName: "First Name",
-      width: 400,
+      width: 200,
       editable: true,
+      renderCell: (params) => <>{params.row.requestedBy.firstName}</>,
     },
     {
-      field: "middleName",
+      field: "requestedBy.middleName",
       headerName: "Middle Name",
       width: 200,
       editable: true,
+      renderCell: (params) => <>{params.row.requestedBy.middleName}</>,
     },
     {
-      field: "lastName",
+      field: "requestedBy.lastName",
       headerName: "Last Name",
       width: 200,
       editable: true,
+      renderCell: (params) => <>{params.row.requestedBy.lastName}</>,
     },
     {
-      field: "email",
+      field: "requestedBy.email",
       headerName: "Email",
       width: 200,
       editable: true,
+      renderCell: (params) => <>{params.row.requestedBy.email}</>,
     },
     {
-      field: "phoneNumber",
+      field: "requestedBy.phoneNumber",
       headerName: "Phone Number",
       width: 200,
       editable: true,
-    },
-    {
-      field: "businessName",
-      headerName: "Business Name",
-      width: 200,
-      editable: true,
+      renderCell: (params) => <>{params.row.requestedBy.phoneNumber}</>,
     },
     {
       field: "createdAt",
       headerName: "Created At",
       width: 200,
       editable: true,
+      renderCell: (params) => (
+        <>{new Date(params.row.requestedBy.createdAt).toLocaleString()}</>
+      ),
     },
     {
-      field: "status",
+      field: "status.displayName",
       headerName: "Status",
       sortable: false,
-      width: 250,
+      width: 150,
+      renderCell: (params) => <>{params.row.status.displayName}</>,
     },
     {
       field: "actions",
@@ -94,7 +97,11 @@ export function ApproveMerchantsTable() {
       getActions: (params) => {
         return [
           <Button
-            onClick={() => navigate(`/approval-detail/${params.row.authId}`)}
+            onClick={() =>
+              navigate(
+                `/approval-detail/${params.row.requestedBy.authId}/${params.row.id}`
+              )
+            }
           >
             Detail
           </Button>,
