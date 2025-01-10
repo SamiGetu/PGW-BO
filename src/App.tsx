@@ -5,10 +5,10 @@ import Protected from "./Routes/Routes";
 const theme = createTheme({
   palette: {
     primary: {
-      main: "#F58634", // Replace with your desired primary color
+      main: "#F58634",
     },
     secondary: {
-      main: "#3E4095", // Replace with your desired secondary color
+      main: "#3E4095",
     },
   },
 });

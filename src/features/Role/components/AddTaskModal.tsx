@@ -21,17 +21,17 @@ const style = {
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: 500,
+  width: 800,
   bgcolor: "background.paper",
-  border: "2px solid #000",
   boxShadow: 24,
   p: 4,
 };
-export const AddTaskModal = () => {
+export const AddTaskModal = ({ existingId }: { existingId: string }) => {
   const [open, setOpen] = useState(false);
   const [tasks, setTasks] = useState<{ id: string; target: string }[]>([]);
   const handleClose = () => setOpen(false);
   const { getToken } = useAuth();
+  console.log(existingId);
 
   const {
     register,
@@ -97,16 +97,25 @@ export const AddTaskModal = () => {
                   );
                 })}
             </FormGroup>
-            <Button
-              type="submit"
-              variant="contained"
-              sx={{
-                bgcolor: "primary.main",
-                color: "white",
-              }}
-            >
-              {isSubmitting ? "Submitting..." : "Submit"}
-            </Button>
+            <div className="flex justify-end items-center gap-5 my-5">
+              <Button type="submit" variant="outlined" onClick={handleClose}>
+                Close
+              </Button>
+              <Button
+                type="submit"
+                variant="contained"
+                sx={{
+                  color: "white",
+                  fontWeight: "500",
+                  background: "#3E4095",
+                  "&:hover": {
+                    background: "#3E4095",
+                  },
+                }}
+              >
+                {isSubmitting ? "Submitting..." : "Submit"}
+              </Button>
+            </div>
           </form>
         </Box>
       </Modal>

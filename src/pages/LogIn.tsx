@@ -1,20 +1,34 @@
 import { useState } from "react";
-import KisPay from "../assets/logo.png";
-import { FaRegEye } from "react-icons/fa";
-import { RxEyeClosed } from "react-icons/rx";
+import kispay from "../assets/logo.png";
 import { useNavigate } from "react-router";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-
-import { Link } from "react-router-dom";
 import { loginSchema, type TLoginSchema } from "../lib/validator";
 import { loginAPI } from "../services/Auth/login";
 import useAuth from "../Hooks/useAuth";
+import { AppModal, triggerModal } from "../components/UseModal";
+import {
+  Box,
+  Button,
+  IconButton,
+  InputAdornment,
+  TextField,
+} from "@mui/material";
+import { MdVisibility, MdVisibilityOff } from "react-icons/md";
 
 export const LogIn = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const [modalTitle, setModalTitle] = useState("");
+  const [modalContent, setModalContent] = useState("");
+
   const navigate = useNavigate();
   const { loginAuth } = useAuth();
+
+  const modal = async (title: string, content: string) => {
+    setModalTitle(title);
+    setModalContent(content);
+    return await triggerModal();
+  };
 
   const {
     register,
@@ -34,27 +48,19 @@ export const LogIn = () => {
       } else {
         const jsonData = await response.json();
         console.log("Error", jsonData.message);
+        modal("Oops", jsonData.message);
       }
     } catch (error) {
       console.log(error);
+      modal("Oops", "something went wrong please try again");
     }
   };
 
-  const togglePasswordVisibility = () => {
-    setShowPassword(!showPassword);
-  };
+  const handleClickShowPassword = () => setShowPassword(!showPassword);
 
   return (
     <>
       <section className="h-screen w-full flex justify-center items-center">
-        <div className="absolute text-[#784724] font-bold  left-0 top-0 p-10 z-50 ">
-          <h1
-            className="text-3xl font-medium cursor-pointer"
-            onClick={() => navigate("/")}
-          >
-            KisPay
-          </h1>
-        </div>
         <div className="custom-shape-divider-top-1714647113">
           <svg
             data-name="Layer 1"
@@ -78,97 +84,99 @@ export const LogIn = () => {
             ></path>
           </svg>
         </div>
-        <div className="shadow-xl bg-white lg:w-[30%] md:w-2/3 px-5 py-[5rem] rounded-lg z-10 ">
-          <div>
+        <div className="absolute top-5 left-5">
+          {" "}
+          <div className="flex justify-center items-center border bg-white w-20 h-20 rounded-full mx-auto p-2">
             <img
-              className="mx-auto h-10 w-auto"
-              src={KisPay}
+              className="mx-auto w-auto object-cover"
+              src={kispay}
               alt="Your Company"
             />
-            <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-secondary">
-              Sign in to your account
-            </h2>
           </div>
+        </div>
+        <div className="bg-white border-none lg:border w-[35rem] p-5 md:p-10 rounded-lg z-10">
+          <h2 className="text-start text-4xl font-medium">Sign in</h2>
+
           <div className="mt-10 sm:mx-auto">
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-              <div>
-                <label
-                  htmlFor="email"
-                  className="block text-sm font-medium leading-6 text-neutral-800"
-                >
-                  Email address
-                </label>
-                <div className="mt-2">
-                  <input
+              <div className="flex flex-col items-start gap-2">
+                <div className="w-full flex flex-col items-start gap-7">
+                  <TextField
+                    label="Email"
+                    fullWidth
                     {...register("email")}
-                    id="email"
-                    name="email"
-                    type="email"
-                    placeholder="example@gmail.com"
-                    autoComplete="email"
-                    className={`px-2 block w-full rounded-md border-0 py-2  text-secondary shadow-sm ring-1 ring-inset ${
-                      errors.email ? "ring-red-500" : "ring-gray-300"
-                    } placeholder:text-gray-400 focus:outline-none  sm:text-sm sm:leading-6`}
+                    error={!!errors.email}
+                    helperText={errors.email?.message}
+                    sx={{
+                      "& .MuiOutlinedInput-root": {
+                        backgroundColor: "#f9fafb",
+                      },
+                    }}
                   />
-                </div>
-                {errors.email && (
-                  <div className="text-red-500">{errors.email.message}</div>
-                )}
-              </div>
-              <div>
-                <div className="flex items-center justify-between">
-                  <label
-                    htmlFor="password"
-                    className="block text-sm font-medium leading-6 text-neutral-800"
-                  >
-                    Password
-                  </label>
-                  <div className="text-sm">
-                    <Link
-                      to="/forgot-password"
-                      className="font-semibold text-secondary hover:text-secondary/75"
+
+                  <Box sx={{ width: "100%" }}>
+                    {" "}
+                    <TextField
+                      label="Password"
+                      type={showPassword ? "text" : "password"}
+                      fullWidth
+                      {...register("password")}
+                      error={!!errors.password}
+                      helperText={errors.password?.message}
+                      InputProps={{
+                        endAdornment: (
+                          <InputAdornment position="end">
+                            <IconButton
+                              aria-label="toggle password visibility"
+                              onClick={handleClickShowPassword}
+                              edge="end"
+                            >
+                              {showPassword ? (
+                                <MdVisibilityOff />
+                              ) : (
+                                <MdVisibility />
+                              )}
+                            </IconButton>
+                          </InputAdornment>
+                        ),
+                      }}
+                      sx={{
+                        "& .MuiOutlinedInput-root": {
+                          backgroundColor: "#f9fafb",
+                        },
+                      }}
+                    />{" "}
+                    <Button
+                      sx={{
+                        fontWeight: "bold",
+                        color: "#F58634",
+                      }}
                     >
-                      Forgot password?
-                    </Link>
-                  </div>
+                      Forget Password
+                    </Button>
+                  </Box>
                 </div>
-                <div className="mt-2 relative">
-                  <input
-                    {...register("password")}
-                    id="password"
-                    name="password"
-                    type={showPassword ? "text" : "password"}
-                    placeholder="password"
-                    autoComplete="current-password"
-                    className={`px-2 block w-full rounded-md border-0 ${
-                      errors.password ? "ring-red-500" : "ring-gray-300"
-                    }  py-2 text-secondary shadow-sm ring-1 ring-inset  placeholder:text-gray-400 focus:outline-none sm:text-sm sm:leading-6`}
-                  />
-                  <button
-                    type="button"
-                    onClick={togglePasswordVisibility}
-                    className="absolute inset-y-0 right-0 flex items-center pr-2 cursor-pointer"
-                  >
-                    {showPassword ? <FaRegEye /> : <RxEyeClosed />}
-                  </button>
-                </div>
-                {errors.password && (
-                  <div className="text-red-500">{errors.password.message}</div>
-                )}
               </div>
               <div>
-                <button
-                  disabled={isSubmitting}
+                <Button
+                  variant="contained"
                   type="submit"
-                  className={`flex w-full justify-center rounded-md bg-primary px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-primary/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600`}
+                  size="large"
+                  sx={{
+                    background: "#F58634",
+                    fontWeight: "bold",
+                    color: "white",
+                    ":hover": { background: "#F58633" },
+                  }}
                 >
-                  {isSubmitting ? "Signing in..." : "Sign in"}
-                </button>
+                  {isSubmitting ? "Signing in ..." : "Sign in"}
+                </Button>
               </div>
             </form>
           </div>
         </div>
       </section>
+      <AppModal title={modalTitle} content={modalContent} onClose={() => {}} />
     </>
   );
 };

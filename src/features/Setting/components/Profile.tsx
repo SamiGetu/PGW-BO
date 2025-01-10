@@ -1,11 +1,4 @@
-import {
-  Button,
-  Card,
-  CardContent,
-  FormGroup,
-  TextField,
-  Typography,
-} from "@mui/material";
+import { Button, FormGroup, TextField, Typography } from "@mui/material";
 import React, { useState } from "react";
 import useAuth from "../../../Hooks/useAuth";
 
@@ -25,71 +18,65 @@ export const Profile = () => {
   };
 
   return (
-    <div className="w-3/4 mx-20 mt-10">
-      <Card>
-        <CardContent>
-          <Typography id="modal-modal-title" variant="h6" component="h2">
-            My Profile
-          </Typography>
-          <form onSubmit={handleSubmit}>
-            <FormGroup className="mt-2">
-              <TextField
-                required
-                id="outlined-required-fname"
-                label="First Name"
-                defaultValue={userData.firstName}
-                disabled={!isEditMode}
-                size="small"
-              />
-            </FormGroup>
-            <FormGroup className="mt-5">
-              <TextField
-                required
-                id="outlined-required-mname"
-                label="Middle Name"
-                defaultValue={userData.lastName}
-                disabled={!isEditMode}
-                size="small"
-              />
-            </FormGroup>
-            <FormGroup className="mt-5">
-              <TextField
-                required
-                id="outlined-required-email"
-                label="Email"
-                defaultValue={userData.email}
-                disabled
-                size="small"
-              />
-            </FormGroup>
-            {isEditMode ? (
-              <Button
-                color="primary"
-                type="submit"
-                variant="contained"
-                className="bg-primary"
-                sx={{
-                  mt: 2,
-                }}
-              >
-                Change Profile
-              </Button>
-            ) : (
-              <Button
-                color="primary"
-                onClick={handleEditProfile}
-                sx={{
-                  mt: 2,
-                }}
-                variant="contained"
-                className="bg-primary"
-              >
-                Edit Profile
-              </Button>
-            )}
-          </form>
-        </CardContent>
-      </Card>
+    <div>
+      <Typography id="modal-modal-title" variant="h6" component="h2">
+        My Profile
+      </Typography>
+      <form onSubmit={handleSubmit}>
+        <FormGroup className="mt-2">
+          <TextField
+            required
+            id="outlined-required-fname"
+            label="First Name"
+            defaultValue={userData.firstName}
+            disabled={!isEditMode}
+            size="medium"
+          />
+        </FormGroup>
+        <FormGroup className="mt-5">
+          <TextField
+            required
+            id="outlined-required-mname"
+            label="Middle Name"
+            defaultValue={userData.lastName}
+            disabled={!isEditMode}
+            size="medium"
+          />
+        </FormGroup>
+        <FormGroup className="mt-5">
+          <TextField
+            required
+            id="outlined-required-email"
+            label="Email"
+            defaultValue={userData.email}
+            disabled
+            size="medium"
+          />
+        </FormGroup>
+        {isEditMode ? (
+          <Button
+            color="secondary"
+            type="submit"
+            variant="contained"
+            sx={{
+              mt: 2,
+            }}
+          >
+            Change Profile
+          </Button>
+        ) : (
+          <Button
+            color="secondary"
+            onClick={handleEditProfile}
+            sx={{
+              mt: 2,
+            }}
+            variant="contained"
+          >
+            Edit Profile
+          </Button>
+        )}
+      </form>
     </div>
   );
 };

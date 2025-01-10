@@ -1,4 +1,3 @@
-import React from "react";
 import {
   PDFViewer,
   Page,
@@ -8,7 +7,7 @@ import {
   Text,
   Image, // Import Image component
 } from "@react-pdf/renderer";
-import { useLocation } from "react-router-dom";
+// import { useLocation } from "react-router-dom";
 import person from "../assets/images/elizeu-dias-2EGNqazbAMk-unsplash.jpg";
 import Logo from "../assets/logo.png";
 
@@ -57,7 +56,7 @@ const styles = StyleSheet.create({
 });
 
 const MerchantPdf = () => {
-  const location = useLocation();
+  //   const location = useLocation();
   //   const applicant = location.state;
 
   //   const date = Date.now();

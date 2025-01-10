@@ -1,4 +1,4 @@
-import { GetUsersURL } from "../../../services/urls";
+import { GetUsersURL, RegisterURL } from "../../../services/urls";
 
 export async function getUsersApi(token: string | null) {
   const myHeaders = new Headers();
@@ -16,21 +16,34 @@ export async function getUsersApi(token: string | null) {
 
   return response;
 }
-
-export async function AddUserApi(token: string | null, name: string) {
+type AddUserApiType = {
+  firstName: string;
+  middleName: string;
+  lastName: string;
+  email: string;
+  password: string;
+};
+export async function AddUserApi(data: AddUserApiType) {
   const myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
   myHeaders.append("Mode", "cors");
-  myHeaders.append("Authorization", `Bearer ${token}`);
+  // myHeaders.append("Authorization", `Bearer ${token}`);
 
+  const jsonData = JSON.stringify({
+    firstName: data.firstName,
+    middleName: data.middleName,
+    lastName: data.lastName,
+    email: data.email,
+    password: data.password,
+  });
   const requestOptions: RequestInit = {
     method: "POST",
     headers: myHeaders,
     redirect: "follow",
-    body: JSON.stringify({ name }),
+    body: jsonData,
   };
 
-  const response = await fetch(GetUsersURL, requestOptions);
+  const response = await fetch(RegisterURL, requestOptions);
 
   return response;
 }

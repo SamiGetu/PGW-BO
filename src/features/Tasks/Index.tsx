@@ -10,7 +10,6 @@ import {
   DialogContentText,
   DialogTitle,
   Snackbar,
-  Typography,
 } from "@mui/material";
 import {
   DataGrid,
@@ -31,11 +30,13 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/DeleteOutlined";
 import SaveIcon from "@mui/icons-material/Save";
 import CancelIcon from "@mui/icons-material/Close";
-import { DeleteTaskApi, TasksApi, UpdateTaskApi } from "./service/TasksApi";
+import { DeleteTaskApi, UpdateTaskApi } from "./service/TasksApi";
 import useAuth from "../../Hooks/useAuth";
+import { GetRequest } from "../../services/GetRequest";
+import { GetTasksURL } from "../../services/urls";
 
 export default function Index() {
-  const [tasks, setTasks] = useState<GridRowsProp>([]);
+  const [task, setTask] = useState<GridRowsProp>([]);
   const [rowModesModel, setRowModesModel] = useState<GridRowModesModel>({});
   const [openSnack, setOpenSnack] = useState(false);
   const [snackMessage, setSnackMessage] = useState("");
@@ -81,15 +82,15 @@ export default function Index() {
       [id]: { mode: GridRowModes.View, ignoreModifications: true },
     });
 
-    const editedRow = tasks.find((task) => task.id === id);
+    const editedRow = task.find((task) => task.id === id);
     if (editedRow!.isNew) {
-      setTasks(tasks.filter((task) => task.id !== id));
+      setTask(task.filter((task) => task.id !== id));
     }
   };
 
   const processRowUpdate = (newRow: GridRowModel) => {
     const updatedRow = { ...newRow, isNew: false };
-    setTasks(tasks.map((task) => (task.id === newRow.id ? updatedRow : task)));
+    setTask(task.map((task) => (task.id === newRow.id ? updatedRow : task)));
     handleEdit(newRow.id, newRow.taskName, newRow.target);
     return updatedRow;
   };
@@ -156,10 +157,10 @@ export default function Index() {
   const getTasks = async () => {
     try {
       setLoading(true);
-      const response = await TasksApi(token);
+      const response = await GetRequest(GetTasksURL, token);
       const jsonData = await response.json();
-      console.log("jsonData", jsonData.body.tasks);
-      setTasks(jsonData.body.tasks);
+      console.log(jsonData.body.tasks);
+      setTask(jsonData.body.tasks);
       setLoading(false);
     } catch (error) {
       setLoading(false);
@@ -170,7 +171,7 @@ export default function Index() {
     getTasks();
   }, []);
 
-  const handleEdit = async (id: any, taskName: string, target: string) => {
+  const handleEdit = async (id: string, taskName: string, target: string) => {
     try {
       const response = await UpdateTaskApi(token, id, taskName, target);
       if (response.ok) {
@@ -190,7 +191,7 @@ export default function Index() {
       console.error("Error:", error);
     }
   };
-  const handleDelete = async (id: any) => {
+  const handleDelete = async (id: string) => {
     try {
       const response = await DeleteTaskApi(token, id);
       if (response.ok) {
@@ -211,7 +212,7 @@ export default function Index() {
     }
   };
   return (
-    <div className="h-full w-[90%] mx-auto z-50" style={{ minHeight: "100vh" }}>
+    <div className="z-50" style={{ fontFamily: "Barlow Condensed, serif" }}>
       <Snackbar
         anchorOrigin={{ vertical: "top", horizontal: "center" }}
         open={openSnack}
@@ -245,8 +246,10 @@ export default function Index() {
           <Button onClick={handleClose}>No</Button>
           <Button
             onClick={() => {
-              handleDelete(selectedRoleId);
-              handleClose();
+              if (selectedRoleId !== null) {
+                handleDelete(selectedRoleId.toString());
+                handleClose();
+              }
             }}
             autoFocus
           >
@@ -255,20 +258,19 @@ export default function Index() {
         </DialogActions>
       </Dialog>
       <div className="py-4">
-        <Typography variant="h4" sx={{ fontWeight: "bold", my: 4 }}>
-          <h2>Task Management</h2>
-        </Typography>
+        {/* <h2 className="text-3xl font-bold mb-2">Task Management</h2> */}
         <div className="flex">
-          <ButtonGroup
-            variant="contained"
-            aria-label="outlined secondary button group"
-          >
+          <ButtonGroup aria-label="outlined secondary button group">
             <Button
               key="refreshRoles"
               variant="contained"
               sx={{
-                bgcolor: "primary.main",
                 color: "white",
+                fontWeight: "500",
+                background: "#3E4095",
+                "&:hover": {
+                  background: "#3E4095",
+                },
               }}
               onClick={() => getTasks()}
               startIcon={<Refresh />}
@@ -281,7 +283,7 @@ export default function Index() {
       </div>
       <div className="py-4">
         <DataGrid
-          rows={tasks}
+          rows={task}
           columns={columns}
           loading={loading}
           editMode="row"
@@ -301,7 +303,13 @@ export default function Index() {
           pageSizeOptions={[5, 10, 25, 50, 100]}
           checkboxSelection
           slots={{ noRowsOverlay: CustomNoRowsOverlay, toolbar: GridToolbar }}
-          sx={{ "--DataGrid-overlayHeight": "300px" }}
+          sx={{
+            "--DataGrid-overlayHeight": "300px",
+            color: "black",
+            ".MuiButtonBase-root": {
+              color: "#3E4095",
+            },
+          }}
         />
       </div>
     </div>

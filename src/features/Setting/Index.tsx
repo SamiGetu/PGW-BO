@@ -48,15 +48,41 @@ export default function Index() {
   };
 
   return (
-    <Box sx={{ width: "100%", mx: 4, mt: 2 }}>
+    <Box sx={{ width: "100%" }}>
       <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
         <Tabs
           value={value}
           onChange={handleChange}
           aria-label="basic tabs example"
+          sx={{
+            "& .MuiTabs-indicator": {
+              backgroundColor: "gray",
+              height: "1px",
+            },
+          }}
         >
-          <Tab sx={{ mx: 2 }} label="Profile" {...a11yProps(0)} />
-          <Tab sx={{ mx: 2 }} label="Password" {...a11yProps(1)} />
+          <Tab
+            label="Profile"
+            sx={{
+              fontWeight: "600",
+              fontFamily: "Barlow Condensed, serif",
+              "&.Mui-selected": {
+                color: "#3E4095",
+              },
+            }}
+            {...a11yProps(0)}
+          />
+          <Tab
+            label="Password"
+            sx={{
+              fontWeight: "600",
+              fontFamily: "Barlow Condensed, serif",
+              "&.Mui-selected": {
+                color: "#3E4095",
+              },
+            }}
+            {...a11yProps(1)}
+          />
         </Tabs>
       </Box>
       <CustomTabPanel value={value} index={0}>

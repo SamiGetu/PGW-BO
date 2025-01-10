@@ -1,12 +1,11 @@
-export const Footer = () => {
+const Footer = () => {
   return (
-    <div>
-      {/* <footer className="bg-zinc-50 text-center z-50 dark:bg-neutral-700 lg:text-left">
-        <div className="bg-black/5 p-4 text-center text-surface dark:text-white">
-          © 2024 Copyright:
-          <a href="https://tw-elements.com/">Invictus Software</a>
-        </div>
-      </footer> */}
-    </div>
+    <footer className="border-t text-neutral-800 text-center p-4">
+      <p className="text-md cursor-pointer hover:text-secondary hover:underline hover:scale-95 transition duration-300 ease-in-out">
+        © {new Date().getFullYear()} Developed by Invictus Software
+      </p>
+    </footer>
   );
 };
+
+export default Footer;

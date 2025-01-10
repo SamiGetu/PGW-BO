@@ -1,12 +1,5 @@
 import { Add } from "@mui/icons-material";
-import {
-  Box,
-  Button,
-  FormGroup,
-  Snackbar,
-  TextField,
-  Typography,
-} from "@mui/material";
+import { Box, Button, FormGroup, Snackbar, TextField } from "@mui/material";
 import Modal from "@mui/material/Modal";
 import { useState } from "react";
 const style = {
@@ -14,9 +7,8 @@ const style = {
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: 500,
+  width: 600,
   bgcolor: "background.paper",
-  border: "2px solid #000",
   boxShadow: 24,
   p: 4,
 };
@@ -26,13 +18,17 @@ export const AddComponentModal = () => {
   const handleClose = () => setOpen(false);
 
   return (
-    <div>
+    <div style={{ fontFamily: "Barlow Condensed, serif" }}>
       <Button
         key="addRole"
         variant="contained"
         sx={{
-          bgcolor: "primary.main",
           color: "white",
+          fontWeight: "500",
+          background: "#3E4095",
+          "&:hover": {
+            background: "#3E4095",
+          },
         }}
         onClick={handleOpen}
         startIcon={<Add />}
@@ -53,9 +49,7 @@ export const AddComponentModal = () => {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <Typography id="modal-modal-title" variant="h6" component="h2">
-            Add New Component
-          </Typography>
+          <h1 className="text-2xl font-bold"> Add New Component</h1>
           <form>
             <FormGroup className="mt-3">
               <TextField
@@ -99,15 +93,25 @@ export const AddComponentModal = () => {
                 sx={{ mb: 2 }}
               />
             </FormGroup>
-            <Button
-              variant="contained"
-              sx={{
-                bgcolor: "primary.main",
-                color: "white",
-              }}
-            >
-              Submit
-            </Button>
+            <div className="flex justify-end items-center gap-5 my-5">
+              <Button type="submit" variant="outlined" onClick={handleClose}>
+                Close
+              </Button>{" "}
+              <Button
+                type="submit"
+                variant="contained"
+                sx={{
+                  color: "white",
+                  fontWeight: "500",
+                  background: "#3E4095",
+                  "&:hover": {
+                    background: "#3E4095",
+                  },
+                }}
+              >
+                Submit
+              </Button>
+            </div>
           </form>
         </Box>
       </Modal>

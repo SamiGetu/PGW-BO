@@ -105,11 +105,11 @@ export default function Index() {
       editable: true,
     },
     {
-        field: "hasSpace",
-        headerName: "Has Space",
-        width: 150,
-        editable: true,
-      },
+      field: "hasSpace",
+      headerName: "Has Space",
+      width: 150,
+      editable: true,
+    },
     {
       field: "actions",
       type: "actions",
@@ -175,7 +175,10 @@ export default function Index() {
     getTasks();
   }, []);
   return (
-    <div className="h-full w-[90%] mx-auto z-50" style={{ minHeight: "100vh" }}>
+    <div
+      className="h-full z-50"
+      style={{ fontFamily: "Barlow Condensed, serif" }}
+    >
       <Snackbar
         anchorOrigin={{ vertical: "top", horizontal: "center" }}
         open={openSnack}
@@ -192,20 +195,18 @@ export default function Index() {
         </Alert>
       </Snackbar>
       <div className="py-4">
-        <Typography variant="h4" sx={{ fontWeight: "bold", my: 4 }}>
-          <h2>Components Management</h2>
-        </Typography>
         <div className="flex">
-          <ButtonGroup
-            variant="contained"
-            aria-label="outlined secondary button group"
-          >
+          <ButtonGroup aria-label="outlined secondary button group">
             <Button
               key="refreshRoles"
               variant="contained"
               sx={{
-                bgcolor: "primary.main",
                 color: "white",
+                fontWeight: "500",
+                background: "#3E4095",
+                "&:hover": {
+                  background: "#3E4095",
+                },
               }}
               onClick={() => getTasks()}
               startIcon={<Refresh />}
@@ -237,7 +238,13 @@ export default function Index() {
           pageSizeOptions={[5, 10, 25, 50, 100]}
           checkboxSelection
           slots={{ noRowsOverlay: CustomNoRowsOverlay, toolbar: GridToolbar }}
-          sx={{ "--DataGrid-overlayHeight": "300px" }}
+          sx={{
+            "--DataGrid-overlayHeight": "300px",
+            color: "black",
+            ".MuiButtonBase-root": {
+              color: "#3E4095",
+            },
+          }}
         />
       </div>
     </div>

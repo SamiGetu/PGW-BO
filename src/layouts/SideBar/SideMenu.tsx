@@ -1,117 +1,152 @@
-import { FaUsers, FaLink, FaUsersCog } from "react-icons/fa";
-import { GrTasks } from "react-icons/gr";
-import { GrTransaction } from "react-icons/gr";
-import { IoMdHome } from "react-icons/io";
-import { IoPeopleSharp } from "react-icons/io5";
-import { useState } from "react";
-
+import kispay from "../../assets/logo.png";
+import { motion } from "framer-motion";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import logo from "../../assets/logo.png";
-import CreditCardIcon from "@mui/icons-material/CreditCard";
+import { useMediaQuery } from "@mui/material";
+import { BsCardChecklist, BsCashStack } from "react-icons/bs";
+import { HiOutlineDocumentReport } from "react-icons/hi";
+import { IoMdPeople } from "react-icons/io";
+import { RiUserSettingsLine } from "react-icons/ri";
+import { MdOutlineAccountBalanceWallet } from "react-icons/md";
+import { BiTask, BiUser } from "react-icons/bi";
+import { CgMenuGridO } from "react-icons/cg";
+import { RiDashboard2Line } from "react-icons/ri";
+import { CiBookmarkCheck } from "react-icons/ci";
+import { BsBank2 } from "react-icons/bs";
 
-export const SideMenu = () => {
-  const [open, setOpen] = useState(true);
-  const location = useLocation(); // Import useLocation hook
+export const SideMenu = ({
+  menuOpen,
+  setMenuOpen,
+}: {
+  menuOpen: boolean;
+  setMenuOpen: React.Dispatch<React.SetStateAction<boolean>>;
+}) => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const isTabletOrSmaller = useMediaQuery("(max-width: 1024px)");
 
   const Links = [
     {
-      Name: "Home",
-      Path: "",
-      icon: <IoMdHome size={"1.5rem"} />,
+      Name: "Dashboard",
+      Path: "/dashboard",
+      icon: <RiDashboard2Line size={20} />,
       spacing: true,
     },
-
     {
       Name: "Transactions",
-      Path: "transaction",
-      icon: <GrTransaction size={"1.5rem"} />,
+      Path: "/transaction",
+      icon: <MdOutlineAccountBalanceWallet size={20} />,
     },
     {
-      Name: "Payment Links",
-      Path: "paymentlink",
-      icon: <FaLink size={"1.5rem"} />,
+      Name: "Transaction Summary",
+      Path: "/transaction-summary",
+      icon: <HiOutlineDocumentReport size={20} />,
+    },
+    {
+      Name: "Withdrawals",
+      Path: "/withdraw",
+      icon: <BsCashStack size={20} />,
+    },
+    {
+      Name: "Withdrawals Payment",
+      Path: "/withdraw-payment",
+      icon: <MdOutlineAccountBalanceWallet size={20} />,
+    },
+    {
+      Name: "Settlements",
+      Path: "/settlement",
+      icon: <BsBank2 size={20} />,
     },
     {
       Name: "Merchants",
-      Path: "merchants",
-      icon: <IoPeopleSharp size={"1.5rem"} />,
+      Path: "/merchants",
+      icon: <IoMdPeople size={20} />,
       spacing: true,
     },
-    { Name: "Users", Path: "users", icon: <FaUsers size={"1.5rem"} /> },
+    {
+      Name: "Approve Request",
+      Path: "/approve-merchants",
+      icon: <CiBookmarkCheck size={20} />,
+      spacing: true,
+    },
+    {
+      Name: "Users",
+      Path: "/users",
+      icon: <BiUser size={20} />,
+    },
     {
       Name: "Roles",
-      Path: "roles",
-      icon: <FaUsersCog size={"1.5rem"} />,
+      Path: "/roles",
+      icon: <RiUserSettingsLine size={20} />,
     },
     {
       Name: "Components",
-      Path: "Components",
-      icon: <CreditCardIcon sx={{ fontSize: "1.5rem" }} />,
+      Path: "/Components",
+      icon: <BsCardChecklist size={20} />,
     },
     {
       Name: "Task",
-      Path: "tasks",
-      icon: <GrTasks size={"1.5rem"} />,
+      Path: "/tasks",
+      icon: <BiTask size={20} />,
     },
   ];
 
   return (
-    <nav className="relative z-10">
-      <div className={`transition-all ${open ? "pl-[17rem]" : "pl-24"}`}>
-        <div
-          className={`${
-            open ? "w-[17rem]" : "w-24"
-          } fixed h-screen p-5 pt-8 bg-white border-r-2 duration-500 font-Roboto top-0 left-0`}
-        >
-          <div className="mt-[5rem]">
-            <div className="inline-flex items-center gap-4 mb-[5rem]">
-              <Link to="/">
-                <img
-                  src={logo}
-                  alt=""
-                  className={`h-12 origin-left ${!open && "scale-0"}`}
-                />
-              </Link>
-              <span
-                className={`w-5 h-5 border-4 border-primary bg-green-0 rounded-full absolute right-11 top-[7.3rem] cursor-pointer ${
-                  open ? "bg-white  " : "bg-0"
-                }`}
-                onClick={() => setOpen(!open)}
-              ></span>
-            </div>
-            <div>
-              <ul className="pt-2">
-                {Links.map((item, index) => (
-                  <li
-                    key={index}
-                    onClick={() => navigate(`/${item.Path}`)}
-                    className={` text-md flex items-center gap-x-4 cursor-pointer p-2 hover:bg-primary/75 hover:text-white rounded-md ${
-                      item.spacing ? "mb-8 divide-y-reverse divide-y-2" : ""
-                    } ${
-                      location.pathname === `/${item.Path}` ||
-                      (location.pathname === "/" && item.Path === "/")
-                        ? "bg-primary text-white"
-                        : "text-neutral-700"
-                    }`}
-                  >
-                    <Link className="flex items-center gap-4" to={item.Path}>
-                      <span className="block float-left mx-1.5">
-                        {item.icon}
-                      </span>
-                      <span className={`${!open && "scale-0"}`}>
-                        {item.Name}
-                      </span>
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-        </div>{" "}
-        {/* Adjust content left margin */}
-        {/* Your content here */}
+    <motion.div
+      initial={{ x: "-100%" }}
+      animate={{ x: menuOpen ? "0%" : "-100%" }}
+      transition={{ type: "spring", stiffness: 70, damping: 20 }}
+      className="fixed top-0 left-0 w-[20rem] h-full bg-blue-50 z-10 flex flex-col items-start border-r"
+    >
+      <div
+        className="flex items-center justify-end w-full fixed left-10 my-5"
+        onClick={() => setMenuOpen(!menuOpen)}
+      >
+        {menuOpen ? (
+          <CgMenuGridO size={30} className="p-1 text-secondary" />
+        ) : (
+          <CgMenuGridO size={35} className="text-secondary" />
+        )}
       </div>
-    </nav>
+      <div className="flex items-center justify-start w-full px-5">
+        <img
+          src={kispay}
+          alt="Logo"
+          className="w-[5rem] h-[5rem] rounded-full object-contain"
+        />
+        <h1 className="text-2xl font-bold text-secondary ml-2">KISPAY</h1>
+      </div>
+
+      <ul className="flex flex-col w-full my-10 px-2">
+        {Links.map((link) => (
+          <>
+            <div
+              className={`w-full hover:border-r-2 hover:border-secondary hover:text-secondary hover:py-2 py-2 px-2 flex items-center  text-black transition duration-300 ease-in-out${
+                location.pathname === link.Path
+                  ? " bg-white text-secondary font-bold border-r-2 border-secondary"
+                  : " "
+              }`}
+              onClick={() => {
+                if (isTabletOrSmaller) {
+                  setMenuOpen(false);
+                } else {
+                  navigate(link.Path);
+                }
+              }}
+            >
+              {link.icon}
+              <Link
+                key={link.Name}
+                to={link.Path}
+                className="flex items-center text-lg font-medium text-neutral-600"
+                style={{ fontFamily: "Barlow Condensed, serif" }}
+              >
+                <span className="ml-4">{link.Name}</span>
+              </Link>
+            </div>
+            <div className={`${link.spacing ? "my-1 border" : ""} `}></div>
+          </>
+        ))}
+      </ul>
+    </motion.div>
   );
 };
