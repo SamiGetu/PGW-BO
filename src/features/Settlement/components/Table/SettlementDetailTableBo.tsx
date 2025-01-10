@@ -134,17 +134,32 @@ export const SettlementDetailTableBo = () => {
             <Box
               sx={{ display: "flex", justifyContent: "space-start", gap: 10 }}
             >
-              <Typography style={{ fontFamily: "Barlow Condensed, serif" }}>
+              <Typography
+                style={{
+                  fontFamily: "Barlow Condensed, serif",
+                  fontSize: "20px",
+                }}
+              >
                 <span className="font-bold">Merchant ID:</span> KPM0001
               </Typography>
-              <Typography style={{ fontFamily: "Barlow Condensed, serif" }}>
+              <Typography
+                style={{
+                  fontFamily: "Barlow Condensed, serif",
+                  fontSize: "20px",
+                }}
+              >
                 <span className="font-bold">Bank:</span> CBE{" "}
               </Typography>
             </Box>
             <Box
               sx={{ display: "flex", justifyContent: "space-start", gap: 10 }}
             >
-              <Typography style={{ fontFamily: "Barlow Condensed, serif" }}>
+              <Typography
+                style={{
+                  fontFamily: "Barlow Condensed, serif",
+                  fontSize: "20px",
+                }}
+              >
                 <span className="font-bold">Business Name:</span> Innvictus
                 Software Development
               </Typography>
