@@ -53,7 +53,10 @@ export default function Protected() {
           <Route path="/withdraw-detail" element={<WithdrawDetail />} />
           <Route path="/withdraw-payment" element={<WithdrawalsPayment />} />
           <Route path="/approve-merchants" element={<ApproveMerchants />} />
-          <Route path="/approval-detail/:authId" element={<ApprovalDetail />} />
+          <Route
+            path="/approval-detail/:authId/:requestId"
+            element={<ApprovalDetail />}
+          />
           <Route
             path="/withdraw-payment-detail"
             element={<WithdrawalsPaymentDetail />}

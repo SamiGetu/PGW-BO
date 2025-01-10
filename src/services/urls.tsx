@@ -1,4 +1,5 @@
 const apiBaseURL = "https://api.kispay.et/api";
+// const apiBaseURL = "http://localhost:8080/api";
 
 export const LoginURL = `${apiBaseURL}/auth/login`;
 export const RegisterURL = `${apiBaseURL}/auth/register`;
@@ -12,7 +13,8 @@ export const GetTasksURL = `${apiBaseURL}/auth/tasks`;
 export const AddTaskUrl = `${apiBaseURL}/auth/tasks`;
 export const DeleteTaskUrl = `${apiBaseURL}/auth/tasks`;
 export const GetMerchantsURL = `${apiBaseURL}/merchants/get_all_merchants`;
-export const GetSingleMerchantUrl = `${apiBaseURL}/merchants/get_merchant`;
+export const GetSingleMerchantUrl = `${apiBaseURL}/merchants/get_merchant_by_auth`;
+export const ApproveMerchantForProductionUrl = `${apiBaseURL}/merchants/rfp/approve_requests`;
 
 export const getAllRolesUrl = `${apiBaseURL}/auth/roles`;
 export const addRole = `${apiBaseURL}/auth/users/add_roles`;

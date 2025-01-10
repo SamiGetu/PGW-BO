@@ -11,8 +11,12 @@ import profile from "../../assets/images/profile.png";
 export const Header = () => {
   const [drop, setDrop] = useState(false);
   const location = useLocation();
-  const routeName =
-    location.pathname.replace("/", "").replace("-", " ") || "Home";
+  let routeName = location.pathname.replace("/", "").replace("-", " ");
+  if (routeName.includes("/Approval detail/")) {
+    routeName = "Approval detail";
+  } else if (routeName.includes("/")) {
+    routeName = routeName.split("/")[0];
+  }
   const navigate = useNavigate();
   const { getUserData, logoutAuth } = useAuth();
   const userDropdownRef = useRef<HTMLDivElement>(null);

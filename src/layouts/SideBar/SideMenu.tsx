@@ -63,7 +63,7 @@ export const SideMenu = ({
       spacing: true,
     },
     {
-      Name: "Approve Request",
+      Name: "Request for Production",
       Path: "/approve-merchants",
       icon: <CiBookmarkCheck size={20} />,
       spacing: true,
