@@ -28,6 +28,11 @@ import ApproveMerchants from "../pages/ApproveMerchants";
 import ApprovalDetail from "../features/ApproveMerchants/Pages/ApprovalDetail";
 import Settlement from "../pages/Settlement";
 import { SettlementDetailTableBo } from "../features/Settlement/components/Table/SettlementDetailTableBo";
+import FinalizeSettlement from "../features/Settlement/components/Page/FinalizeSettlement";
+import FinalizeSettlementDetail from "../features/Settlement/components/Page/FinalizeSettlmentDetail";
+import ManagerialDashboard from "../features/Dashboards/Managerial/ManagerialDashboard";
+import ApproveSettlement from "../features/Settlement/Page/ApproveSettlement";
+import { ApproveSettlementDetailTable } from "../features/Settlement/components/Table/ApproveSettlementDetailTable";
 
 export default function Protected() {
   return (
@@ -60,12 +65,29 @@ export default function Protected() {
           />
           <Route path="/settlement" element={<Settlement />} />
           <Route
-            path="//settlement-detail"
+            path="/settlement-detail"
             element={<SettlementDetailTableBo />}
+          />
+          <Route path="/approve-settlement" element={<ApproveSettlement />} />
+          <Route
+            path="/approve-settlements-detail"
+            element={<ApproveSettlementDetailTable />}
+          />
+          <Route
+            path="/finalize-settlements"
+            element={<FinalizeSettlement />}
+          />
+          <Route
+            path="/finalize-settlements-detail"
+            element={<FinalizeSettlementDetail />}
           />
           {/* dashboards */}
           <Route path="/admin-dashboard" element={<AdminDashBoard />} />
           <Route path="/finance-dashboard" element={<FinanceDashboard />} />
+          <Route
+            path="/managerial-dashboard"
+            element={<ManagerialDashboard />}
+          />
         </Route>
       </Route>
       <Route path="/merchant-pdf" element={<MerchantPdf />} />
